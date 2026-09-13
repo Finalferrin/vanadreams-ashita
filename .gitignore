@@ -1,0 +1,13 @@
+# Editors and operating-system noise
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Game files and Ashita's own runtime never belong here
+*.dll
+*.exe
+*.dat
+config/
+logs/

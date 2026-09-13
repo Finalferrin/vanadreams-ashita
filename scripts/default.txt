@@ -1,0 +1,9 @@
+/*
+ * Example Ashita default script for Vanadreams.
+ * Copy the lines you want into Ashita-v4beta\scripts\default.txt.
+ */
+
+/wait 3
+
+/* Load the Vanadreams UI once it exists in ui\vanadreams. */
+/* /addon load vanadreams */
