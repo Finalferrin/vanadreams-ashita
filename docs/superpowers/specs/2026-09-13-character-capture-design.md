@@ -58,6 +58,8 @@ Job ids are the game's (1 WAR … 22 RUN). Skill ids are Ashita's indexes for `G
 
 Every array is complete, not a diff: a snapshot replaces the previous one.
 
+Known gaps in schema 1, found on the first real capture (14 Sept 2026): `weaponskills` and `traits` come back as a handful of small numbers rather than the real lists and must be ignored by the importer, which loses nothing because the server grants weapon skills from skill level and traits from job level on its own; `character.size` can be -1 when the model size is not readable, so the importer treats anything outside 0–2 as 0; the main-hand and sub-hand equipment slots (0 and 1) can be absent, so the player re-equips weapons once in game. Every other field checked out against the character it was taken from.
+
 ## The addon
 
 `/capture` writes the file and prints a one-line summary: name, main job and level, item count across all bags, gil. `/capture show` prints the last summary again. It reads only through Ashita's memory managers, sends no packets and changes nothing. It runs on retail and on any server; the file says which.
