@@ -1,27 +1,43 @@
 # Vanadreams Ashita
 
-Addons and UI for playing on [Vanadreams](https://fairywitch.ca), a private Final Fantasy XI server, with Ashita v4.
+Everything a player needs to play on [Vanadreams](https://fairywitch.ca), a private Final Fantasy XI server, with Ashita v4: the launcher, the addons, and the boot files.
 
-## What is here
+## The launcher
+
+`VanadreamsLauncher.exe` is a small Windows program that does what the old Ashita v3 launcher did, plus the parts that used to be a wiki page:
+
+- **Profiles and Play.** Pick who you are, press Play. Logins are remembered, protected with Windows's own per-user encryption, and never written into the boot files. Add other servers, or retail, the same way.
+- **Client check.** Before every launch it reads your FFXI client's version stamp and compares it the way the server does, so you know before you press Play whether you'll get in.
+- **Live status.** Whether Vanadreams is up, from the same status the website shows.
+- **Setup.** First run downloads the Ashita v4 beta and xiloader into a folder you choose and writes the Vanadreams profile. It can adopt an Ashita v4 you already have, and it brings profiles and configs across from an Ashita v3 install.
+- **The FFXI client guide.** A step-by-step window for installing and updating the retail client and getting it through the firewall, with checks that turn green as you go.
+- **Addons.** A catalogue of plugins and addons: tick to enable, one click to install or update, and it writes your startup script. Anything from your v3 stack that has a v4 home is there.
+- **Fishing.** The switch and the catch log for [vanafish](addons/vanafish/), the Vanadreams fishing bot.
+
+It needs nothing installed: Ashita v4 already requires the .NET Framework that every Windows 10 and 11 machine has.
+
+**Download:** the latest release is always at
+`https://github.com/Finalferrin/vanadreams-ashita/releases/latest/download/VanadreamsLauncher.zip`.
+Unzip it anywhere, run it, press Setup.
+
+### Building it
+
+`launcher\VanadreamsLauncher.slnx`, Visual Studio 2026 or `dotnet build -c Release`. Tests: `dotnet test launcher\VanadreamsLauncher.Tests`. The design is in [docs/superpowers/specs](docs/superpowers/specs/).
+
+## What else is here
 
 | Folder | What |
 | --- | --- |
-| `addons/` | One folder per addon. Copy the folder into your Ashita `addons` directory. |
-| `ui/` | The Vanadreams UI, an Ashita v4 addon. Same install as any other addon. |
-| `scripts/` | Example boot script and launcher config for connecting to Vanadreams. |
+| `addons/` | One folder per addon. `vanafish` is the fishing bot. Install through the launcher, or copy a folder into your Ashita `addons` directory. |
+| `catalog.json` | The launcher's catalogue: every addon and plugin it can install, where it comes from, how it loads. Edit this to add one; every launcher picks it up on its next start. |
+| `ui/` | The Vanadreams in-game UI, an Ashita v4 addon. Not started yet. |
+| `scripts/` | Example boot ini and startup script for connecting by hand. |
 
-## Installing an addon
+## Connecting by hand, without the launcher
 
-1. Copy the addon's folder from `addons/` (or `ui/`) into `Ashita-v4beta\addons\`.
-2. In game, load it with `/addon load <name>`, or add that line to `Ashita-v4beta\scripts\default.txt` so it loads every time.
-
-## Connecting to Vanadreams with Ashita
-
-Ashita's own bootloader will not reach the server; point it at xiloader instead.
-
-1. Get the latest xiloader from [LandSandBoat's releases](https://github.com/LandSandBoat/xiloader/releases).
+1. Get the latest xiloader from [LandSandBoat's releases](https://github.com/LandSandBoat/xiloader/releases) and put it in `Ashita-v4beta\bootloader\`.
 2. In `Ashita-v4beta\config\boot\`, copy `example-privateserver.ini` to `vanadreams.ini` and set the boot section as in [`scripts/vanadreams.ini`](scripts/vanadreams.ini).
-3. Make a shortcut to `Ashita-cli.exe vanadreams.ini`.
+3. Run `Ashita-cli.exe vanadreams.ini`.
 
 Server address: `vanadreams.fairywitch.ca`. Rates, rules and status are on [fairywitch.ca](https://fairywitch.ca).
 
