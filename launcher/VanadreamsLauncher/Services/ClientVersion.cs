@@ -76,7 +76,13 @@ namespace Vanadreams.Services
             if (string.IsNullOrEmpty(ffxiFolder)) return null;
             var cfg = Path.Combine(ffxiFolder, "patch.cfg");
             if (!File.Exists(cfg)) return null;
-            return NewestStamp(File.ReadAllText(cfg, Encoding.GetEncoding(28591)));
+            try { return NewestStamp(File.ReadAllText(cfg, Encoding.GetEncoding(28591))); }
+            catch (Exception ex)
+            {
+                // PlayOnline holds the file while it updates, or the folder is not readable: treat as unknown
+                Log.Warn("patch.cfg unreadable: " + ex.Message);
+                return null;
+            }
         }
 
         public static string NewestStamp(string patchCfgText)

@@ -42,9 +42,15 @@ namespace Vanadreams.Pages
         {
             InitializeComponent();
             _win = win;
+            _onChanged = OnStateChanged;
             Build();
-            App.State.Changed += () => Dispatcher.BeginInvoke(new Action(Build));
+            // listen only while on screen; a page that has been left must not keep rebuilding
+            Loaded += (s, e) => App.State.Changed += _onChanged;
+            Unloaded += (s, e) => App.State.Changed -= _onChanged;
         }
+
+        private readonly Action _onChanged;
+        private void OnStateChanged() => Dispatcher.BeginInvoke(new Action(Build));
 
         private void Build()
         {
@@ -58,7 +64,7 @@ namespace Vanadreams.Pages
                 _rows.Add(new AddonRow
                 {
                     Item = item,
-                    Installed = item.Source == SourceType.Bundled ? item.IsInstalled(state.AshitaRoot) : item.IsInstalled(state.AshitaRoot),
+                    Installed = item.IsInstalled(state.AshitaRoot),
                     InstalledVersion = ver,
                     Enabled = state.Settings.EnabledAddons.Contains(item.Id, StringComparer.OrdinalIgnoreCase),
                 });
@@ -127,6 +133,7 @@ namespace Vanadreams.Pages
             if (_current == null || _busy) return;
             var item = _current.Item;
             var state = App.State;
+            if (!state.HasAshita) { ProgressText.Visibility = Visibility.Visible; ProgressText.Text = "Set the Ashita folder on Settings first."; return; }
             _busy = true; InstallButton.IsEnabled = false;
             Progress.Visibility = ProgressText.Visibility = Visibility.Visible;
             Progress.IsIndeterminate = true; ProgressText.Text = "Looking up " + item.Name + "…";
@@ -141,7 +148,12 @@ namespace Vanadreams.Pages
                     if (!File.Exists(zip) || new FileInfo(zip).Length != asset.Size)
                         await state.Downloader.DownloadFileAsync(asset.Url, zip, progress, asset.Name, asset.Size);
                     ProgressText.Text = "Unpacking…";
-                    await Task.Run(() => Downloader.ExtractZipOverwrite(zip, state.AshitaRoot));
+                    // the catalogue's install field says where the archive goes; the default is the Ashita root
+                    var unzipTo = item.Install == InstallAction.CopyToAddons ? Path.Combine(state.AshitaRoot, "addons", item.LoadName ?? item.Id)
+                                : item.Install == InstallAction.PivotOverlay ? Path.Combine(PivotConfig.OverlaysRoot(state.AshitaRoot), item.Id)
+                                : state.AshitaRoot;
+                    await Task.Run(() => Downloader.ExtractZipOverwrite(zip, unzipTo));
+                    if (item.Install == InstallAction.PivotOverlay) PivotConfig.AddOverlay(state.AshitaRoot, item.Id);
                     state.Settings.InstalledVersions[item.Id] = item.Version ?? asset.Tag;
                 }
                 else if (item.Source == SourceType.RepoFolder)
@@ -163,9 +175,11 @@ namespace Vanadreams.Pages
                     state.Settings.InstalledVersions[item.Id] = item.Version ?? DateTime.Now.ToString("yyyy-MM-dd");
                     if (overlay) PivotConfig.AddOverlay(state.AshitaRoot, item.Id);
                 }
-                state.Settings.Save();
+                // enabled, saved and applied in one motion, so Play right after Install loads it
                 _current.Enabled = true;
                 if (!state.Settings.EnabledAddons.Contains(item.Id, StringComparer.OrdinalIgnoreCase)) state.Settings.EnabledAddons.Add(item.Id);
+                state.Settings.Save();
+                state.ApplyEnabledAddons();
                 Log.Info("installed " + item.Id);
                 var pivot = item.Install == InstallAction.PivotOverlay ? state.Catalog.Find("pivot") : null;
                 ProgressText.Text = pivot != null && !pivot.IsInstalled(state.AshitaRoot) ? "Installed. It needs XIPivot to show in game: install that too, then Save." : "Installed.";

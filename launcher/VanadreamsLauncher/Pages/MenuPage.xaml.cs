@@ -47,11 +47,16 @@ namespace Vanadreams.Pages
         {
             InitializeComponent();
             _win = win;
+            _onChanged = OnStateChanged;
             Commands.ItemsSource = _commands;
             KeyDown += OnKeyDown;
-            Loaded += (s, e) => { LoadProfile(); Keyboard.Focus(this); };
-            App.State.Changed += () => Dispatcher.BeginInvoke(new Action(LoadProfile));
+            // listen only while on screen; a page that has been left must not keep reloading profiles
+            Loaded += (s, e) => { LoadProfile(); Keyboard.Focus(this); App.State.Changed += _onChanged; };
+            Unloaded += (s, e) => App.State.Changed -= _onChanged;
         }
+
+        private readonly Action _onChanged;
+        private void OnStateChanged() => Dispatcher.BeginInvoke(new Action(LoadProfile));
 
         private void LoadProfile()
         {

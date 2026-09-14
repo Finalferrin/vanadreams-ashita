@@ -35,6 +35,16 @@ namespace Vanadreams.Services
             return list;
         }
 
+        /// <summary>Drop a stray root_path an older launcher wrote; the plugin's own default is the right one.</summary>
+        public static void RemoveRootPath(string ashitaRoot)
+        {
+            var ini = IniPath(ashitaRoot);
+            if (!File.Exists(ini)) return;
+            var lines = File.ReadAllLines(ini);
+            var kept = lines.Where(l => !l.TrimStart().StartsWith("root_path", StringComparison.OrdinalIgnoreCase)).ToArray();
+            if (kept.Length != lines.Length) File.WriteAllLines(ini, kept, new UTF8Encoding(false));
+        }
+
         /// <summary>Make sure the overlay is listed. New overlays go last, so existing texture packs keep priority.</summary>
         public static void AddOverlay(string ashitaRoot, string name)
         {
@@ -67,10 +77,11 @@ namespace Vanadreams.Services
                 }
             }
             var sb = new StringBuilder();
+            // No root_path: XIPivot defaults to the DATs folder beside pivot.dll, and a relative value
+            // here resolves against the game's working directory instead, which breaks every overlay.
             if (!seenSettings)
             {
                 sb.AppendLine("[settings]");
-                sb.AppendLine("root_path = polplugins\\DATs\\");
                 sb.AppendLine("debug_log = false");
             }
             foreach (var l in kept) sb.AppendLine(l);

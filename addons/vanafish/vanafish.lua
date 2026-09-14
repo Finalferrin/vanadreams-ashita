@@ -81,7 +81,7 @@ local bot = {
     injected_end   = false,      -- we sent mode 3; block the client's own
     fish           = nil,        -- last 0x115
     bite           = nil,        -- 'small', 'large', 'item', 'monster'
-    feeling        = nil,        -- 'good', 'bad', 'terrible', 'noskill', 'noskill_sure', 'noskill_positive', 'keen'
+    feeling        = nil,        -- 'good', 'bad', 'terrible', 'noskill', 'noskill_unsure', 'noskill_positive', 'keen'
     decision       = nil,        -- 'catch' / 'release'
     nothing_streak = 0,
     start_pos      = nil,
@@ -224,7 +224,8 @@ local function decide()
     elseif bot.bite == 'item' then want = c.catch_items[1];
     elseif bot.bite == 'large' then want = c.catch_large_fish[1];
     else want = c.catch_small_fish[1]; end
-    if want and c.release_on_noskill[1] and bot.feeling and bot.feeling:find('noskill', 1, true) then want = false; end
+    -- 'noskill' and 'noskill_unsure' are warnings; 'noskill_positive' is the opposite and is kept
+    if want and c.release_on_noskill[1] and (bot.feeling == 'noskill' or bot.feeling == 'noskill_unsure') then want = false; end
     if want and c.release_chance[1] > 0 and math.random(100) <= c.release_chance[1] then want = false; end
     return want and 'catch' or 'release';
 end

@@ -98,6 +98,7 @@ namespace Vanadreams.Services
         {
             if (!Directory.Exists(BootDir)) return new List<Profile>();
             return Directory.GetFiles(BootDir, "*.ini")
+                .Where(f => !System.IO.Path.GetFileName(f).StartsWith(".launch-", StringComparison.OrdinalIgnoreCase))   // GameLauncher's temp copies carry a login
                 .Select(Profile.Load)
                 .OrderBy(p => p.IsExample ? 1 : 0)
                 .ThenBy(p => p.Name, StringComparer.OrdinalIgnoreCase)

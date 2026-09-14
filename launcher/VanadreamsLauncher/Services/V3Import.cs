@@ -92,15 +92,18 @@ namespace Vanadreams.Services
                     p.Name = converted.Name; p.AutoClose = converted.AutoClose; p.BootFile = converted.BootFile; p.Script = converted.Script;
                     p.Width = converted.Width; p.Height = converted.Height; p.MenuWidth = converted.MenuWidth; p.MenuHeight = converted.MenuHeight; p.Mode = converted.Mode;
                     var cmd = converted.Command;
+                    Credential login = null;
                     if (!string.IsNullOrEmpty(cmd.User) || !string.IsNullOrEmpty(cmd.Password))
                     {
-                        foundLogins.Add(new Credential { User = cmd.User, Password = cmd.Password });
+                        login = new Credential { User = cmd.User, Password = cmd.Password };
                         report.Add($"{converted.Name}: login moved out of the profile into the protected store.");
                     }
                     p.Command = new LoaderCommand { Server = cmd.Server, Hairpin = cmd.Hairpin, Extra = cmd.Extra };
                     p.Save();
                     report.ProfilesWritten.Add(path);
+                    // the two lists stay in step: a profile without a login gets a null in its place
                     profileIds.Add(id);
+                    foundLogins.Add(login);
                     report.Add($"Profile {converted.Name} written as {id}.ini.");
                 }
                 catch (Exception ex)
@@ -121,20 +124,13 @@ namespace Vanadreams.Services
             var dats = Path.Combine(v3Root, "plugins", "DATs");
             if (Directory.Exists(dats))
             {
-                CopyTree(dats, Path.Combine(v4Root, "polplugins", "DATs"), "XIPivot overlays", report);
+                CopyTree(dats, PivotConfig.OverlaysRoot(v4Root), "XIPivot overlays", report);
                 var overlays = ReadPivotOverlays(Path.Combine(v3Root, "config", "XIPivot.xml"));
                 if (overlays.Count > 0)
                 {
-                    var ini = Path.Combine(v4Root, "config", "pivot", "pivot.ini");
-                    Directory.CreateDirectory(Path.GetDirectoryName(ini));
-                    var sb = new StringBuilder();
-                    sb.AppendLine("[settings]");
-                    sb.AppendLine("root_path = polplugins\\DATs\\");
-                    sb.AppendLine("debug_log = false");
-                    sb.AppendLine("[overlays]");
-                    for (var i = 0; i < overlays.Count; i++) sb.AppendLine(i + " = " + overlays[i]);
-                    File.WriteAllText(ini, sb.ToString(), new UTF8Encoding(false));
-                    report.Add($"XIPivot config written with {overlays.Count} overlay(s): {string.Join(", ", overlays)}.");
+                    // added to whatever pivot.ini already holds, never written from scratch
+                    foreach (var name in overlays) PivotConfig.AddOverlay(v4Root, name);
+                    report.Add($"XIPivot config carries {overlays.Count} overlay(s) from v3: {string.Join(", ", overlays)}.");
                 }
             }
             return report;

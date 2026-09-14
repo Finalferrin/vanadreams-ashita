@@ -126,6 +126,8 @@ namespace Vanadreams
         /// <summary>Write the startup script and the POL plugin flags from the enabled set.</summary>
         public void ApplyEnabledAddons(Profile profile = null)
         {
+            if (!HasAshita) { Log.Warn("apply addons: no Ashita folder set, nothing written"); return; }
+            PivotConfig.RemoveRootPath(AshitaRoot);   // a value an earlier launcher wrote that stops overlays loading
             var entries = Settings.EnabledAddons.Select(id => Catalog.Find(id)).Where(i => i != null && i.HasV4).Select(i => i.ToScriptEntry()).ToList();
             var scriptPath = Path.Combine(AshitaRoot, "scripts", "vanadreams.txt");
             Directory.CreateDirectory(Path.GetDirectoryName(scriptPath));

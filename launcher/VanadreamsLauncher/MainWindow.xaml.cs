@@ -34,6 +34,8 @@ namespace Vanadreams
             RefreshMute();
             if (!string.IsNullOrEmpty(App.SnapshotPath)) { await SnapshotAndExit(); return; }
             if (State.HasAshita) Navigate(new MenuPage(this)); else Navigate(new SetupPage(this));
+            // music after the first frame, so the unpack on a first run never delays the window
+            if (State.Settings.MusicOn) Dispatcher.BeginInvoke(new Action(Music.Start), System.Windows.Threading.DispatcherPriority.Background);
             _statusTimer.Start();
             await State.RefreshStatusAsync();
             await State.RefreshCatalogAsync();
@@ -50,6 +52,7 @@ namespace Vanadreams
         private void Mute_Click(object sender, RoutedEventArgs e)
         {
             var s = State.Settings;
+            if (s.MusicOn && !Music.Playing) { Music.Start(); RefreshMute(); return; }   // faded out after Play: bring it back
             s.MusicOn = !s.MusicOn;
             s.Save();
             if (s.MusicOn) Music.Start(); else Music.Stop();
@@ -60,8 +63,9 @@ namespace Vanadreams
 
         public void RefreshMute()
         {
-            MuteButton.Content = State.Settings.MusicOn ? "♪ mute" : "♪ music off";
-            MuteButton.Opacity = State.Settings.MusicOn ? 0.75 : 1.0;
+            var on = State.Settings.MusicOn;
+            MuteButton.Content = !on ? "♪ music off" : Music.Playing ? "♪ mute" : "♪ play";
+            MuteButton.Opacity = on && Music.Playing ? 0.75 : 1.0;
         }
 
         public void RefreshStrip()
@@ -70,6 +74,7 @@ namespace Vanadreams
             StatusWord.Text = s.StateWord;
             StatusWhen.Text = s.CheckedWord + (s.FromCache && s.CheckedAt.HasValue ? " (last seen)" : "");
             StatusNote.Text = string.IsNullOrWhiteSpace(s.Note) ? (s.Error != null ? "Couldn't reach fairywitch.ca." : "") : s.Note;
+            StatusNote.ToolTip = string.IsNullOrWhiteSpace(StatusNote.Text) ? null : StatusNote.Text;   // the whole note, however long
             Brush dot;
             switch (s.State)
             {
