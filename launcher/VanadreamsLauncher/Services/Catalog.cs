@@ -6,7 +6,7 @@ using System.Linq;
 namespace Vanadreams.Services
 {
     public enum SourceType { Bundled, GithubRelease, RepoFolder, None }
-    public enum InstallAction { NothingToInstall, UnzipToRoot, CopyToAddons }
+    public enum InstallAction { NothingToInstall, UnzipToRoot, CopyToAddons, PivotOverlay }
 
     /// <summary>One line of catalog.json: a plugin, addon or POL plugin the picker can offer.</summary>
     public sealed class CatalogItem
@@ -83,6 +83,7 @@ namespace Vanadreams.Services
             {
                 case "addon": return System.IO.Path.Combine(ashitaRoot, "addons", LoadName ?? Id, (LoadName ?? Id) + ".lua");
                 case "polplugin": return System.IO.Path.Combine(ashitaRoot, "polplugins", (LoadName ?? Id) + ".dll");
+                case "overlay": return System.IO.Path.Combine(ashitaRoot, "polplugins", "DATs", Id);
                 default: return System.IO.Path.Combine(ashitaRoot, "plugins", (LoadName ?? Id) + ".dll");
             }
         }
@@ -92,6 +93,7 @@ namespace Vanadreams.Services
             if (Source == SourceType.None || string.IsNullOrEmpty(ashitaRoot)) return false;
             var marker = InstalledMarker(ashitaRoot);
             if (File.Exists(marker)) return true;
+            if (Kind == "overlay") return Directory.Exists(marker) && Directory.EnumerateFiles(marker, "*", SearchOption.AllDirectories).Any();
             // plugin DLL names are not always lower case on disk
             var dir = System.IO.Path.GetDirectoryName(marker);
             var name = System.IO.Path.GetFileName(marker);
@@ -146,6 +148,7 @@ namespace Vanadreams.Services
                 var install = (Json.Str(d, "install") ?? "").ToLowerInvariant();
                 item.Install = install == "unzip-to-root" ? InstallAction.UnzipToRoot
                              : install == "copy-to-addons" ? InstallAction.CopyToAddons
+                             : install == "pivot-overlay" ? InstallAction.PivotOverlay
                              : InstallAction.NothingToInstall;
                 var v3 = Json.Obj(d.ContainsKey("v3") ? d["v3"] : null);
                 item.V3Name = Json.Str(v3, "name");
