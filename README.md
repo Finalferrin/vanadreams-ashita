@@ -26,6 +26,8 @@ Run it. It installs itself, adds shortcuts, and opens on Setup. Releases from 0.
 
 Releases come from `launcher\release.ps1`: it builds, runs the tests, signs the exe with Azure Artifact Signing, scans it with Defender, and with `-Publish` creates the GitHub release. The header of the script says what signing needs on the build PC.
 
+The launcher plays its own theme, "The Lanterns Are Lit", quietly while it is open and fades it out when the game starts. Turn it off on Settings. Credits are in [CREDITS.md](CREDITS.md).
+
 ## What else is here
 
 | Folder | What |
