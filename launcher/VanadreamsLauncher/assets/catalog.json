@@ -2,87 +2,658 @@
   "schema": 1,
   "interface": "4.30",
   "items": [
-    { "id": "vanafish", "name": "vanafish", "kind": "addon", "maintainer": "Vanadreams",
-      "source": { "type": "repo-folder", "repo": "Finalferrin/vanadreams-ashita", "path": "addons/vanafish", "branch": "main" },
-      "version": "0.1.0", "install": "copy-to-addons", "load": "/addon load vanafish", "config": "config\\vanafish\\",
+    {
+      "id": "vanafish",
+      "name": "vanafish",
+      "kind": "addon",
+      "maintainer": "Vanadreams",
+      "source": {
+        "type": "repo-folder",
+        "repo": "Finalferrin/vanadreams-ashita",
+        "path": "addons/vanafish",
+        "branch": "main"
+      },
+      "version": "0.1.0",
+      "install": "copy-to-addons",
+      "load": "/addon load vanafish",
+      "config": "config\\vanafish\\",
       "docs": "https://github.com/Finalferrin/vanadreams-ashita/tree/main/addons/vanafish",
-      "description": "The Vanadreams fishing bot. Casts, reads the bite, decides catch or release by your rules, ends the fight the way the server judges it, stops itself when something is off. Vanadreams only." },
-
-    { "id": "charcapture", "name": "charcapture", "kind": "addon", "maintainer": "Vanadreams",
-      "source": { "type": "repo-folder", "repo": "Finalferrin/vanadreams-ashita", "path": "addons/charcapture", "branch": "main" },
-      "version": "0.1.0", "install": "copy-to-addons", "load": "/addon load charcapture", "config": "config\\charcapture\\",
+      "description": "The Vanadreams fishing bot. Casts, reads the bite, decides catch or release by your rules, ends the fight the way the server judges it, stops itself when something is off. Vanadreams only."
+    },
+    {
+      "id": "charcapture",
+      "name": "charcapture",
+      "kind": "addon",
+      "maintainer": "Vanadreams",
+      "source": {
+        "type": "repo-folder",
+        "repo": "Finalferrin/vanadreams-ashita",
+        "path": "addons/charcapture",
+        "branch": "main"
+      },
+      "version": "0.1.0",
+      "install": "copy-to-addons",
+      "load": "/addon load charcapture",
+      "config": "config\\charcapture\\",
       "docs": "https://github.com/Finalferrin/vanadreams-ashita/tree/main/addons/charcapture",
-      "description": "Snapshots your character for porting to Vanadreams: /capture in game, then send it from the launcher's Capture page. Reads only." },
-
-    { "id": "distance", "name": "distance", "kind": "addon", "source": { "type": "bundled" }, "load": "/addon load distance", "description": "Shows the distance to your target.", "v3": { "name": "distance" } },
-    { "id": "fps", "name": "fps", "kind": "addon", "source": { "type": "bundled" }, "load": "/addon load fps", "description": "Frame rate display and cap.", "configLines": ["/bind F12 /fps"], "v3": { "name": "fps" } },
-    { "id": "timestamp", "name": "timestamp", "kind": "addon", "source": { "type": "bundled" }, "load": "/addon load timestamp", "description": "Timestamps in the chat log.", "v3": { "name": "timestamp" } },
-    { "id": "tparty", "name": "tparty", "kind": "addon", "source": { "type": "bundled" }, "load": "/addon load tparty", "description": "Shows party members' TP and target HP.", "v3": { "name": "tparty" } },
-    { "id": "recast", "name": "recast", "kind": "addon", "source": { "type": "bundled" }, "load": "/addon load recast", "description": "Ability and spell recast timers.", "v3": { "name": "recast" } },
-    { "id": "chatmon", "name": "chatmon", "kind": "addon", "source": { "type": "bundled" }, "load": "/addon load chatmon", "description": "Sounds and alerts for tells and chat.", "v3": { "name": "chatmon" } },
-    { "id": "itemwatch", "name": "itemwatch", "kind": "addon", "source": { "type": "bundled" }, "load": "/addon load itemwatch", "description": "Watch counts of items and key items on screen.", "v3": { "name": "itemwatch" } },
-    { "id": "blumon", "name": "blumon", "kind": "addon", "source": { "type": "bundled" }, "load": "/addon load blumon", "description": "Blue Mage spell learning monitor.", "v3": { "name": "blumon" } },
-    { "id": "blusets", "name": "blusets", "kind": "addon", "source": { "type": "bundled" }, "load": "/addon load blusets", "description": "Save and set Blue Mage spell sets.", "v3": { "name": "blusets", "note": "v3 sets were JSON; v4 wants one spell per line in config\\addons\\blusets\\<name>.txt." } },
-    { "id": "checker", "name": "checker", "kind": "addon", "source": { "type": "bundled" }, "load": "/addon load checker", "description": "Shows level and evasion/defense on /check.", "v3": { "name": "checker" } },
-    { "id": "craftmon", "name": "craftmon", "kind": "addon", "source": { "type": "bundled" }, "load": "/addon load craftmon", "description": "Crafting results monitor.", "v3": { "name": "craftmon" } },
-    { "id": "filterless", "name": "filterless", "kind": "addon", "source": { "type": "bundled" }, "load": "/addon load filterless", "description": "Removes chat filters.", "v3": { "name": "filterless" } },
-    { "id": "filterscan", "name": "filterscan", "kind": "addon", "source": { "type": "bundled" }, "load": "/addon load filterscan", "description": "Filters wide scan results.", "v3": { "name": "filterscan" } },
-    { "id": "links", "name": "links", "kind": "addon", "source": { "type": "bundled" }, "load": "/addon load links", "description": "Makes links in chat clickable.", "v3": { "name": "links" } },
-    { "id": "mapdot", "name": "mapdot", "kind": "addon", "source": { "type": "bundled" }, "load": "/addon load mapdot", "description": "Shows your position on the map as a dot.", "v3": { "name": "mapdot" } },
-    { "id": "paranormal", "name": "paranormal", "kind": "addon", "source": { "type": "bundled" }, "load": "/addon load paranormal", "description": "Shows hidden nearby entities.", "v3": { "name": "paranormal" } },
-    { "id": "petinfo", "name": "petinfo", "kind": "addon", "source": { "type": "bundled" }, "load": "/addon load petinfo", "description": "Pet HP, MP and TP display.", "v3": { "name": "petinfo" } },
-    { "id": "repeater", "name": "repeater", "kind": "addon", "source": { "type": "bundled" }, "load": "/addon load repeater", "description": "Repeats a command on a timer.", "v3": { "name": "repeater" } },
-    { "id": "affinity", "name": "affinity", "kind": "addon", "source": { "type": "bundled" }, "load": "/addon load affinity", "description": "Sets the game's CPU affinity.", "v3": { "name": "Affinity", "note": "Was a plugin in v3; an addon in v4. Re-add /affinity set <mask> under the wait if you used one." } },
-    { "id": "nokb", "name": "nokb", "kind": "addon", "source": { "type": "bundled" }, "load": "/addon load nokb", "description": "Disables knockback on you.", "v3": { "name": "No-ckback", "note": "Was the No-ckback plugin in v3." } },
-    { "id": "thirdparty", "name": "thirdparty", "kind": "plugin", "source": { "type": "bundled" }, "load": "/load thirdparty", "description": "Lets outside programs talk to Ashita, the way WindowerInput did.", "v3": { "name": "WindowerInput", "note": "Replaces WindowerInput." } },
-    { "id": "screenshot", "name": "screenshot", "kind": "plugin", "source": { "type": "bundled" }, "load": "/load screenshot", "description": "Screenshots with the chat log hidden.", "configLines": ["/bind SYSRQ /screenshot hide"], "v3": { "name": "Screenshot" } },
-    { "id": "minimap", "name": "minimap", "kind": "plugin", "source": { "type": "bundled" }, "load": "/load minimap", "description": "A minimap overlay." },
-
-    { "id": "find", "name": "find", "kind": "addon", "maintainer": "Sippius",
-      "source": { "type": "repo-folder", "repo": "Sippius/Ashita-v4-addons", "path": "find", "branch": "main" },
-      "install": "copy-to-addons", "load": "/addon load find", "docs": "https://github.com/Sippius/Ashita-v4-addons/tree/main/find",
-      "description": "Finds an item across your bags, storage and slips.", "v3": { "name": "find" } },
-    { "id": "oseem", "name": "Oseem", "kind": "addon", "maintainer": "ThornyFFXI",
-      "source": { "type": "repo-folder", "repo": "ThornyFFXI/Oseem", "path": "", "branch": "main" },
-      "install": "copy-to-addons", "load": "/addon load oseem", "docs": "https://github.com/ThornyFFXI/Oseem",
-      "description": "Augment tracking and control, all in its own window.", "v3": { "name": "Oseem", "note": "Was a plugin in v3; an addon in v4 with no config files." } },
-
-    { "id": "lootwhore", "name": "Lootwhore", "kind": "plugin", "maintainer": "ThornyFFXI",
-      "source": { "type": "github-release", "repo": "ThornyFFXI/Lootwhore", "asset": "Lootwhore.*Interface.4.30.zip" },
-      "version": "1.18c", "install": "unzip-to-root", "load": "/load lootwhore", "config": "config\\lootwhore\\", "docs": "https://github.com/ThornyFFXI/Lootwhore",
-      "description": "Lots and passes the treasure pool by your rules.", "v3": { "name": "Lootwhore", "carry": "profiles", "note": "Profiles copied to config\\lootwhore\\profiles; check the drop and store lists once." } },
-    { "id": "bellhop", "name": "Bellhop", "kind": "plugin", "maintainer": "ThornyFFXI",
-      "source": { "type": "github-release", "repo": "ThornyFFXI/Bellhop", "asset": "Bellhop.*Interface.4.30.zip" },
-      "version": "1.22", "install": "unzip-to-root", "load": "/load bellhop", "config": "config\\bellhop\\", "docs": "https://github.com/ThornyFFXI/Bellhop",
-      "description": "Moves items between bags and storage with one command.", "configLines": ["/bh config legacycommands enable"], "v3": { "name": "Bellhop", "note": "Commands are /bh now; the legacy command names are switched back on for you." } },
-    { "id": "packer", "name": "Packer", "kind": "plugin", "maintainer": "ThornyFFXI",
-      "source": { "type": "github-release", "repo": "ThornyFFXI/Packer", "asset": "Packer.*Interface.4.30.zip" },
-      "version": "1.15b", "install": "unzip-to-root", "load": "/load packer", "config": "config\\packer\\", "docs": "https://github.com/ThornyFFXI/Packer",
-      "description": "Pulls the gear your sets need out of storage.", "v3": { "name": "DressMe", "note": "Does what DressMe did; DressMe has no v4 version." } },
-    { "id": "legacyac", "name": "LegacyAC", "kind": "plugin", "maintainer": "ThornyFFXI",
-      "source": { "type": "github-release", "repo": "ThornyFFXI/LegacyAC", "asset": "LegacyAC.*Interface.4.30.zip" },
-      "version": "1.82", "install": "unzip-to-root", "load": "/load legacyac", "config": "config\\LegacyAC\\", "docs": "https://github.com/ThornyFFXI/LegacyAC",
-      "description": "Ashitacast for v4, reading your v3 gear XMLs as they are.", "v3": { "name": "Ashitacast", "carry": "xml", "note": "Your Ashitacast XMLs were copied into config\\LegacyAC. Commands are /la instead of /ac." } },
-    { "id": "multisend", "name": "Multisend", "kind": "plugin", "maintainer": "ThornyFFXI",
-      "source": { "type": "github-release", "repo": "ThornyFFXI/Multisend", "asset": "Multisend.*Interface.4.30.zip" },
-      "version": "1.20", "install": "unzip-to-root", "load": "/load multisend", "config": "config\\MultiSend.xml", "docs": "https://github.com/ThornyFFXI/Multisend",
-      "description": "Sends commands to your other characters.", "v3": { "name": "MultiSend", "carry": "config", "note": "Same groups file as v3, copied over." } },
-    { "id": "findall", "name": "FindAll", "kind": "plugin", "maintainer": "ThornyFFXI",
-      "source": { "type": "github-release", "repo": "ThornyFFXI/FindAll", "asset": "FindAll.*Interface.4.30.zip" },
-      "version": "1.18", "install": "unzip-to-root", "load": "/load findall", "docs": "https://github.com/ThornyFFXI/FindAll",
-      "description": "Searches every character's inventory at once: /fa search <item>.", "v3": { "name": "findall", "note": "The v3 addon became this plugin. It rebuilds its own cache once each character has loaded." } },
-    { "id": "pivot", "name": "XIPivot", "kind": "polplugin", "maintainer": "HealsCodes",
-      "source": { "type": "github-release", "repo": "HealsCodes/XIPivot", "asset": "XIPivot_Ashita_v4_*.zip" },
-      "version": "4.3.001", "install": "unzip-to-root", "load": "polplugins:pivot", "config": "config\\pivot\\pivot.ini", "docs": "https://github.com/HealsCodes/XIPivot",
-      "description": "Loads DAT overlays (HD textures, UI mods) without touching the game files.", "v3": { "name": "XIPivot", "carry": "overlays", "note": "Overlays moved from plugins\\DATs to polplugins\\DATs and the overlay list rewritten as config\\pivot\\pivot.ini. Enabled in the boot profile, not the script." } },
-
-    { "id": "crafty", "name": "Crafty", "kind": "plugin", "source": { "type": "none" }, "v3": { "name": "Crafty", "note": "No v4 version exists." } },
-    { "id": "dressme", "name": "DressMe", "kind": "plugin", "source": { "type": "none" }, "replacement": "Packer", "v3": { "name": "DressMe", "note": "No v4 version; Packer does the job." } },
-    { "id": "watchexp", "name": "WatchEXP", "kind": "plugin", "source": { "type": "none" }, "v3": { "name": "WatchEXP", "note": "No v4 version exists." } },
-    { "id": "lotomatic", "name": "lotomatic", "kind": "addon", "source": { "type": "none" }, "replacement": "Lootwhore", "v3": { "name": "lotomatic", "note": "No v4 version; Lootwhore covers lotting and passing." } },
-    { "id": "pbar", "name": "pbar", "kind": "addon", "source": { "type": "none" }, "replacement": "petinfo", "v3": { "name": "pbar", "note": "No v4 version; petinfo is the nearest bundled pet display." } },
-    { "id": "pupatt", "name": "pupatt", "kind": "addon", "source": { "type": "none" }, "replacement": "pupsets", "v3": { "name": "pupatt", "note": "No v4 version; Sippius's pupsets sets attachments from a file." } },
-    { "id": "status", "name": "status", "kind": "addon", "source": { "type": "none" }, "v3": { "name": "status", "note": "No v4 version exists." } },
-    { "id": "synplicity", "name": "synplicity", "kind": "addon", "source": { "type": "none" }, "v3": { "name": "synplicity", "note": "No v4 version exists." } }
+      "description": "Snapshots your character for porting to Vanadreams: /capture in game, then send it from the launcher's Capture page. Reads only."
+    },
+    {
+      "id": "distance",
+      "name": "distance",
+      "kind": "addon",
+      "source": {
+        "type": "bundled"
+      },
+      "load": "/addon load distance",
+      "description": "Shows the distance to your target.",
+      "v3": {
+        "name": "distance"
+      }
+    },
+    {
+      "id": "fps",
+      "name": "fps",
+      "kind": "addon",
+      "source": {
+        "type": "bundled"
+      },
+      "load": "/addon load fps",
+      "description": "Frame rate display and cap.",
+      "configLines": [
+        "/bind F12 /fps"
+      ],
+      "v3": {
+        "name": "fps"
+      }
+    },
+    {
+      "id": "timestamp",
+      "name": "timestamp",
+      "kind": "addon",
+      "source": {
+        "type": "bundled"
+      },
+      "load": "/addon load timestamp",
+      "description": "Timestamps in the chat log.",
+      "v3": {
+        "name": "timestamp"
+      }
+    },
+    {
+      "id": "tparty",
+      "name": "tparty",
+      "kind": "addon",
+      "source": {
+        "type": "bundled"
+      },
+      "load": "/addon load tparty",
+      "description": "Shows party members' TP and target HP.",
+      "v3": {
+        "name": "tparty"
+      }
+    },
+    {
+      "id": "recast",
+      "name": "recast",
+      "kind": "addon",
+      "source": {
+        "type": "bundled"
+      },
+      "load": "/addon load recast",
+      "description": "Ability and spell recast timers.",
+      "v3": {
+        "name": "recast"
+      }
+    },
+    {
+      "id": "chatmon",
+      "name": "chatmon",
+      "kind": "addon",
+      "source": {
+        "type": "bundled"
+      },
+      "load": "/addon load chatmon",
+      "description": "Sounds and alerts for tells and chat.",
+      "v3": {
+        "name": "chatmon"
+      }
+    },
+    {
+      "id": "itemwatch",
+      "name": "itemwatch",
+      "kind": "addon",
+      "source": {
+        "type": "bundled"
+      },
+      "load": "/addon load itemwatch",
+      "description": "Watch counts of items and key items on screen.",
+      "v3": {
+        "name": "itemwatch"
+      }
+    },
+    {
+      "id": "blumon",
+      "name": "blumon",
+      "kind": "addon",
+      "source": {
+        "type": "bundled"
+      },
+      "load": "/addon load blumon",
+      "description": "Blue Mage spell learning monitor.",
+      "v3": {
+        "name": "blumon"
+      }
+    },
+    {
+      "id": "blusets",
+      "name": "blusets",
+      "kind": "addon",
+      "source": {
+        "type": "bundled"
+      },
+      "load": "/addon load blusets",
+      "description": "Save and set Blue Mage spell sets.",
+      "v3": {
+        "name": "blusets",
+        "note": "v3 sets were JSON; v4 wants one spell per line in config\\addons\\blusets\\<name>.txt."
+      }
+    },
+    {
+      "id": "checker",
+      "name": "checker",
+      "kind": "addon",
+      "source": {
+        "type": "bundled"
+      },
+      "load": "/addon load checker",
+      "description": "Shows level and evasion/defense on /check.",
+      "v3": {
+        "name": "checker"
+      }
+    },
+    {
+      "id": "craftmon",
+      "name": "craftmon",
+      "kind": "addon",
+      "source": {
+        "type": "bundled"
+      },
+      "load": "/addon load craftmon",
+      "description": "Crafting results monitor.",
+      "v3": {
+        "name": "craftmon"
+      }
+    },
+    {
+      "id": "filterless",
+      "name": "filterless",
+      "kind": "addon",
+      "source": {
+        "type": "bundled"
+      },
+      "load": "/addon load filterless",
+      "description": "Removes chat filters.",
+      "v3": {
+        "name": "filterless"
+      }
+    },
+    {
+      "id": "filterscan",
+      "name": "filterscan",
+      "kind": "addon",
+      "source": {
+        "type": "bundled"
+      },
+      "load": "/addon load filterscan",
+      "description": "Filters wide scan results.",
+      "v3": {
+        "name": "filterscan"
+      }
+    },
+    {
+      "id": "links",
+      "name": "links",
+      "kind": "addon",
+      "source": {
+        "type": "bundled"
+      },
+      "load": "/addon load links",
+      "description": "Makes links in chat clickable.",
+      "v3": {
+        "name": "links"
+      }
+    },
+    {
+      "id": "mapdot",
+      "name": "mapdot",
+      "kind": "addon",
+      "source": {
+        "type": "bundled"
+      },
+      "load": "/addon load mapdot",
+      "description": "Shows your position on the map as a dot.",
+      "v3": {
+        "name": "mapdot"
+      }
+    },
+    {
+      "id": "paranormal",
+      "name": "paranormal",
+      "kind": "addon",
+      "source": {
+        "type": "bundled"
+      },
+      "load": "/addon load paranormal",
+      "description": "Shows hidden nearby entities.",
+      "v3": {
+        "name": "paranormal"
+      }
+    },
+    {
+      "id": "petinfo",
+      "name": "petinfo",
+      "kind": "addon",
+      "source": {
+        "type": "bundled"
+      },
+      "load": "/addon load petinfo",
+      "description": "Pet HP, MP and TP display.",
+      "v3": {
+        "name": "petinfo"
+      }
+    },
+    {
+      "id": "repeater",
+      "name": "repeater",
+      "kind": "addon",
+      "source": {
+        "type": "bundled"
+      },
+      "load": "/addon load repeater",
+      "description": "Repeats a command on a timer.",
+      "v3": {
+        "name": "repeater"
+      }
+    },
+    {
+      "id": "affinity",
+      "name": "affinity",
+      "kind": "addon",
+      "source": {
+        "type": "bundled"
+      },
+      "load": "/addon load affinity",
+      "description": "Sets the game's CPU affinity.",
+      "v3": {
+        "name": "Affinity",
+        "note": "Was a plugin in v3; an addon in v4. Re-add /affinity set <mask> under the wait if you used one."
+      }
+    },
+    {
+      "id": "nokb",
+      "name": "nokb",
+      "kind": "addon",
+      "source": {
+        "type": "bundled"
+      },
+      "load": "/addon load nokb",
+      "description": "Disables knockback on you.",
+      "v3": {
+        "name": "No-ckback",
+        "note": "Was the No-ckback plugin in v3."
+      }
+    },
+    {
+      "id": "thirdparty",
+      "name": "thirdparty",
+      "kind": "plugin",
+      "source": {
+        "type": "bundled"
+      },
+      "load": "/load thirdparty",
+      "description": "Lets outside programs talk to Ashita, the way WindowerInput did.",
+      "v3": {
+        "name": "WindowerInput",
+        "note": "Replaces WindowerInput."
+      }
+    },
+    {
+      "id": "screenshot",
+      "name": "screenshot",
+      "kind": "plugin",
+      "source": {
+        "type": "bundled"
+      },
+      "load": "/load screenshot",
+      "description": "Screenshots with the chat log hidden.",
+      "configLines": [
+        "/bind SYSRQ /screenshot hide"
+      ],
+      "v3": {
+        "name": "Screenshot"
+      }
+    },
+    {
+      "id": "minimap",
+      "name": "minimap",
+      "kind": "plugin",
+      "source": {
+        "type": "bundled"
+      },
+      "load": "/load minimap",
+      "description": "A minimap overlay."
+    },
+    {
+      "id": "find",
+      "name": "find",
+      "kind": "addon",
+      "maintainer": "Sippius",
+      "source": {
+        "type": "repo-folder",
+        "repo": "Sippius/Ashita-v4-addons",
+        "path": "find",
+        "branch": "main"
+      },
+      "install": "copy-to-addons",
+      "load": "/addon load find",
+      "docs": "https://github.com/Sippius/Ashita-v4-addons/tree/main/find",
+      "description": "Finds an item across your bags, storage and slips.",
+      "v3": {
+        "name": "find"
+      }
+    },
+    {
+      "id": "oseem",
+      "name": "Oseem",
+      "kind": "addon",
+      "maintainer": "ThornyFFXI",
+      "source": {
+        "type": "repo-folder",
+        "repo": "ThornyFFXI/Oseem",
+        "path": "",
+        "branch": "main"
+      },
+      "install": "copy-to-addons",
+      "load": "/addon load oseem",
+      "docs": "https://github.com/ThornyFFXI/Oseem",
+      "description": "Augment tracking and control, all in its own window.",
+      "v3": {
+        "name": "Oseem",
+        "note": "Was a plugin in v3; an addon in v4 with no config files."
+      }
+    },
+    {
+      "id": "lootwhore",
+      "name": "Lootwhore",
+      "kind": "plugin",
+      "maintainer": "ThornyFFXI",
+      "source": {
+        "type": "github-release",
+        "repo": "ThornyFFXI/Lootwhore",
+        "asset": "Lootwhore.*Interface.4.30.zip"
+      },
+      "version": "1.18c",
+      "install": "unzip-to-root",
+      "load": "/load lootwhore",
+      "config": "config\\lootwhore\\",
+      "docs": "https://github.com/ThornyFFXI/Lootwhore",
+      "description": "Lots and passes the treasure pool by your rules.",
+      "v3": {
+        "name": "Lootwhore",
+        "carry": "profiles",
+        "note": "Profiles copied to config\\lootwhore\\profiles; check the drop and store lists once."
+      }
+    },
+    {
+      "id": "bellhop",
+      "name": "Bellhop",
+      "kind": "plugin",
+      "maintainer": "ThornyFFXI",
+      "source": {
+        "type": "github-release",
+        "repo": "ThornyFFXI/Bellhop",
+        "asset": "Bellhop.*Interface.4.30.zip"
+      },
+      "version": "1.22",
+      "install": "unzip-to-root",
+      "load": "/load bellhop",
+      "config": "config\\bellhop\\",
+      "docs": "https://github.com/ThornyFFXI/Bellhop",
+      "description": "Moves items between bags and storage with one command.",
+      "configLines": [
+        "/bh config legacycommands enable"
+      ],
+      "v3": {
+        "name": "Bellhop",
+        "note": "Commands are /bh now; the legacy command names are switched back on for you."
+      }
+    },
+    {
+      "id": "packer",
+      "name": "Packer",
+      "kind": "plugin",
+      "maintainer": "ThornyFFXI",
+      "source": {
+        "type": "github-release",
+        "repo": "ThornyFFXI/Packer",
+        "asset": "Packer.*Interface.4.30.zip"
+      },
+      "version": "1.15b",
+      "install": "unzip-to-root",
+      "load": "/load packer",
+      "config": "config\\packer\\",
+      "docs": "https://github.com/ThornyFFXI/Packer",
+      "description": "Pulls the gear your sets need out of storage.",
+      "v3": {
+        "name": "DressMe",
+        "note": "Does what DressMe did; DressMe has no v4 version."
+      }
+    },
+    {
+      "id": "legacyac",
+      "name": "LegacyAC",
+      "kind": "plugin",
+      "maintainer": "ThornyFFXI",
+      "source": {
+        "type": "github-release",
+        "repo": "ThornyFFXI/LegacyAC",
+        "asset": "LegacyAC.*Interface.4.30.zip"
+      },
+      "version": "1.82",
+      "install": "unzip-to-root",
+      "load": "/load legacyac",
+      "config": "config\\LegacyAC\\",
+      "docs": "https://github.com/ThornyFFXI/LegacyAC",
+      "description": "Ashitacast for v4, reading your v3 gear XMLs as they are.",
+      "v3": {
+        "name": "Ashitacast",
+        "carry": "xml",
+        "note": "Your Ashitacast XMLs were copied into config\\LegacyAC. Commands are /la instead of /ac."
+      }
+    },
+    {
+      "id": "multisend",
+      "name": "Multisend",
+      "kind": "plugin",
+      "maintainer": "ThornyFFXI",
+      "source": {
+        "type": "github-release",
+        "repo": "ThornyFFXI/Multisend",
+        "asset": "Multisend.*Interface.4.30.zip"
+      },
+      "version": "1.20",
+      "install": "unzip-to-root",
+      "load": "/load multisend",
+      "config": "config\\MultiSend.xml",
+      "docs": "https://github.com/ThornyFFXI/Multisend",
+      "description": "Sends commands to your other characters.",
+      "v3": {
+        "name": "MultiSend",
+        "carry": "config",
+        "note": "Same groups file as v3, copied over."
+      }
+    },
+    {
+      "id": "findall",
+      "name": "FindAll",
+      "kind": "plugin",
+      "maintainer": "ThornyFFXI",
+      "source": {
+        "type": "github-release",
+        "repo": "ThornyFFXI/FindAll",
+        "asset": "FindAll.*Interface.4.30.zip"
+      },
+      "version": "1.18",
+      "install": "unzip-to-root",
+      "load": "/load findall",
+      "docs": "https://github.com/ThornyFFXI/FindAll",
+      "description": "Searches every character's inventory at once: /fa search <item>.",
+      "v3": {
+        "name": "findall",
+        "note": "The v3 addon became this plugin. It rebuilds its own cache once each character has loaded."
+      }
+    },
+    {
+      "id": "pivot",
+      "name": "XIPivot",
+      "kind": "polplugin",
+      "maintainer": "HealsCodes",
+      "source": {
+        "type": "github-release",
+        "repo": "HealsCodes/XIPivot",
+        "asset": "XIPivot_Ashita_v4_*.zip"
+      },
+      "version": "4.3.001",
+      "install": "unzip-to-root",
+      "load": "polplugins:pivot",
+      "config": "config\\pivot\\pivot.ini",
+      "docs": "https://github.com/HealsCodes/XIPivot",
+      "description": "Loads DAT overlays (HD textures, UI mods) without touching the game files.",
+      "v3": {
+        "name": "XIPivot",
+        "carry": "overlays",
+        "note": "Overlays moved from plugins\\DATs to polplugins\\DATs and the overlay list rewritten as config\\pivot\\pivot.ini. Enabled in the boot profile, not the script."
+      }
+    },
+    {
+      "id": "vanadreams-music",
+      "name": "Vanadreams music",
+      "kind": "overlay",
+      "maintainer": "Vanadreams",
+      "source": {
+        "type": "repo-folder",
+        "repo": "Finalferrin/vanadreams-ashita",
+        "path": "overlays/vanadreams-music",
+        "branch": "main"
+      },
+      "version": "1.0.0",
+      "install": "pivot-overlay",
+      "requires": [
+        "pivot"
+      ],
+      "docs": "https://github.com/Finalferrin/vanadreams-ashita/tree/main/overlays/vanadreams-music",
+      "description": "Vanadreams' own music on the title screen and character select, through XIPivot. Only our tracks are in it; the game's files are untouched. Needs XIPivot from this page."
+    },
+    {
+      "id": "crafty",
+      "name": "Crafty",
+      "kind": "plugin",
+      "source": {
+        "type": "none"
+      },
+      "v3": {
+        "name": "Crafty",
+        "note": "No v4 version exists."
+      }
+    },
+    {
+      "id": "dressme",
+      "name": "DressMe",
+      "kind": "plugin",
+      "source": {
+        "type": "none"
+      },
+      "replacement": "Packer",
+      "v3": {
+        "name": "DressMe",
+        "note": "No v4 version; Packer does the job."
+      }
+    },
+    {
+      "id": "watchexp",
+      "name": "WatchEXP",
+      "kind": "plugin",
+      "source": {
+        "type": "none"
+      },
+      "v3": {
+        "name": "WatchEXP",
+        "note": "No v4 version exists."
+      }
+    },
+    {
+      "id": "lotomatic",
+      "name": "lotomatic",
+      "kind": "addon",
+      "source": {
+        "type": "none"
+      },
+      "replacement": "Lootwhore",
+      "v3": {
+        "name": "lotomatic",
+        "note": "No v4 version; Lootwhore covers lotting and passing."
+      }
+    },
+    {
+      "id": "pbar",
+      "name": "pbar",
+      "kind": "addon",
+      "source": {
+        "type": "none"
+      },
+      "replacement": "petinfo",
+      "v3": {
+        "name": "pbar",
+        "note": "No v4 version; petinfo is the nearest bundled pet display."
+      }
+    },
+    {
+      "id": "pupatt",
+      "name": "pupatt",
+      "kind": "addon",
+      "source": {
+        "type": "none"
+      },
+      "replacement": "pupsets",
+      "v3": {
+        "name": "pupatt",
+        "note": "No v4 version; Sippius's pupsets sets attachments from a file."
+      }
+    },
+    {
+      "id": "status",
+      "name": "status",
+      "kind": "addon",
+      "source": {
+        "type": "none"
+      },
+      "v3": {
+        "name": "status",
+        "note": "No v4 version exists."
+      }
+    },
+    {
+      "id": "synplicity",
+      "name": "synplicity",
+      "kind": "addon",
+      "source": {
+        "type": "none"
+      },
+      "v3": {
+        "name": "synplicity",
+        "note": "No v4 version exists."
+      }
+    }
   ]
 }

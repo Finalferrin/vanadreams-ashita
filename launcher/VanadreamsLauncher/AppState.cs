@@ -130,6 +130,16 @@ namespace Vanadreams
             var scriptPath = Path.Combine(AshitaRoot, "scripts", "vanadreams.txt");
             Directory.CreateDirectory(Path.GetDirectoryName(scriptPath));
             ScriptWriter.Write(scriptPath, entries);
+            // XIPivot overlays: listed in pivot.ini while enabled, dropped from it when not
+            foreach (var overlay in Catalog.Items.Where(i => i.Install == InstallAction.PivotOverlay))
+            {
+                try
+                {
+                    if (Settings.EnabledAddons.Contains(overlay.Id, StringComparer.OrdinalIgnoreCase) && overlay.IsInstalled(AshitaRoot)) PivotConfig.AddOverlay(AshitaRoot, overlay.Id);
+                    else PivotConfig.RemoveOverlay(AshitaRoot, overlay.Id);
+                }
+                catch (Exception ex) { Log.Warn("pivot.ini " + overlay.Id + ": " + ex.Message); }
+            }
             var pol = entries.Where(e => e.Kind == LoadKind.PolPlugin).Select(e => e.LoadName).ToList();
             foreach (var p in profile != null ? new[] { profile } : Profiles.LoadAll().Where(x => !x.IsExample).ToArray())
             {

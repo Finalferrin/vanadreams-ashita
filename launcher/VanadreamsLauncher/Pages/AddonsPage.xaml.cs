@@ -148,7 +148,9 @@ namespace Vanadreams.Pages
                 {
                     var files = await state.Downloader.ListRepoFolderAsync(item.Repo, item.Path, item.Branch);
                     if (files.Count == 0) throw new InvalidOperationException("Nothing found at " + item.Repo + "/" + item.Path + ".");
-                    var target = Path.Combine(state.AshitaRoot, "addons", item.LoadName ?? item.Id);
+                    var overlay = item.Install == InstallAction.PivotOverlay;
+                    var target = overlay ? Path.Combine(PivotConfig.OverlaysRoot(state.AshitaRoot), item.Id)
+                                         : Path.Combine(state.AshitaRoot, "addons", item.LoadName ?? item.Id);
                     var n = 0;
                     foreach (var f in files)
                     {
@@ -159,12 +161,14 @@ namespace Vanadreams.Pages
                         await state.Downloader.DownloadFileAsync(f.Value, dest);
                     }
                     state.Settings.InstalledVersions[item.Id] = item.Version ?? DateTime.Now.ToString("yyyy-MM-dd");
+                    if (overlay) PivotConfig.AddOverlay(state.AshitaRoot, item.Id);
                 }
                 state.Settings.Save();
                 _current.Enabled = true;
                 if (!state.Settings.EnabledAddons.Contains(item.Id, StringComparer.OrdinalIgnoreCase)) state.Settings.EnabledAddons.Add(item.Id);
                 Log.Info("installed " + item.Id);
-                ProgressText.Text = "Installed.";
+                var pivot = item.Install == InstallAction.PivotOverlay ? state.Catalog.Find("pivot") : null;
+                ProgressText.Text = pivot != null && !pivot.IsInstalled(state.AshitaRoot) ? "Installed. It needs XIPivot to show in game: install that too, then Save." : "Installed.";
                 Build();
             }
             catch (Exception ex)

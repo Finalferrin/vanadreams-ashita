@@ -11,3 +11,7 @@ desktop.ini
 *.dat
 config/
 logs/
+
+# Tool build output
+tools/bgw/bin/
+tools/bgw/obj/
