@@ -1,0 +1,53 @@
+<UserControl x:Class="Vanadreams.Pages.FishingPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Focusable="True">
+    <Grid Margin="40,36,40,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="600"/>
+            <ColumnDefinition Width="24"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Border Grid.Column="0" Style="{StaticResource Box}" Height="376" VerticalAlignment="Top">
+            <Grid>
+                <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+                <TextBlock x:Name="Heading" Style="{StaticResource Eyebrow}" Text="✦ Catch log"/>
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                    <ItemsControl x:Name="Log">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Height="22">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="130"/><ColumnDefinition Width="80"/><ColumnDefinition Width="*"/><ColumnDefinition Width="90"/><ColumnDefinition Width="50"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{Binding When}" Style="{StaticResource Muted}" FontSize="12"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding Kind}" FontSize="13" Foreground="{Binding Brush}"/>
+                                    <TextBlock Grid.Column="2" Text="{Binding What}" FontSize="13" TextTrimming="CharacterEllipsis"/>
+                                    <TextBlock Grid.Column="3" Text="{Binding Bite}" Style="{StaticResource Muted}" FontSize="12"/>
+                                    <TextBlock Grid.Column="4" Text="{Binding Skill}" Style="{StaticResource Mono}" FontSize="12" HorizontalAlignment="Right"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Grid>
+        </Border>
+        <Border Grid.Column="2" Style="{StaticResource Box}" Height="376" VerticalAlignment="Top">
+            <Grid>
+                <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+                <TextBlock Style="{StaticResource Eyebrow}" Text="✦ Fishing"/>
+                <StackPanel Grid.Row="1">
+                    <TextBlock Style="{StaticResource Display40}" FontSize="26" Text="vanafish"/>
+                    <TextBlock x:Name="State" Style="{StaticResource Mono}" Margin="0,4,0,10" TextWrapping="Wrap"/>
+                    <CheckBox x:Name="EnabledBox" Content="Load the fishing addon at startup" Click="Enabled_Click"/>
+                    <TextBlock Style="{StaticResource Muted}" FontSize="12" TextWrapping="Wrap" Margin="0,10,0,0" Text="In game: /vanafish opens the window, /vanafish start fishes. Rod in the ranged slot, bait in the ammo slot, stand at a spot. What to keep, timing and the stop rules are set in the game window and kept per character."/>
+                    <TextBlock x:Name="Totals" Style="{StaticResource Mono}" Margin="0,14,0,0" TextWrapping="Wrap"/>
+                </StackPanel>
+                <StackPanel Grid.Row="2">
+                    <Button Style="{StaticResource GhostButton}" Content="Open catch log folder" Click="Folder_Click" Margin="0,0,0,8"/>
+                    <Button Style="{StaticResource GhostButton}" Content="Back" HorizontalAlignment="Left" Click="Back_Click"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>
