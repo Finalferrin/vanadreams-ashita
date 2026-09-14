@@ -11,9 +11,9 @@
 
     Signing needs, once per PC:
       * Windows SDK signtool (Visual Studio installs it).
-      * The Trusted Signing client unpacked at %LOCALAPPDATA%\Vanadreams\signing\client
-        (Microsoft.Trusted.Signing.Client from nuget.org) and metadata.json beside it naming
-        the account endpoint, account name and certificate profile.
+      * The Trusted Signing client unpacked at launcher\tools\signing\client
+        (Microsoft.Trusted.Signing.Client from nuget.org; the folder is ignored by git) and
+        metadata.json beside it naming the account endpoint, account name and certificate profile.
       * Azure CLI signed in as a user with the 'Artifact Signing Certificate Profile Signer'
         role on the account:  az login
 #>
@@ -47,7 +47,7 @@ if (-not $NoSign) {
     $signtool = Get-ChildItem 'C:\Program Files (x86)\Windows Kits\10\bin\*\x64\signtool.exe' -ErrorAction SilentlyContinue |
                 Sort-Object FullName -Descending | Select-Object -First 1
     if (-not $signtool) { throw 'signtool.exe not found under the Windows SDK.' }
-    $signing  = Join-Path $env:LOCALAPPDATA 'Vanadreams\signing'
+    $signing  = Join-Path $launcher 'tools\signing'
     $dlib     = Join-Path $signing 'client\bin\x64\Azure.CodeSigning.Dlib.dll'
     $metadata = Join-Path $signing 'metadata.json'
     foreach ($f in @($dlib, $metadata)) { if (-not (Test-Path $f)) { throw "Missing $f" } }
