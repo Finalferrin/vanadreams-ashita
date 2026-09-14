@@ -15,12 +15,18 @@ namespace Vanadreams.Services
         public string Expected { get; set; }
         public VersionLock Lock { get; set; }
         public VersionVerdict Verdict { get; set; }
-        public bool BlocksPlay => Verdict == VersionVerdict.ClientTooOld || Verdict == VersionVerdict.ClientNewerThanServerAllows;
+        /// <summary>True only when the expected version came from the server's own status, not a launcher default.</summary>
+        public bool ExpectedIsPublished { get; set; }
+        public bool BlocksPlay => ExpectedIsPublished && (Verdict == VersionVerdict.ClientTooOld || Verdict == VersionVerdict.ClientNewerThanServerAllows);
 
         public string Sentence
         {
             get
             {
+                if (!ExpectedIsPublished)
+                    return string.IsNullOrEmpty(Installed)
+                        ? "Client version unknown. Run the PlayOnline updater once, then check again."
+                        : $"Your client is {Installed}. The server hasn't published what it expects yet.";
                 switch (Verdict)
                 {
                     case VersionVerdict.Ready:
