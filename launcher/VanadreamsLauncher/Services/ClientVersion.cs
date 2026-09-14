@@ -51,6 +51,31 @@ namespace Vanadreams.Services
     {
         private static readonly Regex Stamp = new Regex(@"^(3\d{7}_\d+)\b", RegexOptions.Multiline);
 
+        /// <summary>PlayOnline Viewer's pol.exe, the retail bootloader: from the installer's registry entry, else beside the FFXI folder, else null.</summary>
+        public static string FindPlayOnlineViewer()
+        {
+            foreach (var vendor in new[] { "PlayOnlineUS", "PlayOnline", "PlayOnlineEU" })
+            {
+                try
+                {
+                    using (var hklm = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32))
+                    using (var key = hklm.OpenSubKey(@"SOFTWARE\" + vendor + @"\InstallFolder"))
+                    {
+                        var dir = key?.GetValue("1000") as string;   // 1000 is the viewer, 0001 the game
+                        if (!string.IsNullOrWhiteSpace(dir) && File.Exists(Path.Combine(dir, "pol.exe"))) return Path.Combine(dir.TrimEnd('\\'), "pol.exe");
+                    }
+                }
+                catch (Exception) { /* keep looking */ }
+            }
+            var ffxi = FindFfxiFolder();
+            if (ffxi != null)
+            {
+                var beside = Path.Combine(Path.GetDirectoryName(ffxi.TrimEnd('\\')) ?? "", "PlayOnlineViewer", "pol.exe");
+                if (File.Exists(beside)) return beside;
+            }
+            return null;
+        }
+
         /// <summary>The FFXI folder the PlayOnline installer registered, or null.</summary>
         public static string FindFfxiFolder()
         {
