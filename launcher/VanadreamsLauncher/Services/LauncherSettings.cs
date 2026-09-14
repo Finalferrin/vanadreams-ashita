@@ -22,6 +22,7 @@ namespace Vanadreams.Services
         public string ExpectedClientVer { get; set; } = "30260805_0";
         public int VerLock { get; set; } = 2;
         public bool SetupDone { get; set; }
+        public bool MusicOn { get; set; } = true;
         public List<string> EnabledAddons { get; set; } = new List<string>();
         public Dictionary<string, string> InstalledVersions { get; set; } = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         public Dictionary<string, string> LastPlayed { get; set; } = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
@@ -44,6 +45,7 @@ namespace Vanadreams.Services
                 s.ExpectedClientVer = Json.Str(d, "expectedClientVer", s.ExpectedClientVer);
                 s.VerLock = Json.Int(d, "verLock", 2);
                 s.SetupDone = Json.Bool(d, "setupDone");
+                s.MusicOn = Json.Bool(d, "musicOn", true);
                 s.EnabledAddons = Json.Strings(d, "enabledAddons");
                 s.GuideDone = Json.Strings(d, "guideDone");
                 var inst = Json.Obj(d.ContainsKey("installedVersions") ? d["installedVersions"] : null);
@@ -68,6 +70,7 @@ namespace Vanadreams.Services
                 { "expectedClientVer", ExpectedClientVer },
                 { "verLock", VerLock },
                 { "setupDone", SetupDone },
+                { "musicOn", MusicOn },
                 { "enabledAddons", EnabledAddons.ToList() },
                 { "guideDone", GuideDone.ToList() },
                 { "installedVersions", InstalledVersions.ToDictionary(k => k.Key, k => (object)k.Value) },

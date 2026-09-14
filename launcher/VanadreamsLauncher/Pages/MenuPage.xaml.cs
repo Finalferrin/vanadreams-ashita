@@ -173,6 +173,7 @@ namespace Vanadreams.Pages
             try
             {
                 GameLauncher.Launch(state.AshitaRoot, _profile, state.Credentials.Get(_profile.Id));
+                Music.FadeOut(3);
                 state.Settings.LastProfile = _profile.Id;
                 state.Settings.LastPlayed[_profile.Id] = DateTime.Now.ToString("o");
                 state.Settings.Save();

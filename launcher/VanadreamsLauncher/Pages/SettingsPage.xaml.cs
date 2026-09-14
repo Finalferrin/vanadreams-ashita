@@ -19,7 +19,8 @@ namespace Vanadreams.Pages
             AshitaBox.Text = s.AshitaRoot; FfxiBox.Text = s.FfxiFolderOverride; CatalogBox.Text = s.CatalogUrl; StatusBox.Text = s.StatusUrl;
             VerBox.Text = s.ExpectedClientVer; LockBox.SelectedIndex = Math.Max(0, Math.Min(2, s.VerLock));
             DetectedBox.Text = ClientVersion.FindFfxiFolder() ?? "not registered by PlayOnline";
-            About.Text = "Vanadreams Launcher " + typeof(App).Assembly.GetName().Version + " · github.com/Finalferrin/vanadreams-ashita · no telemetry";
+            MusicBox.IsChecked = s.MusicOn;
+            About.Text = "Vanadreams Launcher " + typeof(App).Assembly.GetName().Version + " · github.com/Finalferrin/vanadreams-ashita · no telemetry · " + Music.Credit;
         }
 
         private async void Save_Click(object sender, RoutedEventArgs e)
@@ -27,7 +28,9 @@ namespace Vanadreams.Pages
             var s = App.State.Settings;
             s.AshitaRoot = AshitaBox.Text.Trim(); s.FfxiFolderOverride = FfxiBox.Text.Trim(); s.CatalogUrl = CatalogBox.Text.Trim(); s.StatusUrl = StatusBox.Text.Trim();
             s.ExpectedClientVer = VerBox.Text.Trim(); s.VerLock = LockBox.SelectedIndex;
+            s.MusicOn = MusicBox.IsChecked == true;
             s.Save();
+            if (s.MusicOn) Music.Start(); else Music.Stop();
             App.State.CheckVersion();
             Note.Text = "Saved.";
             App.State.Notify();

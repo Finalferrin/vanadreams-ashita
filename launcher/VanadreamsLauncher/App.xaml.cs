@@ -44,6 +44,13 @@ namespace Vanadreams
                 MessageBox.Show(ex.Exception.Message, "Vanadreams Launcher", MessageBoxButton.OK, MessageBoxImage.Error);
                 ex.Handled = true;
             };
+            if (string.IsNullOrEmpty(SnapshotPath) && State.Settings.MusicOn) Music.Start();
+        }
+
+        protected override void OnExit(ExitEventArgs e)
+        {
+            Music.Stop();
+            base.OnExit(e);
         }
     }
 }
