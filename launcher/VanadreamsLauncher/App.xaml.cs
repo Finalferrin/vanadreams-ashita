@@ -23,6 +23,10 @@ namespace Vanadreams
             }
             State = State ?? new AppState();
             Log.Info("Launcher " + typeof(App).Assembly.GetName().Version + " starting from " + SelfInstall.CurrentExe);
+            Updater.SweepOld();
+
+            // A download clicked while a launcher is installed: refresh the installed one and run that instead.
+            if (string.IsNullOrEmpty(SnapshotPath) && Updater.HandOverToInstalled()) { Shutdown(); return; }
 
             // Installing is asked for, never automatic: VanadreamsLauncher.exe --install
             var wantsInstall = Array.IndexOf(args, "--install") >= 0;

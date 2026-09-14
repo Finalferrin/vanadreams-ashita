@@ -48,6 +48,7 @@
                 <StackPanel Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Right">
                     <TextBlock Style="{StaticResource Eyebrow}" Text="✦ News" HorizontalAlignment="Right"/>
                     <TextBlock x:Name="NewsLine" Style="{StaticResource Muted}" FontSize="13" MaxWidth="160" TextWrapping="Wrap" TextAlignment="Right" Text="Rates, rules and status are on fairywitch.ca."/>
+                    <Button x:Name="UpdateButton" Style="{StaticResource GoldButton}" FontSize="12" Padding="12,3" HorizontalAlignment="Right" Margin="0,4,0,0" Visibility="Collapsed" Click="Update_Click"/>
                 </StackPanel>
             </Grid>
         </Border>

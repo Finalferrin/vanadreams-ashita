@@ -243,6 +243,18 @@ namespace Vanadreams.Tests
         }
 
         [TestMethod]
+        public void Updater_compares_release_tags_with_the_build_version()
+        {
+            Assert.AreEqual(new Version(0, 2, 8), Updater.ParseTag("v0.2.8"));
+            Assert.AreEqual(new Version(0, 2, 8), Updater.ParseTag("0.2.8+89509c5"));
+            Assert.IsNull(Updater.ParseTag("latest"));
+            Assert.IsTrue(Updater.IsNewer(Updater.ParseTag("v0.2.8"), new Version(0, 2, 7, 0)));
+            Assert.IsFalse(Updater.IsNewer(Updater.ParseTag("v0.2.7"), new Version(0, 2, 7, 0)), "the same release is not an update");
+            Assert.IsFalse(Updater.IsNewer(Updater.ParseTag("v0.2.6"), new Version(0, 2, 7, 0)), "an older release never replaces a newer build");
+            Assert.IsFalse(Updater.IsNewer(null, new Version(0, 2, 7, 0)));
+        }
+
+        [TestMethod]
         public void Firewall_registry_rule_strings_are_read_regardless_of_language()
         {
             Assert.AreEqual(@"C:\Games\Ashita\bootloader\xiloader.exe", Firewall.ParseRegistryRule(@"v2.31|Action=Allow|Active=TRUE|Dir=In|Protocol=6|App=C:\Games\Ashita\bootloader\xiloader.exe|Name=Vanadreams - xiloader.exe|Desc=|"));
