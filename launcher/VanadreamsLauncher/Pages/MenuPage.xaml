@@ -57,13 +57,13 @@
                 <ItemsControl x:Name="Commands">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Grid Height="33" Background="Transparent" MouseLeftButtonUp="Command_Click" MouseEnter="Command_Hover" Tag="{Binding}">
+                            <Grid Height="30" Background="Transparent" MouseLeftButtonUp="Command_Click" MouseEnter="Command_Hover" Tag="{Binding}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="34"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Style="{StaticResource Hand}" Visibility="{Binding HandVisibility}"/>
-                                <TextBlock Grid.Column="1" Text="{Binding Label}" Style="{StaticResource MenuItemText}" FontSize="20" Opacity="{Binding Opacity}" VerticalAlignment="Center"/>
+                                <TextBlock Grid.Column="1" Text="{Binding Label}" Style="{StaticResource MenuItemText}" FontSize="19" Opacity="{Binding Opacity}" VerticalAlignment="Center"/>
                             </Grid>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>

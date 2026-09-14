@@ -34,6 +34,7 @@ namespace Vanadreams.Pages
             new MenuCommand { Label = "Profiles", Key = "profiles" },
             new MenuCommand { Label = "Addons", Key = "addons" },
             new MenuCommand { Label = "Fishing", Key = "fishing" },
+            new MenuCommand { Label = "Capture", Key = "capture" },
             new MenuCommand { Label = "Setup", Key = "setup" },
             new MenuCommand { Label = "Guide", Key = "guide" },
             new MenuCommand { Label = "Settings", Key = "settings" },
@@ -140,6 +141,7 @@ namespace Vanadreams.Pages
                 case "profiles": _win.Navigate(new ProfilesPage(_win, _profile?.Id)); break;
                 case "addons": _win.Navigate(new AddonsPage(_win)); break;
                 case "fishing": _win.Navigate(new FishingPage(_win)); break;
+                case "capture": _win.Navigate(new CapturePage(_win)); break;
                 case "setup": _win.Navigate(new SetupPage(_win)); break;
                 case "guide": new GuideWindow(App.State) { Owner = _win }.Show(); break;
                 case "settings": _win.Navigate(new SettingsPage(_win)); break;
