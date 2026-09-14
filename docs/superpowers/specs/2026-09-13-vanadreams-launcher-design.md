@@ -19,6 +19,7 @@ Vanadreams players first. The launcher is Vanadreams branded, ships with the Van
 5. Setup on first run: download and unpack the Ashita v4 beta and xiloader, write the Vanadreams profile, import from a v3 install if one exists.
 6. FFXI client guide: a pop-out, step-by-step window with pictures, links and checks for installing and updating the retail client and getting it through the firewall.
 7. Addon picker: a catalogue of plugins and addons, install and update with one click, tick to enable, writes the startup script.
+8. Fishing: a Vanadreams-only fishing bot, built as an Ashita v4 addon in this repo and switched on from the picker. It casts, reads the bite and reel packets, plays the minigame by the numbers, catches, recasts, and stops itself on no bait, full inventory, fatigue or disconnect. Its settings (rod, bait, stop at a count, stop when full) and its catch log get a page in the launcher menu. Lee ruled it in on 13 Sept 2026: it runs on Vanadreams and nowhere else, checked against the server name at load.
 
 ## Not in version 1
 
