@@ -63,8 +63,8 @@ namespace Vanadreams
             new GuideStep
             {
                 Key = "folder", Title = "2 · Install to a folder you own",
-                Body = "When the installer asks where to put PlayOnline, choose a folder outside Program Files, such as C:\\Games\\PlayOnline.\n\nIt works in Program Files too, but every update and file check then asks for administrator permission, and the launcher's version check has to read files it may not be allowed to. A folder you own has neither problem.",
-                Picture = "guide-2-folder.png", PictureNote = "The installer's folder prompt. Change it to C:\\Games\\PlayOnline.",
+                Body = "Run FFXISetup.exe from the extracted folder, tick all three items and press Install. Each part then runs its own wizard; when one asks where to put itself, choose a folder outside Program Files, such as C:\\Games\\PlayOnline.\n\nIt works in Program Files too, but every update and file check then asks for administrator permission, and the launcher's version check has to read files it may not be allowed to. A folder you own has neither problem.",
+                Picture = "guide-2-folder.png", PictureNote = "The installer: tick all three, press Install, and pick C:\\Games\\PlayOnline when a wizard asks where.",
                 HasCheck = true,
                 Check = st =>
                 {
@@ -78,7 +78,7 @@ namespace Vanadreams
             {
                 Key = "update", Title = "3 · Update it once",
                 Body = "Open PlayOnline Viewer from the Start menu. It updates itself first, then shows the FINAL FANTASY XI entry. Choose it and let it download the game update; this is the long part, often an hour.\n\nDo not log in. Close the viewer when the update finishes. Then press Check: the launcher reads the version your client will report and compares it with what Vanadreams expects.",
-                Picture = "guide-3-update.png", PictureNote = "PlayOnline Viewer on the FINAL FANTASY XI page with the update prompt.",
+                Picture = "guide-3-update.png", PictureNote = "PlayOnline Viewer's menu. Check Files is where the FINAL FANTASY XI update runs.",
                 HasCheck = true,
                 Check = st =>
                 {
@@ -92,7 +92,7 @@ namespace Vanadreams
             {
                 Key = "firewall", Title = "4 · Let it through the firewall",
                 Body = "The first time the loader and the game start, Windows asks whether to allow them through the firewall. Tick Private networks and press Allow access.\n\nIf that prompt was dismissed, the game may sit at 'Searching for lobby server'. Press Check: the launcher looks for the allow rules and can add them for you, which asks for administrator permission once.",
-                Picture = "guide-4-firewall.png", PictureNote = "The Windows Security Alert. Tick Private networks, then Allow access.",
+                PictureNote = "A blue-shield window titled Windows Security Alert, naming xiloader or pol. Tick Private networks, then press Allow access.",
                 HasCheck = true,
                 Check = st =>
                 {
@@ -111,13 +111,13 @@ namespace Vanadreams
             {
                 Key = "account", Title = "5 · Make your account",
                 Body = "Press Play in the launcher. The loader's black window appears with a menu: choose Create New Account, pick a username and a password. This is your Vanadreams account, nothing to do with PlayOnline or Square Enix.\n\nAfter that, the launcher can remember the login for you on the Profiles page, and Play goes straight to character select.",
-                Picture = "guide-5-account.png", PictureNote = "The loader's menu. Create New Account is option 2.",
+                PictureNote = "A black console window with a five-line menu appears. Create New Account is option 2; the arrow keys and Enter drive it.",
             },
             new GuideStep
             {
                 Key = "play", Title = "6 · Play",
                 Body = "That's the whole setup. Pick who you are on the menu and press Play. The bottom strip always shows whether the server is up and whether your client still matches it.\n\nIf anything above turned amber or red, the Discord is where someone can look at it with you.",
-                Picture = "guide-6-play.png", PictureNote = "Character select on Vanadreams.",
+                PictureNote = "From here it is the game. Press Play and you are on Vanadreams.",
             },
         };
 
