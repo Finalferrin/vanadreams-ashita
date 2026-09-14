@@ -10,8 +10,8 @@
     <AssemblyName>VanadreamsLauncher</AssemblyName>
     <AssemblyTitle>Vanadreams Launcher</AssemblyTitle>
     <Product>Vanadreams Launcher</Product>
-    <Version>0.2.0</Version>
-    <ApplicationIcon />
+    <Version>0.2.1</Version>
+    <ApplicationIcon>assets\moon.ico</ApplicationIcon>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
