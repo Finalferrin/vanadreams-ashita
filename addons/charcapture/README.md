@@ -1,6 +1,6 @@
 # charcapture
 
-Takes a snapshot of your character for porting to Vanadreams: jobs and levels, skills, merits and job points, spells, abilities, weapon skills, traits, key items, every bag with augments, gear, gil, look, nation, rank and title. Quests and missions are not carried; everyone starts the story fresh on Vanadreams.
+Takes a snapshot of your character for porting to Vanadreams: jobs and levels, skills, merits and job points, spells, abilities, weapon skills, traits, key items, quests and missions, every bag with augments, gear, gil, look, nation, rank and title. Fame is the one thing the game never tells the client, so Vanadreams grants it on import.
 
 It reads only. It sends nothing and changes nothing in the game.
 
@@ -14,7 +14,7 @@ Copy this folder to `Ashita-v4beta\addons\charcapture\`, then in game:
 
 ## Use
 
-Log in on the character you want to bring. Open the **Merit Points** menu and the **Job Points** menu once from the main menu, since the game only sends your spent merits and job point upgrades when those open. Then:
+Log in on the character you want to bring with charcapture already loaded, and zone once (any door or exit), since the game sends your quest and mission logs when you zone. Open the **Merit Points** menu and the **Job Points** menu once from the main menu, since the game only sends your spent merits and job point upgrades when those open. Then:
 
 ```
 /capture

@@ -10,7 +10,7 @@
 
 addon.name    = 'charcapture';
 addon.author  = 'Vanadreams';
-addon.version = '0.1.1';
+addon.version = '0.1.2';
 addon.desc    = 'Captures a character snapshot for porting to Vanadreams.';
 addon.link    = 'https://github.com/Finalferrin/vanadreams-ashita';
 
@@ -19,12 +19,29 @@ local json = require('json');
 
 local last_summary = nil;
 
+local function hex(s)
+    if s == nil then return ''; end
+    return (s:gsub('.', function (c) return ('%02x'):format(c:byte()); end));
+end
+
 -- Spent merits and job point upgrades are not in Ashita's memory managers; the game only sends
 -- them when the Merit Points and Job Points menus are opened. Those packets are remembered here
 -- and go into the next snapshot.
 --   0x08C: u16 count at 0x04, then count entries of { u16 merit id, u8 next cost, u8 upgrades }
 --   0x08D: 64 entries of { u16 index:5 | job:11, u16 next:10 | level:6 } from 0x04
-local seen = T{ merits = T{}, merits_at = nil, job_points = T{}, job_points_at = nil };
+local seen = T{ merits = T{}, merits_at = nil, job_points = T{}, job_points_at = nil, logs = T{}, logs_at = nil };
+
+-- Quest and mission logs arrive as 0x056 packets when you zone: a 32-byte block at 0x04 and a
+-- 'port' at 0x24 saying which log it is (current or completed quests per area, completed
+-- missions, and 0xFFFF for the current missions). The blocks are kept raw, keyed by port; the
+-- importer knows the layout because the server builds these same packets.
+local function read_log(data)
+    if #data < 0x28 then return; end
+    local port = struct.unpack('<H', data, 0x25);
+    if port == nil then return; end
+    seen.logs[('%04x'):format(port)] = hex(data:sub(5, 36));
+    seen.logs_at = os.time();
+end
 
 local function read_merits(data)
     local count = struct.unpack('<H', data, 0x05);
@@ -60,11 +77,6 @@ local TRAIT_MAX = 256;
 local KEYITEM_MAX = 3072;
 local CONTAINERS = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
 local EQUIP_SLOTS = 16;
-
-local function hex(s)
-    if s == nil then return ''; end
-    return (s:gsub('.', function (c) return ('%02x'):format(c:byte()); end));
-end
 
 local function say(msg)
     print(('\30\08[charcapture]\30\01 %s'):format(msg));
@@ -143,10 +155,12 @@ local function capture()
         -- from the menus, when they were opened this session (see the packet notes at the top)
         merit_upgrades = seen.merits_at and seen.merits or nil,
         job_point_upgrades = seen.job_points_at and seen.job_points or nil,
-        not_captured = T{ 'quests', 'missions', 'fame', 'linkshells', 'mog house layout' },
+        quest_mission_packets = seen.logs_at and seen.logs or nil,
+        not_captured = T{ 'fame (the game never sends the number)', 'linkshells', 'mog house layout' },
     };
     if not seen.merits_at then snap.not_captured:append('merit upgrades (open the Merit Points menu, then /capture again)'); end
     if not seen.job_points_at then snap.not_captured:append('job point upgrades (open the Job Points menu, then /capture again)'); end
+    if not seen.logs_at then snap.not_captured:append('quests and missions (zone once with charcapture loaded, then /capture again)'); end
 
     -- jobs
     for job = 1, JOB_COUNT do
@@ -238,9 +252,10 @@ end);
 
 ashita.events.register('packet_in', 'charcapture_packet_in', function (e)
     if e.id == 0x08C then pcall(read_merits, e.data);
-    elseif e.id == 0x08D then pcall(read_job_points, e.data); end
+    elseif e.id == 0x08D then pcall(read_job_points, e.data);
+    elseif e.id == 0x056 then pcall(read_log, e.data); end
 end);
 
 ashita.events.register('load', 'charcapture_load', function ()
-    say('loaded. Open the Merit Points and Job Points menus once, then /capture writes your character snapshot.');
+    say('loaded. Zone once, open the Merit Points and Job Points menus, then /capture writes your character snapshot.');
 end);
