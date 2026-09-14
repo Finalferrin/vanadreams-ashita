@@ -54,7 +54,7 @@ Everything the client exposes is captured. Delivery is the launcher uploading th
 }
 ```
 
-Job ids are the game's (1 WAR … 22 RUN). Skill ids are Ashita's indexes for `GetCombatSkill` and `GetCraftSkill`. Container ids are the game's (0 inventory, 1 mog safe, 2 storage, 3 temporary, 4 locker, 5 satchel, 6 sack, 7 case, 8–15 wardrobes 1–8, 16 mog safe 2). `extra` is the item's 24-byte extra block, hex, which carries augments, trial numbers and linkshell colours. Gil is the count of the pseudo-item in inventory slot 0.
+Job ids are the game's (1 WAR … 22 RUN). Skill ids are Ashita's indexes for `GetCombatSkill` and `GetCraftSkill`. Container ids are the game's, and LandSandBoat's are the same (0 inventory, 1 mog safe, 2 storage, 3 temporary, 4 locker, 5 satchel, 6 sack, 7 case, 8 wardrobe, 9 mog safe 2, 10–16 wardrobes 2–8). `extra` is the item's 24-byte extra block, hex, which carries augments, trial numbers and linkshell colours. Gil is the count of the pseudo-item in inventory slot 0.
 
 Every array is complete, not a diff: a snapshot replaces the previous one.
 
