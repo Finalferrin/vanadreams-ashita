@@ -10,7 +10,7 @@
 
 addon.name    = 'charcapture';
 addon.author  = 'Vanadreams';
-addon.version = '0.1.0';
+addon.version = '0.1.1';
 addon.desc    = 'Captures a character snapshot for porting to Vanadreams.';
 addon.link    = 'https://github.com/Finalferrin/vanadreams-ashita';
 
@@ -18,6 +18,37 @@ require('common');
 local json = require('json');
 
 local last_summary = nil;
+
+-- Spent merits and job point upgrades are not in Ashita's memory managers; the game only sends
+-- them when the Merit Points and Job Points menus are opened. Those packets are remembered here
+-- and go into the next snapshot.
+--   0x08C: u16 count at 0x04, then count entries of { u16 merit id, u8 next cost, u8 upgrades }
+--   0x08D: 64 entries of { u16 index:5 | job:11, u16 next:10 | level:6 } from 0x04
+local seen = T{ merits = T{}, merits_at = nil, job_points = T{}, job_points_at = nil };
+
+local function read_merits(data)
+    local count = struct.unpack('<H', data, 0x05);
+    if count == nil or count > 61 then return; end
+    for i = 0, count - 1 do
+        local id, _, upgrades = struct.unpack('<HBB', data, 0x09 + i * 4);
+        if id and id > 0 and upgrades > 0 then seen.merits[tostring(id)] = upgrades; end
+    end
+    seen.merits_at = os.time();
+end
+
+local function read_job_points(data)
+    for i = 0, 63 do
+        local a, b = struct.unpack('<HH', data, 0x05 + i * 4);
+        if a == nil or a == 0 then break; end
+        local index, job = bit.band(a, 0x1F), bit.rshift(a, 5);
+        local level = bit.rshift(b, 10);
+        if job > 0 and level > 0 then
+            seen.job_points[tostring(job)] = seen.job_points[tostring(job)] or T{};
+            seen.job_points[tostring(job)][tostring(index)] = level;
+        end
+    end
+    seen.job_points_at = os.time();
+end
 
 local JOB_COUNT = 22;        -- 1 WAR .. 22 RUN
 local COMBAT_SKILLS = 48;    -- Ashita combat skill indexes
@@ -109,8 +140,13 @@ local function capture()
             sub = safe(function() return ent:GetLookSub(idx); end, 0),
             ranged = safe(function() return ent:GetLookRanged(idx); end, 0),
         },
-        not_captured = T{ 'merit categories', 'quests', 'missions', 'fame', 'linkshells', 'mog house layout' },
+        -- from the menus, when they were opened this session (see the packet notes at the top)
+        merit_upgrades = seen.merits_at and seen.merits or nil,
+        job_point_upgrades = seen.job_points_at and seen.job_points or nil,
+        not_captured = T{ 'quests', 'missions', 'fame', 'linkshells', 'mog house layout' },
     };
+    if not seen.merits_at then snap.not_captured:append('merit upgrades (open the Merit Points menu, then /capture again)'); end
+    if not seen.job_points_at then snap.not_captured:append('job point upgrades (open the Job Points menu, then /capture again)'); end
 
     -- jobs
     for job = 1, JOB_COUNT do
@@ -200,6 +236,11 @@ ashita.events.register('command', 'charcapture_cmd', function (e)
     end
 end);
 
+ashita.events.register('packet_in', 'charcapture_packet_in', function (e)
+    if e.id == 0x08C then pcall(read_merits, e.data);
+    elseif e.id == 0x08D then pcall(read_job_points, e.data); end
+end);
+
 ashita.events.register('load', 'charcapture_load', function ()
-    say('loaded. /capture writes your character snapshot.');
+    say('loaded. Open the Merit Points and Job Points menus once, then /capture writes your character snapshot.');
 end);

@@ -14,7 +14,7 @@ Copy this folder to `Ashita-v4beta\addons\charcapture\`, then in game:
 
 ## Use
 
-Log in on the character you want to bring, then:
+Log in on the character you want to bring. Open the **Merit Points** menu and the **Job Points** menu once from the main menu, since the game only sends your spent merits and job point upgrades when those open. Then:
 
 ```
 /capture
