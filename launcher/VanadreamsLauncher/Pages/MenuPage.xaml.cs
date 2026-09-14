@@ -89,7 +89,8 @@ namespace Vanadreams.Pages
                 !v.ExpectedIsPublished ? "Mist" : v.Verdict == VersionVerdict.Ready ? "Ok" : v.Verdict == VersionVerdict.Unknown ? "Warn" : "Bad");
             AddFact("Ashita", "v4 beta, updated " + state.AshitaUpdated() + " · " + state.AshitaRoot, null);
             AddFact("Loader", "xiloader " + state.LoaderVersion(), null);
-            AddFact("Login", cred != null && !string.IsNullOrEmpty(cred.User) ? cred.User + " · remembered" : "Asked at launch", null);
+            var savedLogin = cred != null && !string.IsNullOrEmpty(cred.User);
+            AddFact("Login", savedLogin ? cred.User + " · remembered" : "Not saved · Edit profile, fill Username and Password, Save", savedLogin ? null : "Warn");
             AddFact("Addons", state.EnabledCount + " enabled" + (state.UpdateCount > 0 ? " · " + state.UpdateCount + " update" + (state.UpdateCount > 1 ? "s" : "") : ""), null);
             AddFact("Window", mode + size, null);
             AddFact("Last played", last, null);

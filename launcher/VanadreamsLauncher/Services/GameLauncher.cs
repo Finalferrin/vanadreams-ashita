@@ -29,8 +29,15 @@ namespace Vanadreams.Services
                 iniName = Path.GetFileName(temp);
             }
 
-            var psi = new ProcessStartInfo(cli, "\"" + iniName + "\"") { WorkingDirectory = ashitaRoot, UseShellExecute = false };
-            var process = Process.Start(psi);
+            // Ashita-cli.exe asks for administrator in its manifest. Starting it through the shell lets
+            // Windows raise the UAC prompt; a direct start fails with "requires elevation" instead.
+            var psi = new ProcessStartInfo(cli, "\"" + iniName + "\"") { WorkingDirectory = ashitaRoot, UseShellExecute = true };
+            Process process;
+            try { process = Process.Start(psi); }
+            catch (System.ComponentModel.Win32Exception ex) when (ex.NativeErrorCode == 1223)
+            {
+                throw new InvalidOperationException("Windows asked to run Ashita as administrator and the prompt was cancelled. Press Play again and choose Yes.");
+            }
             Log.Info("Launched " + profile.Name + " via " + iniName);
 
             if (temp != null)
