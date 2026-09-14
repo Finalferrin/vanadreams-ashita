@@ -14,6 +14,10 @@
 
         <ContentControl x:Name="Page" Grid.Row="0" Margin="0"/>
 
+        <!-- the mute, tucked in the bottom right corner under the strip -->
+        <Button x:Name="MuteButton" Grid.Row="1" Style="{StaticResource GhostButton}" FontSize="11" Padding="10,2"
+                HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,40,3" Click="Mute_Click" ToolTip="Music on or off"/>
+
         <!-- The gil-and-time strip: server, client, news -->
         <Border Grid.Row="1" Style="{StaticResource Box}" Margin="40,0,40,24">
             <Grid>

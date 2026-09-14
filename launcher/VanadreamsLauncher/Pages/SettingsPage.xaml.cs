@@ -24,6 +24,9 @@ namespace Vanadreams.Pages
             About.Text = "Vanadreams Launcher " + typeof(App).Assembly.GetName().Version + " · github.com/Finalferrin/vanadreams-ashita · no telemetry";
         }
 
+        /// <summary>The corner mute changed the setting; show it.</summary>
+        public void SyncMusic() => MusicBox.IsChecked = App.State.Settings.MusicOn;
+
         private async void Save_Click(object sender, RoutedEventArgs e)
         {
             var s = App.State.Settings;
@@ -32,6 +35,7 @@ namespace Vanadreams.Pages
             s.MusicOn = MusicBox.IsChecked == true;
             s.Save();
             if (s.MusicOn) Music.Start(); else Music.Stop();
+            _win.RefreshMute();
             App.State.CheckVersion();
             Note.Text = "Saved.";
             App.State.Notify();
