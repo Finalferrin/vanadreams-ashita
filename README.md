@@ -24,6 +24,8 @@ Run it. It installs itself, adds shortcuts, and opens on Setup. Windows will war
 
 `launcher\VanadreamsLauncher.slnx`, Visual Studio 2026 or `dotnet build -c Release`. Tests: `dotnet test launcher\VanadreamsLauncher.Tests`. The design is in [docs/superpowers/specs](docs/superpowers/specs/).
 
+Releases come from `launcher\release.ps1`: it builds, runs the tests, signs the exe with Azure Artifact Signing, scans it with Defender, and with `-Publish` creates the GitHub release. The header of the script says what signing needs on the build PC.
+
 ## What else is here
 
 | Folder | What |
