@@ -24,8 +24,9 @@ namespace Vanadreams
             State = State ?? new AppState();
             Log.Info("Launcher " + typeof(App).Assembly.GetName().Version + " starting from " + SelfInstall.CurrentExe);
 
-            // A fresh download installs itself once, then runs from its own folder with shortcuts.
-            if (string.IsNullOrEmpty(SnapshotPath) && SelfInstall.LooksLikeADownload())
+            // Installing is asked for, never automatic: VanadreamsLauncher.exe --install
+            var wantsInstall = Array.IndexOf(args, "--install") >= 0;
+            if (wantsInstall && string.IsNullOrEmpty(SnapshotPath))
             {
                 var answer = MessageBox.Show(
                     "Install the Vanadreams Launcher?\n\nIt copies itself to your apps folder and adds Start menu and desktop shortcuts. Nothing else changes. Choose No to run it from here just this once.",
