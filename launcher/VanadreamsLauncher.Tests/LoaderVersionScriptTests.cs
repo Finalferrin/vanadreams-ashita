@@ -48,7 +48,12 @@ namespace Vanadreams.Tests
             var unknown = ClientVersion.Compare(null, "30260904_1", VersionLock.MatchingOrNewer);
             Assert.AreEqual(VersionVerdict.Unknown, unknown.Verdict);
             Assert.IsFalse(unknown.BlocksPlay, "unknown never blocks");
-            StringAssert.Contains(ClientVersion.Compare("30260415_0", "30260805_0", VersionLock.MatchingOrNewer).Sentence, "Update the client");
+            var tooOld = ClientVersion.Compare("30260415_0", "30260805_0", VersionLock.MatchingOrNewer);
+            Assert.IsFalse(tooOld.BlocksPlay, "a launcher default never blocks or claims a match");
+            StringAssert.Contains(tooOld.Sentence, "hasn't published");
+            tooOld.ExpectedIsPublished = true;
+            Assert.IsTrue(tooOld.BlocksPlay, "a published version does block");
+            StringAssert.Contains(tooOld.Sentence, "Update the client");
         }
 
         [TestMethod]

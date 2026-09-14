@@ -81,8 +81,12 @@ namespace Vanadreams.Pages
                 ? (when.Date == DateTime.Today ? "Today, " + when.ToString("HH:mm") : when.ToString("d MMM, HH:mm")) : "Not yet";
             var cred = state.Credentials.Get(_profile.Id);
             AddFact("Server", state.Status.StateWord + (string.IsNullOrEmpty(state.Status.CheckedWord) ? "" : " · " + state.Status.CheckedWord), null);
-            AddFact("Client", v.Verdict == VersionVerdict.Ready ? "✓ " + v.Installed + " · matches the server" : v.Verdict == VersionVerdict.Unknown ? "Version unknown" : "✗ " + v.Installed + " · server expects " + v.Expected,
-                v.Verdict == VersionVerdict.Ready ? "Ok" : v.Verdict == VersionVerdict.Unknown ? "Warn" : "Bad");
+            AddFact("Client",
+                !v.ExpectedIsPublished ? (string.IsNullOrEmpty(v.Installed) ? "Version unknown" : v.Installed + " · server hasn't published its version")
+                : v.Verdict == VersionVerdict.Ready ? "✓ " + v.Installed + " · matches the server"
+                : v.Verdict == VersionVerdict.Unknown ? "Version unknown"
+                : "✗ " + v.Installed + " · server expects " + v.Expected,
+                !v.ExpectedIsPublished ? "Mist" : v.Verdict == VersionVerdict.Ready ? "Ok" : v.Verdict == VersionVerdict.Unknown ? "Warn" : "Bad");
             AddFact("Ashita", "v4 beta, updated " + state.AshitaUpdated() + " · " + state.AshitaRoot, null);
             AddFact("Loader", "xiloader " + state.LoaderVersion(), null);
             AddFact("Login", cred != null && !string.IsNullOrEmpty(cred.User) ? cred.User + " · remembered" : "Asked at launch", null);

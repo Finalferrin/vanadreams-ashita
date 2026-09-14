@@ -62,7 +62,7 @@ namespace Vanadreams
             StatusDot.Effect = new System.Windows.Media.Effects.DropShadowEffect { Color = ((SolidColorBrush)dot).Color, BlurRadius = 8, ShadowDepth = 0 };
             var v = State.Version;
             VersionLine.Text = v.Sentence;
-            VersionLine.Foreground = (Brush)FindResource(v.Verdict == VersionVerdict.Ready ? "Ok" : v.Verdict == VersionVerdict.Unknown ? "Warn" : "Bad");
+            VersionLine.Foreground = (Brush)FindResource(!v.ExpectedIsPublished ? "Mist" : v.Verdict == VersionVerdict.Ready ? "Ok" : v.Verdict == VersionVerdict.Unknown ? "Warn" : "Bad");
             if (!string.IsNullOrWhiteSpace(s.Note)) NewsLine.Text = s.Note;
         }
 

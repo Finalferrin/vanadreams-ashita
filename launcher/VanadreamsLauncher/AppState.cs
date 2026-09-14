@@ -43,9 +43,11 @@ namespace Vanadreams
         public VersionCheck CheckVersion()
         {
             var installed = ClientVersion.ReadInstalled(FfxiFolder);
-            var expected = Status.ClientVer ?? Settings.ExpectedClientVer;
+            var published = !string.IsNullOrEmpty(Status.ClientVer);
+            var expected = published ? Status.ClientVer : Settings.ExpectedClientVer;
             var lockMode = Status.Lock ?? (Enum.IsDefined(typeof(VersionLock), Settings.VerLock) ? (VersionLock)Settings.VerLock : VersionLock.MatchingOrNewer);
             Version = ClientVersion.Compare(installed, expected, lockMode);
+            Version.ExpectedIsPublished = published;
             return Version;
         }
 
