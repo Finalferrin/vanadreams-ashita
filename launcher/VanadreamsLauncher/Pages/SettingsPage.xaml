@@ -28,17 +28,8 @@
                     <TextBox Grid.Row="2" Grid.Column="1" x:Name="CatalogBox" VerticalAlignment="Center"/>
                     <TextBlock Grid.Row="3" Text="Status address" Style="{StaticResource Muted}" VerticalAlignment="Center"/>
                     <TextBox Grid.Row="3" Grid.Column="1" x:Name="StatusBox" VerticalAlignment="Center"/>
-                    <TextBlock Grid.Row="4" Text="Expected client version" Style="{StaticResource Muted}" VerticalAlignment="Center"/>
-                    <StackPanel Grid.Row="4" Grid.Column="1" Orientation="Horizontal">
-                        <TextBox x:Name="VerBox" Width="140" VerticalAlignment="Center"/>
-                        <TextBlock Text="   lock " Style="{StaticResource Muted}" VerticalAlignment="Center"/>
-                        <ComboBox x:Name="LockBox" Width="220" VerticalAlignment="Center">
-                            <ComboBoxItem Content="0 · any version"/>
-                            <ComboBoxItem Content="1 · exact month only"/>
-                            <ComboBoxItem Content="2 · matching or newer"/>
-                        </ComboBox>
-                        <TextBlock Text="  (the status route overrides these when it carries them)" Style="{StaticResource Muted}" FontSize="12" VerticalAlignment="Center"/>
-                    </StackPanel>
+                    <TextBlock Grid.Row="4" Text="Server's client version" Style="{StaticResource Muted}" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Row="4" Grid.Column="1" x:Name="ExpectedBox" Style="{StaticResource Mono}" VerticalAlignment="Center"/>
                     <TextBlock Grid.Row="5" Text="Detected FFXI folder" Style="{StaticResource Muted}" VerticalAlignment="Center"/>
                     <TextBlock Grid.Row="5" Grid.Column="1" x:Name="DetectedBox" Style="{StaticResource Mono}" VerticalAlignment="Center"/>
                     <TextBlock Grid.Row="6" Text="Music" Style="{StaticResource Muted}" VerticalAlignment="Top" Margin="0,10,0,0"/>

@@ -93,7 +93,7 @@ namespace Vanadreams.Services
             if (Source == SourceType.None || string.IsNullOrEmpty(ashitaRoot)) return false;
             var marker = InstalledMarker(ashitaRoot);
             if (File.Exists(marker)) return true;
-            if (Kind == "overlay") return Directory.Exists(marker) && Directory.EnumerateFiles(marker, "*", SearchOption.AllDirectories).Any();
+            if (Kind == "overlay") return Directory.Exists(marker) && Directory.EnumerateFileSystemEntries(marker).Any();
             // plugin DLL names are not always lower case on disk
             var dir = System.IO.Path.GetDirectoryName(marker);
             var name = System.IO.Path.GetFileName(marker);

@@ -83,8 +83,8 @@ namespace Vanadreams
                 Check = st =>
                 {
                     var v = st.CheckVersion();
+                    if (!v.ExpectedIsPublished) return Tuple.Create<bool?, string>(null, v.Sentence + (string.IsNullOrEmpty(v.Installed) ? "" : " Your client reports " + v.Installed + "."));
                     if (v.Verdict == VersionVerdict.Ready) return Tuple.Create<bool?, string>(true, v.Sentence);
-                    if (v.Verdict == VersionVerdict.Unknown) return Tuple.Create<bool?, string>(false, v.Sentence);
                     return Tuple.Create<bool?, string>(false, v.Sentence);
                 },
             },

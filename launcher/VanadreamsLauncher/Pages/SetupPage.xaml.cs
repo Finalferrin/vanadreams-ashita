@@ -37,9 +37,17 @@ namespace Vanadreams.Pages
             UpdateAdopt();
         }
 
+        /// <summary>The typed folder as a usable root: trailing slash off, except that a drive root keeps its slash.</summary>
+        internal static string RootFrom(string text)
+        {
+            var t = (text ?? "").Trim().TrimEnd('\\', '/');
+            if (t.Length == 2 && t[1] == ':') t += "\\";   // "D:" alone is drive-relative, which is never what was meant
+            return t;
+        }
+
         private void UpdateAdopt()
         {
-            var root = FolderBox.Text.Trim().TrimEnd('\\');
+            var root = RootFrom(FolderBox.Text);
             var existing = root.Length > 0 && File.Exists(Path.Combine(root, "Ashita-cli.exe"));
             AdoptButton.Visibility = existing && !string.Equals(root, App.State.AshitaRoot, StringComparison.OrdinalIgnoreCase) ? Visibility.Visible : Visibility.Collapsed;
             if (existing) Say("An Ashita v4 install is already in that folder. Update it, or use it as it is.", "GoldSoft");
@@ -48,7 +56,7 @@ namespace Vanadreams.Pages
         /// <summary>Register an Ashita v4 folder the player already has, write the profile, download nothing.</summary>
         private void Adopt_Click(object sender, RoutedEventArgs e)
         {
-            var root = FolderBox.Text.Trim().TrimEnd('\\');
+            var root = RootFrom(FolderBox.Text);
             if (!File.Exists(Path.Combine(root, "Ashita-cli.exe"))) return;
             var state = App.State;
             try
@@ -94,7 +102,7 @@ namespace Vanadreams.Pages
         private async void Go_Click(object sender, RoutedEventArgs e)
         {
             if (_busy) return;
-            var root = FolderBox.Text.Trim().TrimEnd('\\');
+            var root = RootFrom(FolderBox.Text);
             if (string.IsNullOrWhiteSpace(root)) { Say("Choose a folder first.", "Warn"); return; }
             if (ClientVersion.IsUnderProgramFiles(root)) { Say("Not under Program Files: pick a folder you own, like C:\\Games\\Vanadreams.", "Warn"); return; }
             _busy = true; GoButton.IsEnabled = false;
@@ -158,7 +166,7 @@ namespace Vanadreams.Pages
                         List<Credential> logins; List<string> ids;
                         var rep = V3Import.ImportProfiles(_v3, root, out logins, out ids);
                         lines.AddRange(rep.Lines);
-                        for (var i = 0; i < ids.Count && i < logins.Count; i++) state.Credentials.Set(ids[i], logins[i].User, logins[i].Password);
+                        for (var i = 0; i < ids.Count && i < logins.Count; i++) if (logins[i] != null) state.Credentials.Set(ids[i], logins[i].User, logins[i].Password);
                     }
                     if (ImportConfigs.IsChecked == true) lines.AddRange(V3Import.ImportConfigs(_v3, root).Lines);
                     Log.Info("v3 import: " + string.Join(" | ", lines));

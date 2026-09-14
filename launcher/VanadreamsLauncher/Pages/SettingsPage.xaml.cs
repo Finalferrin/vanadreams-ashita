@@ -17,7 +17,9 @@ namespace Vanadreams.Pages
             _win = win;
             var s = App.State.Settings;
             AshitaBox.Text = s.AshitaRoot; FfxiBox.Text = s.FfxiFolderOverride; CatalogBox.Text = s.CatalogUrl; StatusBox.Text = s.StatusUrl;
-            VerBox.Text = s.ExpectedClientVer; LockBox.SelectedIndex = Math.Max(0, Math.Min(2, s.VerLock));
+            // read-only: it comes from the status route, never typed here
+            var st = App.State.Status;
+            ExpectedBox.Text = string.IsNullOrEmpty(st.ClientVer) ? "not published by the server yet" : st.ClientVer + " · lock " + (st.Lock.HasValue ? ((int)st.Lock.Value).ToString() : "2") + " · from fairywitch.ca";
             DetectedBox.Text = ClientVersion.FindFfxiFolder() ?? "not registered by PlayOnline";
             MusicBox.IsChecked = s.MusicOn;
             MusicCredit.Text = "made for Vanadreams with SoundBreak";
@@ -31,7 +33,6 @@ namespace Vanadreams.Pages
         {
             var s = App.State.Settings;
             s.AshitaRoot = AshitaBox.Text.Trim(); s.FfxiFolderOverride = FfxiBox.Text.Trim(); s.CatalogUrl = CatalogBox.Text.Trim(); s.StatusUrl = StatusBox.Text.Trim();
-            s.ExpectedClientVer = VerBox.Text.Trim(); s.VerLock = LockBox.SelectedIndex;
             s.MusicOn = MusicBox.IsChecked == true;
             s.Save();
             if (s.MusicOn) Music.Start(); else Music.Stop();

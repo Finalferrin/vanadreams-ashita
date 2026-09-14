@@ -18,7 +18,7 @@ It needs nothing installed: Ashita v4 already requires the .NET Framework that e
 
 **Download:** the latest release is always at
 `https://github.com/Finalferrin/vanadreams-ashita/releases/latest/download/VanadreamsLauncher.exe`.
-Run it. It installs itself, adds shortcuts, and opens on Setup. Releases from 0.2.0 are code-signed by Lee Hattery through Azure Artifact Signing. A brand-new certificate has no download history with Windows yet, so SmartScreen may still show a warning for the first while; choose More info, then Run anyway, and check that the publisher shown is Lee Hattery.
+Run it. It opens on Setup and runs from wherever you put it; Settings has an Install shortcuts button that copies it into your apps folder and makes Start menu and desktop shortcuts. Releases from 0.2.0 are code-signed by Lee Hattery through Azure Artifact Signing. A brand-new certificate has no download history with Windows yet, so SmartScreen may still show a warning for the first while; choose More info, then Run anyway, and check that the publisher shown is Lee Hattery.
 
 ### Building it
 

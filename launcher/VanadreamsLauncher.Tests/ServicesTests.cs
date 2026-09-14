@@ -179,7 +179,7 @@ namespace Vanadreams.Tests
             Assert.AreEqual(WindowMode.Borderless, p.Mode);
             Assert.AreEqual(1920, p.Width);
             Assert.AreEqual("vanadreams.txt", p.Script);
-            Assert.AreEqual(1, logins.Count);
+            Assert.AreEqual(1, logins.Count(l => l != null));
             Assert.AreEqual("secret", logins[0].Password);
             Assert.IsFalse(File.ReadAllText(p.Path).Contains("secret"));
 
@@ -190,7 +190,66 @@ namespace Vanadreams.Tests
             var pivot = File.ReadAllText(Path.Combine(v4, "config", "pivot", "pivot.ini"));
             StringAssert.Contains(pivot, "0 = HD-Remake");
             StringAssert.Contains(pivot, "1 = Other");
+            Assert.IsFalse(pivot.Contains("root_path"), "XIPivot's own default is the right DATs root; a relative override breaks overlays");
             Assert.IsTrue(cfg.Lines.Any(l => l.StartsWith("Lootwhore profiles: nothing")));
+        }
+
+        [TestMethod]
+        public void V3_import_keeps_logins_in_step_with_profiles()
+        {
+            var v3 = Path.Combine(_dir, "v3"); Directory.CreateDirectory(Path.Combine(v3, "config", "boot"));
+            File.WriteAllText(Path.Combine(v3, "config", "boot", "A-Retail.xml"), "<settings><setting name=\"name\">Retail</setting><setting name=\"boot_command\">/game eAZcFcB</setting></settings>");
+            File.WriteAllText(Path.Combine(v3, "config", "boot", "B-Vana.xml"), "<settings><setting name=\"name\">Vana</setting><setting name=\"boot_command\">--server 10.0.0.2 --user Ferrin --pass secret</setting></settings>");
+            var v4 = Path.Combine(_dir, "v4"); Directory.CreateDirectory(Path.Combine(v4, "config", "boot"));
+            File.WriteAllText(Path.Combine(v4, "config", "boot", "example-privateserver.ini"), "[ashita.launcher]\nname = Example\n[ashita.boot]\nfile = x\ncommand = --server x\nscript = default.txt\n");
+            System.Collections.Generic.List<Credential> logins; System.Collections.Generic.List<string> ids;
+            V3Import.ImportProfiles(v3, v4, out logins, out ids);
+            Assert.AreEqual(ids.Count, logins.Count);
+            for (var i = 0; i < ids.Count; i++)
+            {
+                if (ids[i].IndexOf("vana", StringComparison.OrdinalIgnoreCase) >= 0) { Assert.IsNotNull(logins[i]); Assert.AreEqual("secret", logins[i].Password); }
+                else Assert.IsNull(logins[i], ids[i] + " had no login and must not receive one");
+            }
+        }
+
+        [TestMethod]
+        public void Profile_store_never_lists_a_launch_copy()
+        {
+            var root = Path.Combine(_dir, "ashita"); var boot = Path.Combine(root, "config", "boot"); Directory.CreateDirectory(boot);
+            File.WriteAllText(Path.Combine(boot, "vanadreams.ini"), "[ashita.launcher]\nname = Vanadreams\n[ashita.boot]\ncommand = --server x\n");
+            File.WriteAllText(Path.Combine(boot, ".launch-vanadreams-1a2b3c4d.ini"), "[ashita.launcher]\nname = Vanadreams\n[ashita.boot]\ncommand = --server x --user u --pass p\n");
+            var all = new ProfileStore(root).LoadAll();
+            Assert.AreEqual(1, all.Count);
+            Assert.AreEqual("vanadreams", all[0].Id);
+            GameLauncher.Sweep(root);
+            Assert.AreEqual(1, Directory.GetFiles(boot).Length, "the sweep removes launch copies and nothing else");
+        }
+
+        [TestMethod]
+        public void Pivot_config_adds_and_removes_overlays_without_a_root_path()
+        {
+            var root = Path.Combine(_dir, "ashita");
+            PivotConfig.AddOverlay(root, "HD-Remake");
+            PivotConfig.AddOverlay(root, "vanadreams-music");
+            PivotConfig.AddOverlay(root, "vanadreams-music");
+            CollectionAssert.AreEqual(new[] { "HD-Remake", "vanadreams-music" }, PivotConfig.ReadOverlays(root).ToArray());
+            var text = File.ReadAllText(PivotConfig.IniPath(root));
+            Assert.IsFalse(text.Contains("root_path"));
+            File.WriteAllText(PivotConfig.IniPath(root), "[settings]\nroot_path=polplugins\\DATs\\\ndebug_log=false\n[overlays]\n0=vanadreams-music\n");
+            PivotConfig.RemoveRootPath(root);
+            Assert.IsFalse(File.ReadAllText(PivotConfig.IniPath(root)).Contains("root_path"));
+            PivotConfig.RemoveOverlay(root, "vanadreams-music");
+            Assert.AreEqual(0, PivotConfig.ReadOverlays(root).Count);
+        }
+
+        [TestMethod]
+        public void Firewall_registry_rule_strings_are_read_regardless_of_language()
+        {
+            Assert.AreEqual(@"C:\Games\Ashita\bootloader\xiloader.exe", Firewall.ParseRegistryRule(@"v2.31|Action=Allow|Active=TRUE|Dir=In|Protocol=6|App=C:\Games\Ashita\bootloader\xiloader.exe|Name=Vanadreams - xiloader.exe|Desc=|"));
+            Assert.IsNull(Firewall.ParseRegistryRule(@"v2.31|Action=Block|Active=TRUE|Dir=In|App=C:\x.exe|"), "a block rule is not an allow");
+            Assert.IsNull(Firewall.ParseRegistryRule(@"v2.31|Action=Allow|Active=FALSE|Dir=In|App=C:\x.exe|"), "a disabled rule does not count");
+            Assert.IsNull(Firewall.ParseRegistryRule(@"v2.31|Action=Allow|Active=TRUE|Dir=Out|App=C:\x.exe|"), "outbound is not inbound");
+            Assert.IsNull(Firewall.ParseRegistryRule(@"v2.31|Action=Allow|Active=TRUE|Dir=In|Name=no program|"));
         }
     }
 }

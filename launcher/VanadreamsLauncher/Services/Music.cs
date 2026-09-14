@@ -21,13 +21,14 @@ namespace Vanadreams.Services
         private static MediaPlayer _player;
         private static DispatcherTimer _fade;
 
-        public static bool Playing => _player != null;
+        public static bool Playing => _player != null && _fade == null;
 
         public static string TrackPath => Path.Combine(LauncherSettings.DataFolder, "music", "the-lanterns-are-lit.mp3");
 
         /// <summary>Start the loop if music is on. Safe to call more than once.</summary>
         public static void Start()
         {
+            if (_player != null && _fade != null) { _fade.Stop(); _fade = null; _player.Volume = Volume; return; }   // mid-fade: keep it
             if (_player != null) return;
             try
             {
@@ -60,14 +61,16 @@ namespace Vanadreams.Services
             var steps = Math.Max(1, (int)(seconds * 20));
             var step = p.Volume / steps;
             _fade = new DispatcherTimer { Interval = TimeSpan.FromSeconds(seconds / steps) };
-            _fade.Tick += (s, e) =>
+            var timer = _fade;
+            timer.Tick += (s, e) =>
             {
-                if (_player == null) { _fade.Stop(); _fade = null; return; }
+                if (_fade != timer) { timer.Stop(); return; }   // cancelled by Start or Stop
+                if (_player == null) { timer.Stop(); _fade = null; return; }
                 var v = p.Volume - step;
                 if (v <= 0.01) { Stop(); return; }
                 p.Volume = v;
             };
-            _fade.Start();
+            timer.Start();
         }
 
         /// <summary>Copy the track out of the exe into the data folder. Returns the file path, or null if the resource is missing.</summary>

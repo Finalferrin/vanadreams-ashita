@@ -10,7 +10,7 @@ Install it from the launcher's Addons page (it needs XIPivot, also on that page)
 
 The BGW files are made with `tools\bgw` from the wav of each track:
 
-```bash
+```powershell
 dotnet run --project tools\bgw -c Release -- encode track.wav music108.bgw --id 108 --loop 0
 ```
 
