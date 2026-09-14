@@ -18,11 +18,11 @@
         <Border Grid.Row="1" Style="{StaticResource Box}" Margin="40,0,40,24">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="40"/>
-                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto" MaxWidth="400"/>
+                    <ColumnDefinition Width="32"/>
+                    <ColumnDefinition Width="Auto" MaxWidth="240"/>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto" MaxWidth="170"/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0" VerticalAlignment="Center">
                     <TextBlock Style="{StaticResource Eyebrow}" Text="✦ Vanadreams"/>
@@ -34,16 +34,16 @@
                                 <TextBlock x:Name="StatusWhen" Style="{StaticResource Muted}" FontSize="12" Margin="8,0,0,0"/>
                             </StackPanel>
                         </Border>
-                        <TextBlock x:Name="StatusNote" Style="{StaticResource Muted}" FontSize="13" Margin="12,0,0,0" VerticalAlignment="Center" MaxWidth="260" TextTrimming="CharacterEllipsis"/>
+                        <TextBlock x:Name="StatusNote" Style="{StaticResource Muted}" FontSize="13" Margin="12,0,0,0" VerticalAlignment="Center" MaxWidth="150" TextTrimming="CharacterEllipsis"/>
                     </StackPanel>
                 </StackPanel>
                 <StackPanel Grid.Column="2" VerticalAlignment="Center">
                     <TextBlock Style="{StaticResource Eyebrow}" Text="✦ Client check"/>
-                    <TextBlock x:Name="VersionLine" Style="{StaticResource Mono}" Text="Checking…" MaxWidth="300" TextWrapping="Wrap"/>
+                    <TextBlock x:Name="VersionLine" Style="{StaticResource Mono}" Text="Checking…" MaxWidth="230" TextWrapping="Wrap"/>
                 </StackPanel>
                 <StackPanel Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Right">
                     <TextBlock Style="{StaticResource Eyebrow}" Text="✦ News" HorizontalAlignment="Right"/>
-                    <TextBlock x:Name="NewsLine" Style="{StaticResource Muted}" FontSize="13" MaxWidth="240" TextWrapping="Wrap" TextAlignment="Right" Text="Rates, rules and status are on fairywitch.ca."/>
+                    <TextBlock x:Name="NewsLine" Style="{StaticResource Muted}" FontSize="13" MaxWidth="160" TextWrapping="Wrap" TextAlignment="Right" Text="Rates, rules and status are on fairywitch.ca."/>
                 </StackPanel>
             </Grid>
         </Border>

@@ -63,7 +63,7 @@ namespace Vanadreams
             var v = State.Version;
             VersionLine.Text = v.Sentence;
             VersionLine.Foreground = (Brush)FindResource(!v.ExpectedIsPublished ? "Mist" : v.Verdict == VersionVerdict.Ready ? "Ok" : v.Verdict == VersionVerdict.Unknown ? "Warn" : "Bad");
-            if (!string.IsNullOrWhiteSpace(s.Note)) NewsLine.Text = s.Note;
+            // the note already sits beside the status pill; News keeps its own line
         }
 
         private void DrawStars()
