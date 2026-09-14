@@ -20,7 +20,8 @@ namespace Vanadreams.Pages
             VerBox.Text = s.ExpectedClientVer; LockBox.SelectedIndex = Math.Max(0, Math.Min(2, s.VerLock));
             DetectedBox.Text = ClientVersion.FindFfxiFolder() ?? "not registered by PlayOnline";
             MusicBox.IsChecked = s.MusicOn;
-            About.Text = "Vanadreams Launcher " + typeof(App).Assembly.GetName().Version + " · github.com/Finalferrin/vanadreams-ashita · no telemetry · " + Music.Credit;
+            MusicCredit.Text = "made for Vanadreams with SoundBreak";
+            About.Text = "Vanadreams Launcher " + typeof(App).Assembly.GetName().Version + " · github.com/Finalferrin/vanadreams-ashita · no telemetry";
         }
 
         private async void Save_Click(object sender, RoutedEventArgs e)
