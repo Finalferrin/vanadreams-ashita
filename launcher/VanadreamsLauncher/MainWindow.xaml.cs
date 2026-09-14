@@ -31,6 +31,7 @@ namespace Vanadreams
             if (State.HasAshita) GameLauncher.Sweep(State.AshitaRoot);
             State.CheckVersion();
             RefreshStrip();
+            RefreshMute();
             if (!string.IsNullOrEmpty(App.SnapshotPath)) { await SnapshotAndExit(); return; }
             if (State.HasAshita) Navigate(new MenuPage(this)); else Navigate(new SetupPage(this));
             _statusTimer.Start();
@@ -42,6 +43,25 @@ namespace Vanadreams
         {
             Page.Content = page;
             page.Focus();
+            RefreshMute();
+        }
+
+        /// <summary>The corner button: music on or off, remembered in settings, and the Settings page follows it.</summary>
+        private void Mute_Click(object sender, RoutedEventArgs e)
+        {
+            var s = State.Settings;
+            s.MusicOn = !s.MusicOn;
+            s.Save();
+            if (s.MusicOn) Music.Start(); else Music.Stop();
+            RefreshMute();
+            var settings = Page.Content as Pages.SettingsPage;
+            if (settings != null) settings.SyncMusic();
+        }
+
+        public void RefreshMute()
+        {
+            MuteButton.Content = State.Settings.MusicOn ? "♪ mute" : "♪ music off";
+            MuteButton.Opacity = State.Settings.MusicOn ? 0.75 : 1.0;
         }
 
         public void RefreshStrip()
