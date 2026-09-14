@@ -17,8 +17,8 @@ Everything a player needs to play on [Vanadreams](https://fairywitch.ca), a priv
 It needs nothing installed: Ashita v4 already requires the .NET Framework that every Windows 10 and 11 machine has.
 
 **Download:** the latest release is always at
-`https://github.com/Finalferrin/vanadreams-ashita/releases/latest/download/VanadreamsLauncher.zip`.
-Unzip it anywhere, run it, press Setup.
+`https://github.com/Finalferrin/vanadreams-ashita/releases/latest/download/VanadreamsLauncher.exe`.
+Run it. It installs itself, adds shortcuts, and opens on Setup. Windows will warn that the publisher is unknown, because the exe is not code-signed; choose More info, then Run anyway.
 
 ### Building it
 
