@@ -39,6 +39,33 @@ namespace Vanadreams
             _statusTimer.Start();
             await State.RefreshStatusAsync();
             await State.RefreshCatalogAsync();
+            await CheckForUpdateAsync();
+        }
+
+        private string _updatedExe;
+
+        /// <summary>Once per start: a newer signed release is fetched and swapped in; the strip offers the restart.</summary>
+        private async Task CheckForUpdateAsync()
+        {
+            try
+            {
+                var asset = await Updater.CheckAsync(State.Downloader);
+                if (asset == null) return;
+                NewsLine.Text = "Update " + asset.Tag + " found, downloading…";
+                var exe = await Updater.FetchAsync(State.Downloader, asset, State.Settings.DownloadsFolder);
+                if (exe == null) { NewsLine.Text = "Update " + asset.Tag + " could not be fetched; it is on fairywitch.ca."; return; }
+                _updatedExe = Updater.Apply(exe);
+                NewsLine.Text = "Launcher " + asset.Tag + " is ready.";
+                UpdateButton.Content = "Restart into " + asset.Tag;
+                UpdateButton.Visibility = Visibility.Visible;
+            }
+            catch (Exception ex) { Log.Warn("update: " + ex.Message); }
+        }
+
+        private void Update_Click(object sender, RoutedEventArgs e)
+        {
+            if (_updatedExe == null) return;
+            Updater.Restart(_updatedExe);
         }
 
         public void Navigate(UserControl page)
