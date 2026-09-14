@@ -70,7 +70,11 @@ Data comes from: `IPlayer` for jobs, levels, master levels, job points, merits, 
 
 A Capture page in the menu lists the snapshots in `config\charcapture\`, shows each summary, and has "Send to Vanadreams". Sending posts the JSON to the capture route with the player's Vanadreams username, taken from the selected profile's remembered login, and shows the reply: queued with a reference, or the reason it was refused. Nothing is sent without the button.
 
-## The site endpoint, for the site session
+## The site endpoint, as built (14 Sept 2026)
+
+`POST https://fairywitch.ca/api/public/vanadreams/capture` with the snapshot as the body and the player's Vanadreams login in `X-Vanadreams-User`. The worker checks the login shape, the 2 MB limit, `schema: 1` and a character name, allows five sends an hour per login, and commits the file into the private server repo `Finalferrin/vanadreams` on branch `vanadreams` at `captures/<login>/<Name>.json` through the GitHub contents API with the worker's own key (`CAPTURE_GITHUB_TOKEN`, a fine-grained token with Contents read and write on that one repo). A second send for the same character replaces the file. Replies `{ ok: true, reference: <commit>, queued: 1, path }`, or `{ ok: false, error }` with 400, 413, 429, 502 or 503 (drop-box not set up). Claudette pulls the repo and `tools/vanadreams/import_capture.py` there does the import by hand. The D1 queue and bridge endpoints below were the earlier plan and are not built.
+
+## The site endpoint, earlier plan (superseded)
 
 `POST /api/public/vanadreams/capture`, body the snapshot JSON, header `X-Vanadreams-User: <username>`. Limits: 2 MB, schema 1, character name present. Stores a row in a D1 table:
 
