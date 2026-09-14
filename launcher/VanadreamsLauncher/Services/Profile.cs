@@ -14,6 +14,9 @@ namespace Vanadreams.Services
         public string FileName => System.IO.Path.GetFileName(Path);
         public string Id => System.IO.Path.GetFileNameWithoutExtension(Path);
         public bool IsExample => Id.StartsWith("example", StringComparison.OrdinalIgnoreCase);
+        /// <summary>A retail profile: PlayOnline's own quick-play command, launched through PlayOnline Viewer.</summary>
+        public bool IsRetail => (Command.Extra ?? "").IndexOf("/game", StringComparison.OrdinalIgnoreCase) >= 0
+                                || BootFile.EndsWith(@"PlayOnlineViewer\pol.exe", StringComparison.OrdinalIgnoreCase);
 
         public string Name { get; set; } = "";
         public bool AutoClose { get; set; } = true;

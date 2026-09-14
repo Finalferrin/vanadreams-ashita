@@ -61,6 +61,9 @@ namespace Vanadreams.Services
                 ? Path.Combine(v4Root, "bootloader", "xiloader.exe")
                 : bootFile;
             p.Command = LoaderCommand.Parse(get("boot_command") ?? "");
+            // a retail profile whose viewer path is empty or gone gets the one the installer registered
+            if (p.IsRetail && (string.IsNullOrWhiteSpace(p.BootFile) || !File.Exists(p.BootFile)))
+                p.BootFile = ClientVersion.FindPlayOnlineViewer() ?? p.BootFile;
             int w, h;
             if (int.TryParse(get("window_x"), out w)) { p.Width = w; p.MenuWidth = w; }
             if (int.TryParse(get("window_y"), out h)) { p.Height = h; p.MenuHeight = h; }

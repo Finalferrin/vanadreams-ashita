@@ -127,11 +127,24 @@ namespace Vanadreams.Pages
             var copy = Profile.Load(sourcePath).DuplicateTo(store.PathFor(id), id);
             if (retail)
             {
-                // Ashita's own PlayOnline bootloader, retail's quick-play command, the shared startup script
-                copy.BootFile = @".\bootloader\pol.exe";
+                // Retail runs through PlayOnline Viewer's own pol.exe with its quick-play command, as
+                // Ashita's example shows. The bootloader folder's pol.exe is for private servers only.
+                var viewer = ClientVersion.FindPlayOnlineViewer();
+                copy.BootFile = viewer ?? "";
                 copy.Command = new LoaderCommand { Extra = "/game eAZcFcB" };
                 copy.Script = "vanadreams.txt";
                 copy.Save();
+                App.State.Settings.LastProfile = id;
+                App.State.Settings.Save();
+                App.State.Notify();
+                if (viewer == null)
+                {
+                    Reload(id);
+                    Note.Text = "PlayOnline Viewer was not found. Install the retail client (Guide) and browse to its pol.exe here.";
+                    return;
+                }
+                _win.Navigate(new MenuPage(_win));   // it is the current profile now: Play is one press away
+                return;
             }
             else if (Path.GetFileName(sourcePath).StartsWith("example", StringComparison.OrdinalIgnoreCase))
             {

@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -75,7 +76,8 @@ namespace Vanadreams.Pages
             }
             PlayButton.IsEnabled = true;
             ProfileName.Text = _profile.Name;
-            ProfileServer.Text = (_profile.Command.Server.IndexOf("vanadreams", StringComparison.OrdinalIgnoreCase) >= 0 ? "Vanadreams · " : "") + _profile.Command.Server;
+            ProfileServer.Text = _profile.IsRetail ? "Retail · Square Enix, through PlayOnline"
+                : (_profile.Command.Server.IndexOf("vanadreams", StringComparison.OrdinalIgnoreCase) >= 0 ? "Vanadreams · " : "") + _profile.Command.Server;
             var v = state.Version;
             var mode = _profile.Mode == WindowMode.Registry ? "As the game remembers" : _profile.Mode.ToString();
             var size = _profile.Width > 0 && _profile.Height > 0 ? $" · {_profile.Width} × {_profile.Height}" : "";
@@ -93,7 +95,10 @@ namespace Vanadreams.Pages
                 : "✗ " + v.Installed + " · server expects " + v.Expected,
                 !v.ExpectedIsPublished ? "Mist" : v.Verdict == VersionVerdict.Ready ? "Ok" : v.Verdict == VersionVerdict.Unknown ? "Warn" : "Bad");
             AddFact("Ashita", "v4 beta, updated " + state.AshitaUpdated() + " · " + state.AshitaRoot, null);
-            AddFact("Loader", "xiloader " + state.LoaderVersion(), null);
+            if (_profile.IsRetail)
+                AddFact("Loader", File.Exists(_profile.BootFile) ? "PlayOnline Viewer" : "PlayOnline Viewer missing · install the retail client", File.Exists(_profile.BootFile) ? null : "Bad");
+            else
+                AddFact("Loader", "xiloader " + state.LoaderVersion(), null);
             var savedLogin = cred != null && !string.IsNullOrEmpty(cred.User);
             AddFact("Login", savedLogin ? cred.User + " · remembered" : "Not saved · Edit profile, fill Username and Password, Save", savedLogin ? null : "Warn");
             AddFact("Addons", state.EnabledCount + " enabled" + (state.UpdateCount > 0 ? " · " + state.UpdateCount + " update" + (state.UpdateCount > 1 ? "s" : "") : ""), null);
@@ -170,7 +175,7 @@ namespace Vanadreams.Pages
             if (_profile == null) return;
             var state = App.State;
             state.CheckVersion();
-            if (state.Version.BlocksPlay)
+            if (!_profile.IsRetail && state.Version.BlocksPlay)   // the Vanadreams version rule has no say over retail
             {
                 MessageBox.Show(state.Version.Sentence + "\n\nOpen the Guide from the menu for the update steps.", "Vanadreams Launcher", MessageBoxButton.OK, MessageBoxImage.Warning);
                 _win.RefreshStrip();
