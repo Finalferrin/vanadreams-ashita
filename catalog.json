@@ -8,6 +8,12 @@
       "docs": "https://github.com/Finalferrin/vanadreams-ashita/tree/main/addons/vanafish",
       "description": "The Vanadreams fishing bot. Casts, reads the bite, decides catch or release by your rules, ends the fight the way the server judges it, stops itself when something is off. Vanadreams only." },
 
+    { "id": "charcapture", "name": "charcapture", "kind": "addon", "maintainer": "Vanadreams",
+      "source": { "type": "repo-folder", "repo": "Finalferrin/vanadreams-ashita", "path": "addons/charcapture", "branch": "main" },
+      "version": "0.1.0", "install": "copy-to-addons", "load": "/addon load charcapture", "config": "config\\charcapture\\",
+      "docs": "https://github.com/Finalferrin/vanadreams-ashita/tree/main/addons/charcapture",
+      "description": "Snapshots your character for porting to Vanadreams: /capture in game, then send it from the launcher's Capture page. Reads only." },
+
     { "id": "distance", "name": "distance", "kind": "addon", "source": { "type": "bundled" }, "load": "/addon load distance", "description": "Shows the distance to your target.", "v3": { "name": "distance" } },
     { "id": "fps", "name": "fps", "kind": "addon", "source": { "type": "bundled" }, "load": "/addon load fps", "description": "Frame rate display and cap.", "configLines": ["/bind F12 /fps"], "v3": { "name": "fps" } },
     { "id": "timestamp", "name": "timestamp", "kind": "addon", "source": { "type": "bundled" }, "load": "/addon load timestamp", "description": "Timestamps in the chat log.", "v3": { "name": "timestamp" } },

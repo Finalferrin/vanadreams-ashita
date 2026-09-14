@@ -89,6 +89,7 @@ namespace Vanadreams
                 case "setup": page = new SetupPage(this); break;
                 case "settings": page = new SettingsPage(this); break;
                 case "fishing": page = new FishingPage(this); break;
+                case "capture": page = new CapturePage(this); break;
                 default: page = new MenuPage(this); break;
             }
             Navigate(page);

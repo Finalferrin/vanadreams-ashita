@@ -18,6 +18,7 @@ namespace Vanadreams.Services
         public string LastProfile { get; set; } = "";
         public string CatalogUrl { get; set; } = "https://raw.githubusercontent.com/Finalferrin/vanadreams-ashita/main/catalog.json";
         public string StatusUrl { get; set; } = ServerStatusClient.DefaultUrl;
+        public string CaptureUrl { get; set; } = "https://fairywitch.ca/api/public/vanadreams/capture";
         public string ExpectedClientVer { get; set; } = "30260805_0";
         public int VerLock { get; set; } = 2;
         public bool SetupDone { get; set; }
@@ -39,6 +40,7 @@ namespace Vanadreams.Services
                 s.LastProfile = Json.Str(d, "lastProfile", "");
                 s.CatalogUrl = Json.Str(d, "catalogUrl", s.CatalogUrl);
                 s.StatusUrl = Json.Str(d, "statusUrl", s.StatusUrl);
+                s.CaptureUrl = Json.Str(d, "captureUrl", s.CaptureUrl);
                 s.ExpectedClientVer = Json.Str(d, "expectedClientVer", s.ExpectedClientVer);
                 s.VerLock = Json.Int(d, "verLock", 2);
                 s.SetupDone = Json.Bool(d, "setupDone");
@@ -62,6 +64,7 @@ namespace Vanadreams.Services
                 { "lastProfile", LastProfile ?? "" },
                 { "catalogUrl", CatalogUrl },
                 { "statusUrl", StatusUrl },
+                { "captureUrl", CaptureUrl },
                 { "expectedClientVer", ExpectedClientVer },
                 { "verLock", VerLock },
                 { "setupDone", SetupDone },
