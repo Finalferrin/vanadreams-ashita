@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="VanadreamsLauncher.Tests/VanadreamsLauncher.Tests.csproj" />
+  <Project Path="VanadreamsLauncher/VanadreamsLauncher.csproj" />
+</Solution>

@@ -1,0 +1,236 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Vanadreams tokens, from fairywitch.ca, used unchanged -->
+    <Color x:Key="NightColor">#FF0F0A17</Color>
+    <Color x:Key="PlumColor">#FF231938</Color>
+    <Color x:Key="VelvetColor">#FF33224A</Color>
+    <Color x:Key="GoldColor">#FFD6A74C</Color>
+    <Color x:Key="GoldSoftColor">#FFF1CD78</Color>
+    <Color x:Key="BrassColor">#FF9C6428</Color>
+    <Color x:Key="CreamColor">#FFFFF3D2</Color>
+    <Color x:Key="MistColor">#ADFFF2D3</Color>
+    <Color x:Key="LineColor">#38F1CD78</Color>
+    <Color x:Key="OkColor">#FF8EC29C</Color>
+    <Color x:Key="WarnColor">#FFF2C94F</Color>
+    <Color x:Key="BadColor">#FFE07A6A</Color>
+
+    <SolidColorBrush x:Key="Night" Color="{StaticResource NightColor}"/>
+    <SolidColorBrush x:Key="Plum" Color="{StaticResource PlumColor}"/>
+    <SolidColorBrush x:Key="Velvet" Color="{StaticResource VelvetColor}"/>
+    <SolidColorBrush x:Key="Gold" Color="{StaticResource GoldColor}"/>
+    <SolidColorBrush x:Key="GoldSoft" Color="{StaticResource GoldSoftColor}"/>
+    <SolidColorBrush x:Key="Brass" Color="{StaticResource BrassColor}"/>
+    <SolidColorBrush x:Key="Cream" Color="{StaticResource CreamColor}"/>
+    <SolidColorBrush x:Key="Mist" Color="{StaticResource MistColor}"/>
+    <SolidColorBrush x:Key="Line" Color="{StaticResource LineColor}"/>
+    <SolidColorBrush x:Key="Ok" Color="{StaticResource OkColor}"/>
+    <SolidColorBrush x:Key="Warn" Color="{StaticResource WarnColor}"/>
+    <SolidColorBrush x:Key="Bad" Color="{StaticResource BadColor}"/>
+
+    <FontFamily x:Key="Display">Georgia, Times New Roman</FontFamily>
+    <FontFamily x:Key="Body">Segoe UI Variable, Segoe UI</FontFamily>
+
+    <!-- The FF7 box: vertical gradient, bevelled border, everything inside shadowed -->
+    <LinearGradientBrush x:Key="BoxFill" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="#FF3A2757" Offset="0"/>
+        <GradientStop Color="#FF1E1531" Offset="0.55"/>
+        <GradientStop Color="#FF120C1C" Offset="1"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="WindowSky" StartPoint="0.18,0" EndPoint="0.6,1">
+        <GradientStop Color="#FF2C1C44" Offset="0"/>
+        <GradientStop Color="#FF0F0A17" Offset="1"/>
+    </LinearGradientBrush>
+
+    <DropShadowEffect x:Key="TextShadow" ShadowDepth="2" Direction="270" BlurRadius="0" Opacity="0.85" Color="Black"/>
+    <DropShadowEffect x:Key="BoxShadow" ShadowDepth="10" Direction="270" BlurRadius="30" Opacity="0.5" Color="Black"/>
+
+    <Style x:Key="Box" TargetType="Border">
+        <Setter Property="Background" Value="{StaticResource BoxFill}"/>
+        <Setter Property="BorderThickness" Value="3"/>
+        <Setter Property="BorderBrush">
+            <Setter.Value>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#FFF1CD78" Offset="0"/>
+                    <GradientStop Color="#FFD6A74C" Offset="0.5"/>
+                    <GradientStop Color="#FF5C3C17" Offset="1"/>
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Padding" Value="16,14"/>
+        <Setter Property="Effect" Value="{StaticResource BoxShadow}"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+    </Style>
+
+    <Style x:Key="BoxInner" TargetType="Border">
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="#99000000"/>
+        <Setter Property="Margin" Value="-14,-12"/>
+        <Setter Property="Padding" Value="14,12"/>
+    </Style>
+
+    <Style TargetType="TextBlock">
+        <Setter Property="Foreground" Value="{StaticResource Cream}"/>
+        <Setter Property="FontFamily" Value="{StaticResource Body}"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Effect" Value="{StaticResource TextShadow}"/>
+    </Style>
+
+    <Style x:Key="Eyebrow" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+        <Setter Property="Foreground" Value="{StaticResource GoldSoft}"/>
+        <Setter Property="FontSize" Value="11"/>
+        <Setter Property="FontWeight" Value="ExtraBold"/>
+        <Setter Property="Typography.Capitals" Value="AllSmallCaps"/>
+        <Setter Property="Margin" Value="0,0,0,8"/>
+    </Style>
+
+    <Style x:Key="Display40" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+        <Setter Property="FontFamily" Value="{StaticResource Display}"/>
+        <Setter Property="FontSize" Value="40"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Foreground" Value="#FFFFF6DF"/>
+    </Style>
+
+    <Style x:Key="MenuItemText" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+        <Setter Property="FontFamily" Value="{StaticResource Display}"/>
+        <Setter Property="FontSize" Value="22"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Foreground" Value="#FFFFF6DF"/>
+    </Style>
+
+    <Style x:Key="Muted" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+        <Setter Property="Foreground" Value="{StaticResource Mist}"/>
+    </Style>
+
+    <Style x:Key="Mono" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+        <Setter Property="Typography.NumeralAlignment" Value="Tabular"/>
+    </Style>
+
+    <!-- The pointing hand: the FF7 cursor -->
+    <Style x:Key="Hand" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+        <Setter Property="Text" Value="☞"/>
+        <Setter Property="FontSize" Value="26"/>
+        <Setter Property="Foreground" Value="{StaticResource GoldSoft}"/>
+        <Setter Property="Margin" Value="0,-4,8,0"/>
+        <Setter Property="Effect">
+            <Setter.Value>
+                <DropShadowEffect ShadowDepth="0" BlurRadius="12" Opacity="0.7" Color="#FFF1CD78"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Gold pill button -->
+    <Style x:Key="GoldButton" TargetType="Button">
+        <Setter Property="Foreground" Value="#FF2A1C0A"/>
+        <Setter Property="FontFamily" Value="{StaticResource Body}"/>
+        <Setter Property="FontWeight" Value="ExtraBold"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Padding" Value="22,8"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="bd" CornerRadius="999" Padding="{TemplateBinding Padding}">
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                <GradientStop Color="#FFF1CD78" Offset="0"/>
+                                <GradientStop Color="#FFD6A74C" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="bd" Property="Opacity" Value="0.92"/>
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="bd" Property="BorderBrush" Value="White"/>
+                            <Setter TargetName="bd" Property="BorderThickness" Value="2"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="bd" Property="Opacity" Value="0.45"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="GhostButton" TargetType="Button" BasedOn="{StaticResource GoldButton}">
+        <Setter Property="Foreground" Value="{StaticResource Cream}"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="bd" CornerRadius="999" Padding="{TemplateBinding Padding}" Background="#59000000" BorderBrush="{StaticResource Line}" BorderThickness="1">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="bd" Property="BorderBrush" Value="{StaticResource GoldSoft}"/>
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="bd" Property="BorderBrush" Value="White"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="bd" Property="Opacity" Value="0.45"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Text entry in the box -->
+    <Style TargetType="TextBox">
+        <Setter Property="Background" Value="#66000000"/>
+        <Setter Property="Foreground" Value="{StaticResource Cream}"/>
+        <Setter Property="CaretBrush" Value="{StaticResource GoldSoft}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource Line}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Padding" Value="8,5"/>
+        <Setter Property="FontFamily" Value="{StaticResource Body}"/>
+        <Setter Property="FontSize" Value="14"/>
+    </Style>
+    <Style TargetType="PasswordBox">
+        <Setter Property="Background" Value="#66000000"/>
+        <Setter Property="Foreground" Value="{StaticResource Cream}"/>
+        <Setter Property="CaretBrush" Value="{StaticResource GoldSoft}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource Line}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Padding" Value="8,5"/>
+        <Setter Property="FontFamily" Value="{StaticResource Body}"/>
+        <Setter Property="FontSize" Value="14"/>
+    </Style>
+    <Style TargetType="CheckBox">
+        <Setter Property="Foreground" Value="{StaticResource Cream}"/>
+        <Setter Property="FontFamily" Value="{StaticResource Body}"/>
+        <Setter Property="FontSize" Value="14"/>
+    </Style>
+    <Style TargetType="ComboBox">
+        <Setter Property="FontFamily" Value="{StaticResource Body}"/>
+        <Setter Property="FontSize" Value="14"/>
+    </Style>
+    <Style TargetType="ProgressBar">
+        <Setter Property="Foreground" Value="{StaticResource Gold}"/>
+        <Setter Property="Background" Value="#66000000"/>
+        <Setter Property="BorderBrush" Value="{StaticResource Line}"/>
+        <Setter Property="Height" Value="10"/>
+    </Style>
+
+    <!-- Status pill -->
+    <Style x:Key="Pill" TargetType="Border">
+        <Setter Property="CornerRadius" Value="999"/>
+        <Setter Property="Background" Value="#73000000"/>
+        <Setter Property="BorderBrush" Value="{StaticResource Line}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Padding" Value="8,4,12,4"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+    </Style>
+    <Style x:Key="PillDot" TargetType="Ellipse">
+        <Setter Property="Width" Value="9"/>
+        <Setter Property="Height" Value="9"/>
+        <Setter Property="Margin" Value="0,0,8,0"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+</ResourceDictionary>
