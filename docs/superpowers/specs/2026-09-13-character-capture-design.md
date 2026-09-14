@@ -58,6 +58,8 @@ Job ids are the game's (1 WAR … 22 RUN). Skill ids are Ashita's indexes for `G
 
 Every array is complete, not a diff: a snapshot replaces the previous one.
 
+Added in addon 0.1.1 (14 Sept 2026), still schema 1, both optional: `merit_upgrades`, an object of merit id to upgrade count (the server's `char_merit.meritid` and `upgrades`), and `job_point_upgrades`, an object of job id to an object of upgrade index (0–9) to level (the server's `char_job_points.jptype0`–`jptype9`). Ashita's memory has neither, so the addon reads them from the packets the game sends when the Merit Points menu (0x08C) and the Job Points menu (0x08D) are opened, and the player opens both once before `/capture`. When a menu was not opened the field is absent and `not_captured` says which one.
+
 Known gaps in schema 1, found on the first real capture (14 Sept 2026): `weaponskills` and `traits` come back as a handful of small numbers rather than the real lists and must be ignored by the importer, which loses nothing because the server grants weapon skills from skill level and traits from job level on its own; `character.size` can be -1 when the model size is not readable, so the importer treats anything outside 0–2 as 0; the main-hand and sub-hand equipment slots (0 and 1) can be absent, so the player re-equips weapons once in game. Every other field checked out against the character it was taken from.
 
 ## The addon
