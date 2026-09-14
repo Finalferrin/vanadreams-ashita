@@ -10,7 +10,7 @@
     <AssemblyName>VanadreamsLauncher</AssemblyName>
     <AssemblyTitle>Vanadreams Launcher</AssemblyTitle>
     <Product>Vanadreams Launcher</Product>
-    <Version>0.1.0</Version>
+    <Version>0.1.1</Version>
     <ApplicationIcon />
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <Deterministic>true</Deterministic>
@@ -23,6 +23,7 @@
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="assets\**\*" />

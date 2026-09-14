@@ -41,6 +41,16 @@ namespace Vanadreams.Pages
             Note.Text = App.State.CatalogFromCache ? "Could not fetch; using the cached copy." : "Catalogue updated: " + App.State.Catalog.Items.Count + " items.";
         }
 
+        private void Shortcuts_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (!SelfInstall.IsInstalledCopy) { SelfInstall.Install(); Note.Text = "Installed to " + SelfInstall.InstallDir + " with shortcuts. Use the shortcut from now on."; }
+                else { SelfInstall.MakeShortcuts(); Note.Text = "Shortcuts made."; }
+            }
+            catch (Exception ex) { Note.Text = ex.Message; }
+        }
+
         private void Data_Click(object sender, RoutedEventArgs e) => Open(LauncherSettings.DataFolder);
         private void Log_Click(object sender, RoutedEventArgs e) => Open(App.State.Settings.LogPath);
         private void Open(string path)

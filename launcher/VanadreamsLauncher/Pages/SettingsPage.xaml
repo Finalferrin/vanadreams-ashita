@@ -45,6 +45,7 @@
                         <Button Style="{StaticResource GhostButton}" Content="Refresh catalogue" Click="Catalog_Click"/>
                         <Button Style="{StaticResource GhostButton}" Content="Open data folder" Margin="8,0,0,0" Click="Data_Click"/>
                         <Button Style="{StaticResource GhostButton}" Content="Open log" Margin="8,0,0,0" Click="Log_Click"/>
+                        <Button x:Name="ShortcutsButton" Style="{StaticResource GhostButton}" Content="Install shortcuts" Margin="8,0,0,0" Click="Shortcuts_Click"/>
                     </StackPanel>
                 </Grid>
                 <Grid Grid.Row="2">
