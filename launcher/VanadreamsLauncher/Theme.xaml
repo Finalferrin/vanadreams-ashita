@@ -210,6 +210,11 @@
     <Style TargetType="ComboBox">
         <Setter Property="FontFamily" Value="{StaticResource Body}"/>
         <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Foreground" Value="#FF2A1C0A"/>
+        <Setter Property="Padding" Value="8,4"/>
+    </Style>
+    <Style TargetType="ComboBoxItem">
+        <Setter Property="Foreground" Value="#FF2A1C0A"/>
     </Style>
     <Style TargetType="ProgressBar">
         <Setter Property="Foreground" Value="{StaticResource Gold}"/>

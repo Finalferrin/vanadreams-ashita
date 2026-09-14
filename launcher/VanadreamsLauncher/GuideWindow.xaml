@@ -1,0 +1,62 @@
+<Window x:Class="Vanadreams.GuideWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Installing FFXI for Vanadreams" Width="900" Height="640" ResizeMode="CanMinimize"
+        WindowStartupLocation="CenterOwner" Background="{StaticResource WindowSky}" FontFamily="{StaticResource Body}">
+    <Grid Margin="24">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Border Style="{StaticResource Box}">
+            <StackPanel>
+                <TextBlock Style="{StaticResource Eyebrow}" Text="✦ Steps"/>
+                <ItemsControl x:Name="Steps">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Height="40" Background="Transparent" MouseLeftButtonUp="Step_Click" Tag="{Binding}">
+                                <Grid.ColumnDefinitions><ColumnDefinition Width="28"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                                <TextBlock Style="{StaticResource Hand}" FontSize="22" Visibility="{Binding HandVisibility}"/>
+                                <TextBlock Grid.Column="1" Text="{Binding Title}" FontFamily="{StaticResource Display}" FontSize="15" FontWeight="Bold" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                                <TextBlock Grid.Column="2" Text="{Binding Mark}" Foreground="{Binding MarkBrush}" FontWeight="Bold" VerticalAlignment="Center"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </Border>
+        <Border Grid.Column="2" Style="{StaticResource Box}">
+            <Grid>
+                <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+                <StackPanel>
+                    <TextBlock x:Name="StepEyebrow" Style="{StaticResource Eyebrow}"/>
+                    <TextBlock x:Name="StepTitle" Style="{StaticResource Display40}" FontSize="28"/>
+                </StackPanel>
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="0,8,0,8">
+                    <StackPanel>
+                        <Border x:Name="PictureFrame" BorderBrush="{StaticResource Line}" BorderThickness="1" Background="#66000000" Height="200" Margin="0,0,0,12">
+                            <Grid>
+                                <Image x:Name="Picture" Stretch="Uniform"/>
+                                <TextBlock x:Name="PictureNote" Style="{StaticResource Muted}" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" MaxWidth="400"/>
+                            </Grid>
+                        </Border>
+                        <TextBlock x:Name="StepBody" TextWrapping="Wrap" LineHeight="22"/>
+                        <TextBlock x:Name="CheckResult" Style="{StaticResource Mono}" TextWrapping="Wrap" Margin="0,12,0,0"/>
+                    </StackPanel>
+                </ScrollViewer>
+                <StackPanel Grid.Row="2">
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                        <Button x:Name="LinkButton" Style="{StaticResource GhostButton}" Content="Open the link" Padding="14,6" Click="Link_Click"/>
+                        <Button x:Name="CheckButton" Style="{StaticResource GoldButton}" Content="Check" Padding="18,6" Margin="8,0,0,0" Click="Check_Click"/>
+                        <Button x:Name="DoneButton" Style="{StaticResource GhostButton}" Content="I did this" Padding="14,6" Margin="8,0,0,0" Click="Done_Click"/>
+                    </StackPanel>
+                    <Grid>
+                        <Button Style="{StaticResource GhostButton}" Content="Something's wrong" Padding="14,6" HorizontalAlignment="Left" Click="Wrong_Click"/>
+                        <Button x:Name="NextButton" Style="{StaticResource GoldButton}" Content="Next ▸" Padding="18,6" HorizontalAlignment="Right" Click="Next_Click"/>
+                    </Grid>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

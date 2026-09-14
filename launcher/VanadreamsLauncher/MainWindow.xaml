@@ -3,8 +3,49 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Vanadreams Launcher" Width="1000" Height="640" ResizeMode="CanMinimize"
         WindowStartupLocation="CenterScreen" Background="{StaticResource WindowSky}"
-        FontFamily="{StaticResource Body}">
+        FontFamily="{StaticResource Body}" UseLayoutRounding="True" TextOptions.TextFormattingMode="Display">
     <Grid>
-        <ContentControl x:Name="Page"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="120"/>
+        </Grid.RowDefinitions>
+
+        <Canvas x:Name="Stars" Grid.RowSpan="2" IsHitTestVisible="False"/>
+
+        <ContentControl x:Name="Page" Grid.Row="0" Margin="0"/>
+
+        <!-- The gil-and-time strip: server, client, news -->
+        <Border Grid.Row="1" Style="{StaticResource Box}" Margin="40,0,40,24">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                    <TextBlock Style="{StaticResource Eyebrow}" Text="✦ Vanadreams"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Border Style="{StaticResource Pill}" VerticalAlignment="Center">
+                            <StackPanel Orientation="Horizontal">
+                                <Ellipse x:Name="StatusDot" Style="{StaticResource PillDot}" Fill="{StaticResource Mist}"/>
+                                <TextBlock x:Name="StatusWord" Text="Status unknown" FontWeight="Bold" FontSize="13"/>
+                                <TextBlock x:Name="StatusWhen" Style="{StaticResource Muted}" FontSize="12" Margin="8,0,0,0"/>
+                            </StackPanel>
+                        </Border>
+                        <TextBlock x:Name="StatusNote" Style="{StaticResource Muted}" FontSize="13" Margin="12,0,0,0" VerticalAlignment="Center" MaxWidth="260" TextTrimming="CharacterEllipsis"/>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Grid.Column="2" VerticalAlignment="Center">
+                    <TextBlock Style="{StaticResource Eyebrow}" Text="✦ Client check"/>
+                    <TextBlock x:Name="VersionLine" Style="{StaticResource Mono}" Text="Checking…" MaxWidth="300" TextWrapping="Wrap"/>
+                </StackPanel>
+                <StackPanel Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Right">
+                    <TextBlock Style="{StaticResource Eyebrow}" Text="✦ News" HorizontalAlignment="Right"/>
+                    <TextBlock x:Name="NewsLine" Style="{StaticResource Muted}" FontSize="13" MaxWidth="240" TextWrapping="Wrap" TextAlignment="Right" Text="Rates, rules and status are on fairywitch.ca."/>
+                </StackPanel>
+            </Grid>
+        </Border>
     </Grid>
 </Window>

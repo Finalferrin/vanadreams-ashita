@@ -1,0 +1,55 @@
+<UserControl x:Class="Vanadreams.Pages.SetupPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Focusable="True">
+    <Grid Margin="40,36,40,0">
+        <Border Style="{StaticResource Box}" Height="376" VerticalAlignment="Top">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="32"/>
+                    <ColumnDefinition Width="300"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock x:Name="Heading" Style="{StaticResource Eyebrow}" Text="✦ Setup"/>
+                <StackPanel Grid.Row="1">
+                    <TextBlock x:Name="Title" Style="{StaticResource Display40}" FontSize="30" Text="Set up Ashita for Vanadreams"/>
+                    <TextBlock x:Name="Lede" Style="{StaticResource Muted}" TextWrapping="Wrap" Margin="0,4,0,16" Text="This downloads the Ashita v4 beta and the loader, unpacks them into a folder you choose, and writes the Vanadreams profile. It never touches the FFXI client itself."/>
+                    <TextBlock Text="Ashita folder" Style="{StaticResource Muted}"/>
+                    <Grid Margin="0,4,0,14">
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                        <TextBox x:Name="FolderBox"/>
+                        <Button Grid.Column="1" Style="{StaticResource GhostButton}" Content="Choose…" Padding="12,4" Margin="8,0,0,0" Click="Choose_Click"/>
+                    </Grid>
+                    <StackPanel x:Name="ImportPanel" Visibility="Collapsed">
+                        <TextBlock x:Name="ImportLabel" Style="{StaticResource Muted}"/>
+                        <CheckBox x:Name="ImportProfiles" Content="Bring my v3 profiles over" IsChecked="True" Margin="0,4,0,2"/>
+                        <CheckBox x:Name="ImportConfigs" Content="Copy the configs that carry over (MultiSend, Lootwhore, Ashitacast, XIPivot)" IsChecked="True" Margin="0,2,0,10"/>
+                    </StackPanel>
+                    <ProgressBar x:Name="Progress" Visibility="Collapsed" Margin="0,4,0,4"/>
+                    <TextBlock x:Name="Status" Style="{StaticResource Mono}" TextWrapping="Wrap"/>
+                </StackPanel>
+                <StackPanel Grid.Row="2" Orientation="Horizontal">
+                    <Button x:Name="GoButton" Style="{StaticResource GoldButton}" Content="Download and set up" Click="Go_Click"/>
+                    <Button x:Name="AdoptButton" Style="{StaticResource GhostButton}" Content="Use this folder as it is" Margin="10,0,0,0" Click="Adopt_Click" Visibility="Collapsed"/>
+                    <Button x:Name="BackButton" Style="{StaticResource GhostButton}" Content="Back" Margin="10,0,0,0" Click="Back_Click"/>
+                    <Button Style="{StaticResource GhostButton}" Content="FFXI client guide" Margin="10,0,0,0" Click="Guide_Click"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="2" Grid.RowSpan="3">
+                    <TextBlock Style="{StaticResource Eyebrow}" Text="✦ What happens"/>
+                    <TextBlock x:Name="Step1" TextWrapping="Wrap" Margin="0,0,0,8" Text="1. Ashita v4 beta downloads from its GitHub repository."/>
+                    <TextBlock x:Name="Step2" TextWrapping="Wrap" Margin="0,0,0,8" Text="2. xiloader downloads from LandSandBoat's releases into the bootloader folder."/>
+                    <TextBlock x:Name="Step3" TextWrapping="Wrap" Margin="0,0,0,8" Text="3. The Vanadreams profile is written with the server address and the startup script."/>
+                    <TextBlock x:Name="Step4" TextWrapping="Wrap" Margin="0,0,0,8" Text="4. If a v3 Ashita is found, profiles and configs come across."/>
+                    <TextBlock x:Name="Step5" TextWrapping="Wrap" Margin="0,0,0,8" Text="5. You land on the menu with Vanadreams selected. Make your account at the loader prompt on first Play."/>
+                    <TextBlock Style="{StaticResource Muted}" FontSize="12" TextWrapping="Wrap" Margin="0,8,0,0" Text="Run this again any time as Repair: only what changed is fetched."/>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>
