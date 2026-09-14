@@ -22,7 +22,21 @@ namespace Vanadreams
                 if (args[i] == "--ashita" && i + 1 < args.Length) { State = State ?? new AppState(); State.Settings.AshitaRoot = args[i + 1]; }
             }
             State = State ?? new AppState();
-            Log.Info("Launcher " + typeof(App).Assembly.GetName().Version + " starting");
+            Log.Info("Launcher " + typeof(App).Assembly.GetName().Version + " starting from " + SelfInstall.CurrentExe);
+
+            // A fresh download installs itself once, then runs from its own folder with shortcuts.
+            if (string.IsNullOrEmpty(SnapshotPath) && SelfInstall.LooksLikeADownload())
+            {
+                var answer = MessageBox.Show(
+                    "Install the Vanadreams Launcher?\n\nIt copies itself to your apps folder and adds Start menu and desktop shortcuts. Nothing else changes. Choose No to run it from here just this once.",
+                    "Vanadreams Launcher", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                if (answer == MessageBoxResult.Cancel) { Shutdown(); return; }
+                if (answer == MessageBoxResult.Yes)
+                {
+                    try { SelfInstall.Install(); SelfInstall.HandOver(); Shutdown(); return; }
+                    catch (Exception ex) { Log.Error("self-install", ex); MessageBox.Show("Couldn't install: " + ex.Message + "\n\nRunning from here instead.", "Vanadreams Launcher"); }
+                }
+            }
             DispatcherUnhandledException += (s, ex) =>
             {
                 Log.Error("unhandled", ex.Exception);
