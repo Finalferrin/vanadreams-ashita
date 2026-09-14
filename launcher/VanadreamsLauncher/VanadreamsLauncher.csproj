@@ -10,7 +10,7 @@
     <AssemblyName>VanadreamsLauncher</AssemblyName>
     <AssemblyTitle>Vanadreams Launcher</AssemblyTitle>
     <Product>Vanadreams Launcher</Product>
-    <Version>0.1.1</Version>
+    <Version>0.1.2</Version>
     <ApplicationIcon />
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <Deterministic>true</Deterministic>
