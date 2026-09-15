@@ -41,6 +41,7 @@ local defaults = T{
     stop_free_slots = T{ 1 },   -- stop when free inventory slots fall to this
     stop_on_fail_streak = T{ 8 },
     servers     = T{ 'vanadreams' },
+    recipes     = T{ },         -- every synth you have done by hand, newest first: { crystal = id, ingredients = { id, ... } }
 };
 local cfg = settings.load(defaults);
 
@@ -52,7 +53,8 @@ local S = { IDLE = 'idle', SENT = 'synthesizing', COOLDOWN = 'cooldown', STOPPED
 local bot = {
     running = false, state = S.STOPPED, stop_reason = '', deadline = 0,
     queue = T{},            -- { count = n, done = n, crystal = id, ingredients = { id, id, ... } }
-    last = nil,             -- the synth you last did by hand: { crystal = id, ingredients = { ... } }
+    last = nil,             -- the synth you last did by hand: { crystal = id, ingredients = { ... }, at = clock }
+    selected = 1,           -- index into cfg.recipes shown in the dropdown
     repeat_count = T{ 10 },
     counters = T{ synths = 0, success = 0, hq = 0, failed = 0, other = 0 },
     fail_streak = 0, last_result = '', allowed = false, allowed_reason = '',
@@ -189,7 +191,31 @@ local function start()
     end
 end
 
--- Watch the synths you do by hand through the game's own menu, so the window can repeat the last one.
+-- "Fire Crystal + Lizard Skin, Distilled Water"
+local function recipe_label(r)
+    local names = T{}; for _, id in ipairs(r.ingredients) do names:append(item_name(id)); end
+    return item_name(r.crystal) .. ' + ' .. table.concat(names, ', ');
+end
+
+local function same_recipe(a, b)
+    if a.crystal ~= b.crystal or #a.ingredients ~= #b.ingredients then return false; end
+    for i = 1, #a.ingredients do if a.ingredients[i] ~= b.ingredients[i] then return false; end end
+    return true;
+end
+
+-- keep a hand synth in the saved list, newest first, no duplicates, twenty at most
+local function remember(crystal, ingredients)
+    local r = { crystal = crystal, ingredients = ingredients };
+    for i, old in ipairs(cfg.recipes) do
+        if same_recipe(old, r) then table.remove(cfg.recipes, i); break; end
+    end
+    table.insert(cfg.recipes, 1, r);
+    while #cfg.recipes > 20 do table.remove(cfg.recipes); end
+    bot.selected = 1;
+    settings.save();
+end
+
+-- Watch the synths you do by hand through the game's own menu, so the window can repeat them.
 ashita.events.register('packet_out', 'crafty_packet_out', function (e)
     if e.id ~= 0x096 or e.injected then return; end
     local crystal = struct.unpack('<H', e.data, 0x06 + 1);
@@ -200,13 +226,15 @@ ashita.events.register('packet_out', 'crafty_packet_out', function (e)
         ingredients:append((struct.unpack('<H', e.data, 0x0A + i * 2 + 1)));
     end
     bot.last = { crystal = crystal, ingredients = ingredients, at = now() };
-    local names = T{}; for _, id in ipairs(ingredients) do names:append(item_name(id)); end
-    say(('saw you craft %s + %s. Open /crafty to repeat it.'):format(item_name(crystal), table.concat(names, ', ')));
+    remember(crystal, ingredients);
+    say(('saw you craft %s. Open /crafty to repeat it.'):format(recipe_label(bot.last)));
 end);
 
-local function repeat_last(count)
-    if not bot.last then say('craft something by hand first, then repeat it'); return; end
-    bot.queue = T{ { count = count, done = 0, crystal = bot.last.crystal, ingredients = bot.last.ingredients } };
+-- repeat the recipe picked in the dropdown (or the one you last did by hand)
+local function repeat_selected(count)
+    local r = cfg.recipes[bot.selected] or bot.last;
+    if not r then say('craft something by hand first, then repeat it'); return; end
+    bot.queue = T{ { count = count, done = 0, crystal = r.crystal, ingredients = r.ingredients } };
     start();
 end
 
@@ -269,7 +297,7 @@ ashita.events.register('command', 'crafty_cmd', function (e)
         end
     elseif sub == 'clear' then bot.queue = T{}; say('queue cleared');
     elseif sub == 'start' then start();
-    elseif sub == 'repeat' then repeat_last(tonumber(args[3]) or bot.repeat_count[1]);
+    elseif sub == 'repeat' then repeat_selected(tonumber(args[3]) or bot.repeat_count[1]);
     elseif sub == 'stop' then stop('by command');
     elseif sub == 'delay' then
         local d = tonumber(args[3]);
@@ -288,35 +316,46 @@ ashita.events.register('d3d_present', 'crafty_present', function ()
     imgui.SetNextWindowSize({ 360, 0 }, ImGuiCond_FirstUseEver);
     if imgui.Begin('Vanadreams crafting', cfg.window_open) then
         local c = bot.counters;
-        if bot.last then
-            local names = T{}; for _, id in ipairs(bot.last.ingredients) do names:append(item_name(id)); end
-            imgui.Text('Last synth: ' .. item_name(bot.last.crystal) .. ' + ' .. table.concat(names, ', '));
-        else
+        -- the dropdown of every synth you have done by hand, newest first
+        if #cfg.recipes == 0 then
             imgui.TextDisabled('Craft something once by hand and it shows up here.');
+        else
+            if bot.selected > #cfg.recipes then bot.selected = 1; end
+            imgui.PushItemWidth(-1);
+            if imgui.BeginCombo('##recipe', recipe_label(cfg.recipes[bot.selected])) then
+                for i, r in ipairs(cfg.recipes) do
+                    if imgui.Selectable(recipe_label(r) .. '##' .. i, i == bot.selected) then bot.selected = i; end
+                end
+                imgui.EndCombo();
+            end
+            imgui.PopItemWidth();
         end
         imgui.PushItemWidth(80);
         imgui.InputInt('times', bot.repeat_count);
         imgui.PopItemWidth();
         if bot.repeat_count[1] < 1 then bot.repeat_count[1] = 1; end
         imgui.SameLine();
-        if not bot.running and imgui.Button('Repeat', { 100, 24 }) then repeat_last(bot.repeat_count[1]); end
-        imgui.Separator();
         if bot.running then
-            if imgui.Button('Stop', { 120, 26 }) then stop('by button'); end
+            if imgui.Button('Stop', { 100, 24 }) then stop('by button'); end
         else
-            if imgui.Button('Start', { 120, 26 }) then start(); end
+            if imgui.Button('Repeat', { 100, 24 }) then repeat_selected(bot.repeat_count[1]); end
         end
-        imgui.SameLine();
-        imgui.Text(bot.state .. (bot.stop_reason ~= '' and not bot.running and (': ' .. bot.stop_reason) or ''));
-        if bot.running and bot.deadline > 0 then imgui.SameLine(); imgui.TextDisabled(('%ds'):format(math.max(0, bot.deadline - now()))); end
-        imgui.Separator();
-        if #bot.queue == 0 then imgui.TextDisabled('Nothing queued. /crafty add <count> "<crystal>" "<ingredient>" ...'); end
-        for i, r in ipairs(bot.queue) do
-            local names = T{}; for _, id in ipairs(r.ingredients) do names:append(item_name(id)); end
-            imgui.Text(('%d/%d  %s + %s'):format(r.done, r.count, item_name(r.crystal), table.concat(names, ', ')));
+        if #cfg.recipes > 0 and not bot.running then
+            imgui.SameLine();
+            if imgui.Button('Forget', { 70, 24 }) then table.remove(cfg.recipes, bot.selected); bot.selected = 1; settings.save(); end
         end
         imgui.Separator();
-        imgui.Text(('Synths %d  Success %d  HQ %d  Failed %d   Free slots %d'):format(c.synths, c.success, c.hq, c.failed, free_slots()));
+        -- what it is doing right now
+        local r = current_recipe();
+        if bot.running and r then
+            imgui.Text(('%s  %d/%d'):format(bot.state, r.done, r.count));
+            if bot.deadline > 0 then imgui.SameLine(); imgui.TextDisabled(('next in %ds'):format(math.max(0, bot.deadline - now()))); end
+        elseif bot.stop_reason ~= '' then
+            imgui.TextDisabled('Stopped: ' .. bot.stop_reason);
+        else
+            imgui.TextDisabled('Idle');
+        end
+        imgui.Text(('Synths %d   Success %d   HQ %d   Failed %d   Free slots %d'):format(c.synths, c.success, c.hq, c.failed, free_slots()));
         if bot.last_result ~= '' then imgui.TextDisabled('Last: ' .. bot.last_result); end
         if imgui.CollapsingHeader('Settings') then
             local changed = false;
