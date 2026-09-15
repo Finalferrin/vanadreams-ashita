@@ -42,6 +42,7 @@ local defaults = T{
     stop_on_fail_streak = T{ 8 },
     servers     = T{ 'vanadreams' },
     recipes     = T{ },         -- every synth you have done by hand, newest first: { crystal = id, ingredients = { id, ... } }
+    see_through = T{ true },    -- window background: see-through so it can sit beside the crafting menu, or solid
 };
 local cfg = settings.load(defaults);
 
@@ -55,6 +56,7 @@ local bot = {
     queue = T{},            -- { count = n, done = n, crystal = id, ingredients = { id, id, ... } }
     last = nil,             -- the synth you last did by hand: { crystal = id, ingredients = { ... }, at = clock }
     selected = 1,           -- index into cfg.recipes shown in the dropdown
+    next = nil,             -- the outcome of the synth in progress, known the moment it starts: { text, colour, at }
     repeat_count = T{ 10 },
     counters = T{ synths = 0, success = 0, hq = 0, failed = 0, other = 0 },
     fail_streak = 0, last_result = '', allowed = false, allowed_reason = '',
@@ -238,6 +240,40 @@ local function repeat_selected(count)
     start();
 end
 
+-- Vanadreams palette, from the site: night, plum, velvet, gold, soft gold, cream
+local C = {
+    night  = { 0.059, 0.039, 0.090 },
+    plum   = { 0.137, 0.098, 0.220 },
+    velvet = { 0.200, 0.133, 0.290 },
+    gold   = { 0.839, 0.655, 0.298 },
+    soft   = { 0.945, 0.804, 0.471 },
+    cream  = { 1.000, 0.953, 0.824 },
+    fail   = { 0.900, 0.450, 0.450 },
+};
+local function rgba(c, a) return { c[1], c[2], c[3], a }; end
+
+-- The server decides the outcome when the synth starts and sends it in the animation packet,
+-- so this knows the result while the crystal is still spinning.
+local OUTCOME = {
+    [0] = { 'FAIL',          C.fail },
+    [1] = { 'Success',       C.soft },
+    [2] = { 'HQ',            C.cream },
+    [3] = { 'HQ +2',         C.cream },
+    [4] = { 'HQ +3',         C.cream },
+};
+
+ashita.events.register('packet_in', 'crafty_effect_in', function (e)
+    if e.id ~= 0x030 then return; end
+    local who = struct.unpack('<I', e.data, 0x04 + 1);
+    local me = AshitaCore:GetMemoryManager():GetParty():GetMemberServerId(0);
+    if who ~= me then return; end
+    local kind = struct.unpack('<b', e.data, 0x0C + 1);
+    local o = OUTCOME[kind];
+    if not o then return; end
+    bot.next = { text = o[1], colour = o[2], at = now() };
+    say('this synth: ' .. o[1]);
+end);
+
 local RESULT = { [0] = 'success', [1] = 'failed', [2] = 'interrupted', [3] = 'bad recipe', [4] = 'cancelled', [6] = 'skill too low', [7] = 'rare item held', [12] = 'desynth success', [13] = 'wait longer', [14] = 'interrupted' };
 
 ashita.events.register('packet_in', 'crafty_packet_in', function (e)
@@ -314,8 +350,36 @@ ashita.events.register('d3d_present', 'crafty_present', function ()
     tick();
     if not cfg.window_open[1] then return; end
     imgui.SetNextWindowSize({ 360, 0 }, ImGuiCond_FirstUseEver);
+    -- see-through, in the Vanadreams colours, so it can sit beside the crafting menu
+    local see = cfg.see_through[1];
+    imgui.PushStyleVar(ImGuiStyleVar_WindowRounding, 6.0);
+    imgui.PushStyleColor(ImGuiCol_WindowBg,      rgba(C.night, see and 0.55 or 0.97));
+    imgui.PushStyleColor(ImGuiCol_TitleBg,       rgba(C.plum, see and 0.70 or 1.0));
+    imgui.PushStyleColor(ImGuiCol_TitleBgActive, rgba(C.velvet, see and 0.85 or 1.0));
+    imgui.PushStyleColor(ImGuiCol_Border,        rgba(C.gold, 0.35));
+    imgui.PushStyleColor(ImGuiCol_FrameBg,       rgba(C.velvet, 0.60));
+    imgui.PushStyleColor(ImGuiCol_PopupBg,       rgba(C.night, 0.92));
+    imgui.PushStyleColor(ImGuiCol_Button,        rgba(C.velvet, 0.85));
+    imgui.PushStyleColor(ImGuiCol_ButtonHovered, rgba(C.gold, 0.60));
+    imgui.PushStyleColor(ImGuiCol_ButtonActive,  rgba(C.gold, 0.85));
+    imgui.PushStyleColor(ImGuiCol_Header,        rgba(C.velvet, 0.85));
+    imgui.PushStyleColor(ImGuiCol_HeaderHovered, rgba(C.gold, 0.45));
+    imgui.PushStyleColor(ImGuiCol_Separator,     rgba(C.gold, 0.35));
+    imgui.PushStyleColor(ImGuiCol_Text,          rgba(C.cream, 1.0));
+    imgui.PushStyleColor(ImGuiCol_TextDisabled,  rgba(C.soft, 0.75));
     if imgui.Begin('Vanadreams crafting', cfg.window_open) then
         local c = bot.counters;
+        -- the synth in progress: the server already told us how it ends
+        if bot.next and now() - bot.next.at < 20 then
+            imgui.TextDisabled('This synth: ');
+            imgui.SameLine();
+            imgui.TextColored(rgba(bot.next.colour, 1.0), bot.next.text);
+        else
+            imgui.TextDisabled('This synth: shows here the moment it starts');
+        end
+        imgui.SameLine(imgui.GetWindowWidth() - 92);
+        if imgui.SmallButton(see and 'solid' or 'see-through') then cfg.see_through[1] = not see; settings.save(); end
+        imgui.Separator();
         -- the dropdown of every synth you have done by hand, newest first
         if #cfg.recipes == 0 then
             imgui.TextDisabled('Craft something once by hand and it shows up here.');
@@ -367,6 +431,8 @@ ashita.events.register('d3d_present', 'crafty_present', function ()
         if not bot.allowed and bot.allowed_reason ~= '' then imgui.TextDisabled(bot.allowed_reason); end
     end
     imgui.End();
+    imgui.PopStyleColor(14);
+    imgui.PopStyleVar(1);
 end);
 
 ashita.events.register('load', 'crafty_load', function ()
