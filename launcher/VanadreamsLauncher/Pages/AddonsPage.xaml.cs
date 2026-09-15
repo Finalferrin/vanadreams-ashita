@@ -150,6 +150,7 @@ namespace Vanadreams.Pages
                     ProgressText.Text = "Unpacking…";
                     // the catalogue's install field says where the archive goes; the default is the Ashita root
                     var unzipTo = item.Install == InstallAction.CopyToAddons ? Path.Combine(state.AshitaRoot, "addons", item.LoadName ?? item.Id)
+                                : item.Install == InstallAction.UnzipToAddons ? Path.Combine(state.AshitaRoot, "addons")
                                 : item.Install == InstallAction.PivotOverlay ? Path.Combine(PivotConfig.OverlaysRoot(state.AshitaRoot), item.Id)
                                 : state.AshitaRoot;
                     await Task.Run(() => Downloader.ExtractZipOverwrite(zip, unzipTo));

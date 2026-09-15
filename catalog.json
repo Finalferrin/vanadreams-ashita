@@ -13,12 +13,12 @@
         "path": "addons/vanafish",
         "branch": "main"
       },
-      "version": "0.1.0",
+      "version": "0.1.1",
       "install": "copy-to-addons",
       "load": "/addon load vanafish",
       "config": "config\\vanafish\\",
       "docs": "https://github.com/Finalferrin/vanadreams-ashita/tree/main/addons/vanafish",
-      "description": "The Vanadreams fishing bot. Casts, reads the bite, decides catch or release by your rules, ends the fight the way the server judges it, stops itself when something is off. Vanadreams only."
+      "description": "The Vanadreams fishing bot. Casts, reads the bite, decides catch or release by your rules, ends the fight the way the server judges it, stops itself when something is off. Works on any server."
     },
     {
       "id": "charcapture",
@@ -685,6 +685,1162 @@
         "name": "synplicity",
         "note": "No v4 version exists."
       }
+    },
+    {
+      "id": "actionparse",
+      "name": "actionparse",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load actionparse",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/actionparse",
+      "description": "Shows the contents of incoming action packets. A developer tool."
+    },
+    {
+      "id": "activemon",
+      "name": "activemon",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load activemon",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/activemon",
+      "description": "Shows an image on screen when this game window is the focused one. For people running more than one."
+    },
+    {
+      "id": "ahcolors",
+      "name": "ahcolors",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load ahcolors",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/ahcolors",
+      "description": "Recolours auction house listings so they are easier to read."
+    },
+    {
+      "id": "ahgo",
+      "name": "ahgo",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load ahgo",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/ahgo",
+      "description": "Opens the auction house from anywhere and lets you walk with it open."
+    },
+    {
+      "id": "allmaps",
+      "name": "allmaps",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load allmaps",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/allmaps",
+      "description": "Shows every map with /map without needing the key items, waypoints included."
+    },
+    {
+      "id": "aspect",
+      "name": "aspect",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load aspect",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/aspect",
+      "description": "Forces the game's aspect ratio to match the window."
+    },
+    {
+      "id": "autojoin",
+      "name": "autojoin",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load autojoin",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/autojoin",
+      "description": "Handles party invites for you by your rules."
+    },
+    {
+      "id": "autologin",
+      "name": "autologin",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load autologin",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/autologin",
+      "description": "Logs into a chosen character slot on its own."
+    },
+    {
+      "id": "autorespond",
+      "name": "autorespond",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load autorespond",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/autorespond",
+      "description": "Marks you AFK and answers tells with a set message."
+    },
+    {
+      "id": "blucheck",
+      "name": "blucheck",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load blucheck",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/blucheck",
+      "description": "A window tracking which Blue Mage spells you have learned."
+    },
+    {
+      "id": "cartographer",
+      "name": "cartographer",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load cartographer",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/cartographer",
+      "description": "Shows every map in the map menus, not just the zone you are in."
+    },
+    {
+      "id": "casper",
+      "name": "casper",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load casper",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/casper",
+      "description": "Removes collision with other players: walk through them."
+    },
+    {
+      "id": "cfhblock",
+      "name": "cfhblock",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load cfhblock",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/cfhblock",
+      "description": "Blocks Call for Help so you cannot hit it by accident."
+    },
+    {
+      "id": "chamcham",
+      "name": "chamcham",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load chamcham",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/chamcham",
+      "description": "Colours models by what they are: player, monster, NPC."
+    },
+    {
+      "id": "changecall",
+      "name": "changecall",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load changecall",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/changecall",
+      "description": "Replaces every call command with the one call sound you pick."
+    },
+    {
+      "id": "chatfix",
+      "name": "chatfix",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load chatfix",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/chatfix",
+      "description": "Fixes private-server chat problems caused by a client update. Worth having on."
+    },
+    {
+      "id": "chime",
+      "name": "chime",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load chime",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/chime",
+      "description": "Plays in-game chime sounds from a slash command."
+    },
+    {
+      "id": "cleancs",
+      "name": "cleancs",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load cleancs",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/cleancs",
+      "description": "Hides Ashita windows during cutscenes."
+    },
+    {
+      "id": "clearcolor",
+      "name": "clearcolor",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load clearcolor",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/clearcolor",
+      "description": "Changes the background colour of the scene."
+    },
+    {
+      "id": "clock",
+      "name": "clock",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load clock",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/clock",
+      "description": "Shows clocks on screen: local, server, Vana'diel."
+    },
+    {
+      "id": "config",
+      "name": "config",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load config",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/config",
+      "description": "Slash commands that set game settings directly."
+    },
+    {
+      "id": "crosshair",
+      "name": "crosshair",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load crosshair",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/crosshair",
+      "description": "Draws position guide lines for lining up Ashita windows."
+    },
+    {
+      "id": "debuff",
+      "name": "debuff",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load debuff",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/debuff",
+      "description": "Cancel a status effect by command."
+    },
+    {
+      "id": "drawdistance",
+      "name": "drawdistance",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load drawdistance",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/drawdistance",
+      "description": "Slash commands for the scene render distances."
+    },
+    {
+      "id": "enternity",
+      "name": "enternity",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load enternity",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/enternity",
+      "description": "No more pressing Enter through NPC dialogue and cutscenes."
+    },
+    {
+      "id": "equipmon",
+      "name": "equipmon",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load equipmon",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/equipmon",
+      "description": "Your equipment on screen all the time."
+    },
+    {
+      "id": "fastswap",
+      "name": "fastswap",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load fastswap",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/fastswap",
+      "description": "Fixes the client getting stuck when you change jobs too fast."
+    },
+    {
+      "id": "filters",
+      "name": "filters",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load filters",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/filters",
+      "description": "Save and load chat filter sets. Written for private servers."
+    },
+    {
+      "id": "freemem",
+      "name": "freemem",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load freemem",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/freemem",
+      "description": "Memory clean-up."
+    },
+    {
+      "id": "gateway",
+      "name": "gateway",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load gateway",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/gateway",
+      "description": "Every door is always open."
+    },
+    {
+      "id": "hideconsole",
+      "name": "hideconsole",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load hideconsole",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/hideconsole",
+      "description": "Slash commands to hide or show the boot loader window on private servers."
+    },
+    {
+      "id": "hideobs",
+      "name": "hideobs",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load hideobs",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/hideobs",
+      "description": "Hides the game window from OBS capture."
+    },
+    {
+      "id": "hideparty",
+      "name": "hideparty",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load hideparty",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/hideparty",
+      "description": "Slash commands to hide, show or toggle the party frames."
+    },
+    {
+      "id": "hideui",
+      "name": "hideui",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load hideui",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/hideui",
+      "description": "Slash commands to hide, show or toggle the Ashita windows."
+    },
+    {
+      "id": "ime",
+      "name": "ime",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load ime",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/ime",
+      "description": "Lets non-Japanese clients type with the Japanese IME."
+    },
+    {
+      "id": "imguistyle",
+      "name": "imguistyle",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load imguistyle",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/imguistyle",
+      "description": "Per-character styling of the Ashita windows."
+    },
+    {
+      "id": "instantah",
+      "name": "instantah",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load instantah",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/instantah",
+      "description": "Removes the delay on auction house actions."
+    },
+    {
+      "id": "instantchat",
+      "name": "instantchat",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load instantchat",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/instantchat",
+      "description": "Removes the delay on messages reaching the chat windows."
+    },
+    {
+      "id": "invmon",
+      "name": "invmon",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load invmon",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/invmon",
+      "description": "Your bag space on screen."
+    },
+    {
+      "id": "logincmd",
+      "name": "logincmd",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load logincmd",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/logincmd",
+      "description": "Runs a script per character at login or on switching characters."
+    },
+    {
+      "id": "logs",
+      "name": "logs",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load logs",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/logs",
+      "description": "Writes everything in the chat log to a file."
+    },
+    {
+      "id": "macrofix",
+      "name": "macrofix",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load macrofix",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/macrofix",
+      "description": "Removes the macro bar delay when pressing Ctrl or Alt."
+    },
+    {
+      "id": "minimapmon",
+      "name": "minimapmon",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load minimapmon",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/minimapmon",
+      "description": "Hides the minimap when you stand still and in other cases you choose."
+    },
+    {
+      "id": "mipmap",
+      "name": "mipmap",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load mipmap",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/mipmap",
+      "description": "Undoes a Square Enix patch that changed how mipmaps are set up."
+    },
+    {
+      "id": "move",
+      "name": "move",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load move",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/move",
+      "description": "Adjusts the game window: position, size, border."
+    },
+    {
+      "id": "namecolors",
+      "name": "namecolors",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load namecolors",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/namecolors",
+      "description": "Edits the game's name colour table."
+    },
+    {
+      "id": "nomad",
+      "name": "nomad",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load nomad",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/nomad",
+      "description": "Mog house functions in any zone."
+    },
+    {
+      "id": "noname",
+      "name": "noname",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load noname",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/noname",
+      "description": "Hides your own name."
+    },
+    {
+      "id": "onevent",
+      "name": "onevent",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load onevent",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/onevent",
+      "description": "Runs commands of your choosing when a chat event matches."
+    },
+    {
+      "id": "peekaboo",
+      "name": "peekaboo",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load peekaboo",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/peekaboo",
+      "description": "Makes every entity the client knows about visible."
+    },
+    {
+      "id": "quicksets",
+      "name": "quicksets",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load quicksets",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/quicksets",
+      "description": "Removes the delay between equipment sets."
+    },
+    {
+      "id": "renamer",
+      "name": "renamer",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load renamer",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/renamer",
+      "description": "Renames entities with your own overrides."
+    },
+    {
+      "id": "sexchange",
+      "name": "sexchange",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load sexchange",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/sexchange",
+      "description": "Change your race and hair style by command."
+    },
+    {
+      "id": "singlerace",
+      "name": "singlerace",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load singlerace",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/singlerace",
+      "description": "Every player and NPC becomes one race and hair style."
+    },
+    {
+      "id": "skeletonkey",
+      "name": "skeletonkey",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load skeletonkey",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/skeletonkey",
+      "description": "Forces closed doors open."
+    },
+    {
+      "id": "stepdialog",
+      "name": "stepdialog",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load stepdialog",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/stepdialog",
+      "description": "Presses the key to continue the current dialogue, by command."
+    },
+    {
+      "id": "stfu",
+      "name": "stfu",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load stfu",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/stfu",
+      "description": "Stops repeated game spam in chat and stops calls making sounds."
+    },
+    {
+      "id": "tokens",
+      "name": "tokens",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load tokens",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/tokens",
+      "description": "More tokens for the chat log to parse."
+    },
+    {
+      "id": "trimspells",
+      "name": "trimspells",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load trimspells",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/trimspells",
+      "description": "Trims the Ctrl+M spell list to the spells you know."
+    },
+    {
+      "id": "truesight",
+      "name": "truesight",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load truesight",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/truesight",
+      "description": "Removes occlusion and shows invisible players half-transparent."
+    },
+    {
+      "id": "watchdog",
+      "name": "watchdog",
+      "kind": "addon",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/addon load watchdog",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/watchdog",
+      "description": "Widescan tracking of nearly anything, by command."
+    },
+    {
+      "id": "hardwaremouse",
+      "name": "hardwaremouse",
+      "kind": "plugin",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/load hardwaremouse",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta",
+      "description": "Uses the hardware mouse cursor instead of the game-drawn one."
+    },
+    {
+      "id": "winefix",
+      "name": "winefix",
+      "kind": "plugin",
+      "maintainer": "Ashita",
+      "source": {
+        "type": "bundled"
+      },
+      "install": "nothing",
+      "load": "/load winefix",
+      "docs": "https://github.com/AshitaXI/Ashita-v4beta",
+      "description": "Fixes for running under Wine on Linux and Mac."
+    },
+    {
+      "id": "sequencer",
+      "name": "Sequencer",
+      "kind": "plugin",
+      "maintainer": "ThornyFFXI",
+      "source": {
+        "type": "github-release",
+        "repo": "ThornyFFXI/Sequencer",
+        "asset": "Sequencer.*Interface.4.30.zip"
+      },
+      "version": "1.01b",
+      "install": "unzip-to-root",
+      "load": "/load sequencer",
+      "docs": "https://github.com/ThornyFFXI/Sequencer",
+      "description": "Stops actions double-registering when a gear swapper (LegacyAC or LuAshitacast) is changing your gear. The author recommends it with either."
+    },
+    {
+      "id": "tcrossbar",
+      "name": "tCrossBar",
+      "kind": "addon",
+      "maintainer": "ThornyFFXI",
+      "source": {
+        "type": "github-release",
+        "repo": "ThornyFFXI/tCrossBar",
+        "asset": "tCrossBar-v*.zip"
+      },
+      "version": "2.21",
+      "install": "unzip-to-root",
+      "load": "/addon load tCrossBar",
+      "docs": "https://github.com/ThornyFFXI/tCrossBar",
+      "description": "Controller macros with an on-screen crossbar, the FFXIV style.",
+      "config": "config\\addons\\tCrossBar\\"
+    },
+    {
+      "id": "thotbar",
+      "name": "tHotBar",
+      "kind": "addon",
+      "maintainer": "ThornyFFXI",
+      "source": {
+        "type": "github-release",
+        "repo": "ThornyFFXI/tHotBar",
+        "asset": "tHotBar.*.zip"
+      },
+      "version": "2.21",
+      "install": "unzip-to-root",
+      "load": "/addon load thotbar",
+      "docs": "https://github.com/ThornyFFXI/tHotBar",
+      "description": "Keyboard macro bars with an on-screen display.",
+      "config": "config\\addons\\thotbar\\"
+    },
+    {
+      "id": "ttimers",
+      "name": "tTimers",
+      "kind": "addon",
+      "maintainer": "ThornyFFXI",
+      "source": {
+        "type": "github-release",
+        "repo": "ThornyFFXI/tTimers",
+        "asset": "tTimers-v*.zip"
+      },
+      "version": "0.25",
+      "install": "unzip-to-root",
+      "load": "/addon load tTimers",
+      "docs": "https://github.com/ThornyFFXI/tTimers",
+      "description": "Time left on the buffs and debuffs you cast, and recast timers for your spells and abilities.",
+      "config": "config\\addons\\tTimers\\"
+    },
+    {
+      "id": "statustimers",
+      "name": "statustimers",
+      "kind": "addon",
+      "maintainer": "HealsCodes",
+      "source": {
+        "type": "github-release",
+        "repo": "HealsCodes/statustimers",
+        "asset": "statustimers_v*.zip"
+      },
+      "version": "4.3.0202",
+      "install": "unzip-to-root",
+      "load": "/addon load statustimers",
+      "docs": "https://github.com/HealsCodes/statustimers",
+      "description": "Status effect timers on screen, replacing the game's icons.",
+      "config": "config\\addons\\statustimers\\"
+    },
+    {
+      "id": "mobdb",
+      "name": "mobdb",
+      "kind": "addon",
+      "maintainer": "ThornyFFXI",
+      "source": {
+        "type": "github-release",
+        "repo": "ThornyFFXI/mobdb",
+        "asset": "mobdb-v*.zip"
+      },
+      "version": "1.25",
+      "install": "unzip-to-root",
+      "load": "/addon load mobdb",
+      "docs": "https://github.com/ThornyFFXI/mobdb",
+      "description": "Information about the monsters around you, in the style of ibar.",
+      "config": "config\\addons\\mobdb\\"
+    },
+    {
+      "id": "porter",
+      "name": "Porter",
+      "kind": "addon",
+      "maintainer": "ThornyFFXI",
+      "source": {
+        "type": "github-release",
+        "repo": "ThornyFFXI/Porter",
+        "asset": "Porter-v*.zip"
+      },
+      "version": "1.15",
+      "install": "unzip-to-root",
+      "load": "/addon load porter",
+      "docs": "https://github.com/ThornyFFXI/Porter",
+      "description": "Stores and fetches gear through the porter moogle. LegacyAC and LuAshitacast can drive it.",
+      "config": "config\\addons\\Porter\\"
+    },
+    {
+      "id": "castdelay",
+      "name": "castdelay",
+      "kind": "addon",
+      "maintainer": "ThornyFFXI",
+      "source": {
+        "type": "github-release",
+        "repo": "ThornyFFXI/castdelay",
+        "asset": "castdelay-v*.zip"
+      },
+      "version": "1.04",
+      "install": "unzip-to-root",
+      "load": "/addon load castdelay",
+      "docs": "https://github.com/ThornyFFXI/castdelay",
+      "description": "Holds casts, ranged attacks and item use until you stop moving, so they are not interrupted."
+    },
+    {
+      "id": "xiui",
+      "name": "XIUI",
+      "kind": "addon",
+      "maintainer": "tirem",
+      "source": {
+        "type": "github-release",
+        "repo": "tirem/XIUI",
+        "asset": "XIUI-?.?.?.zip"
+      },
+      "version": "1.8.3",
+      "install": "unzip-to-addons",
+      "load": "/addon load XIUI",
+      "docs": "https://github.com/tirem/XIUI",
+      "description": "A replacement UI: player bar, target bar, party list, enemy list, exp and gil trackers. The most-used v4 project.",
+      "config": "config\\addons\\XIUI\\"
+    },
+    {
+      "id": "hitpoints",
+      "name": "HitPoints",
+      "kind": "addon",
+      "maintainer": "tirem",
+      "source": {
+        "type": "github-release",
+        "repo": "tirem/HitPoints",
+        "asset": "HitPoints_*.zip"
+      },
+      "version": "2.1",
+      "install": "unzip-to-root",
+      "load": "/addon load HitPoints",
+      "docs": "https://github.com/tirem/HitPoints",
+      "description": "Your target and every enemy you are fighting, as HP bars on screen.",
+      "config": "config\\addons\\HitPoints\\"
+    },
+    {
+      "id": "balloon",
+      "name": "Balloon",
+      "kind": "addon",
+      "maintainer": "onimitch",
+      "source": {
+        "type": "github-release",
+        "repo": "onimitch/ffxi-balloon-ashitav4",
+        "asset": "Balloon_*.zip"
+      },
+      "version": "4.3.2",
+      "install": "unzip-to-addons",
+      "load": "/addon load Balloon",
+      "docs": "https://github.com/onimitch/ffxi-balloon-ashitav4",
+      "description": "NPC dialogue in speech balloons, with themes. A port of the Windower addon.",
+      "config": "config\\addons\\Balloon\\"
+    },
+    {
+      "id": "captain",
+      "name": "captain",
+      "kind": "addon",
+      "maintainer": "sruon",
+      "source": {
+        "type": "github-release",
+        "repo": "sruon/captain",
+        "asset": "captain.zip"
+      },
+      "version": "1.13.1",
+      "install": "unzip-to-addons",
+      "load": "/addon load captain",
+      "docs": "https://github.com/sruon/captain",
+      "description": "Packet capture and analysis. For people helping build the server.",
+      "config": "config\\addons\\captain\\"
+    },
+    {
+      "id": "scenthound",
+      "name": "ScentHound",
+      "kind": "addon",
+      "maintainer": "ThornyFFXI",
+      "source": {
+        "type": "github-release",
+        "repo": "ThornyFFXI/ScentHound",
+        "asset": "Scenthound.*.zip"
+      },
+      "version": "1.07",
+      "install": "unzip-to-root",
+      "load": "/addon load scenthound",
+      "docs": "https://github.com/ThornyFFXI/ScentHound",
+      "description": "Tracks monster spawns with on-screen markers and sound alerts. For notorious monster camping.",
+      "config": "config\\addons\\scenthound\\"
+    },
+    {
+      "id": "hush",
+      "name": "hush",
+      "kind": "addon",
+      "maintainer": "clanofartisans",
+      "source": {
+        "type": "github-release",
+        "repo": "clanofartisans/ashita-hush",
+        "asset": "ashita-hush_v*.zip"
+      },
+      "version": "1.5.2",
+      "install": "copy-to-addons",
+      "load": "/addon load hush",
+      "docs": "https://github.com/clanofartisans/ashita-hush",
+      "description": "Hides yells, teleport requests and other chat noise.",
+      "config": "config\\addons\\hush\\"
+    },
+    {
+      "id": "zonename",
+      "name": "Zonename",
+      "kind": "addon",
+      "maintainer": "onimitch",
+      "source": {
+        "type": "github-release",
+        "repo": "onimitch/ffxi-zonename",
+        "asset": "Zonename_*.zip"
+      },
+      "version": "2.3",
+      "install": "unzip-to-addons",
+      "load": "/addon load Zonename",
+      "docs": "https://github.com/onimitch/ffxi-zonename",
+      "description": "Shows the zone and region name for a moment when you zone. A port of the Windower addon.",
+      "config": "config\\addons\\Zonename\\"
+    },
+    {
+      "id": "simplelog",
+      "name": "SimpleLog",
+      "kind": "addon",
+      "maintainer": "ThornyFFXI",
+      "source": {
+        "type": "repo-folder",
+        "repo": "ThornyFFXI/SimpleLog",
+        "path": "",
+        "branch": "main"
+      },
+      "install": "copy-to-addons",
+      "load": "/addon load simplelog",
+      "docs": "https://github.com/ThornyFFXI/SimpleLog",
+      "description": "Combat and message log parser: a cleaner, filtered log window.",
+      "config": "config\\addons\\simplelog\\"
+    },
+    {
+      "id": "fancytrusts",
+      "name": "FancyTrusts",
+      "kind": "addon",
+      "maintainer": "ThornyFFXI",
+      "source": {
+        "type": "repo-folder",
+        "repo": "ThornyFFXI/FancyTrusts",
+        "path": "FancyTrusts",
+        "branch": "main"
+      },
+      "install": "copy-to-addons",
+      "load": "/addon load FancyTrusts",
+      "docs": "https://github.com/ThornyFFXI/FancyTrusts",
+      "description": "A window for calling and managing trusts."
+    },
+    {
+      "id": "boussole",
+      "name": "boussole",
+      "kind": "addon",
+      "maintainer": "loonsies",
+      "source": {
+        "type": "repo-folder",
+        "repo": "loonsies/boussole",
+        "path": "",
+        "branch": "main"
+      },
+      "install": "copy-to-addons",
+      "load": "/addon load boussole",
+      "docs": "https://github.com/loonsies/boussole",
+      "description": "A replacement for the in-game map with extra features.",
+      "config": "config\\addons\\boussole\\"
+    },
+    {
+      "id": "auctioneer",
+      "name": "Auctioneer",
+      "kind": "addon",
+      "maintainer": "loonsies",
+      "source": {
+        "type": "repo-folder",
+        "repo": "loonsies/Auctioneer",
+        "path": "",
+        "branch": "main"
+      },
+      "install": "copy-to-addons",
+      "load": "/addon load auctioneer",
+      "docs": "https://github.com/loonsies/Auctioneer",
+      "description": "An easier auction house: search, buy and sell from one window.",
+      "config": "config\\addons\\auctioneer\\"
+    },
+    {
+      "id": "points",
+      "name": "Points",
+      "kind": "addon",
+      "maintainer": "Shinzaku",
+      "source": {
+        "type": "repo-folder",
+        "repo": "Shinzaku/Points",
+        "path": "points",
+        "branch": "main"
+      },
+      "install": "copy-to-addons",
+      "load": "/addon load points",
+      "docs": "https://github.com/Shinzaku/Points",
+      "description": "Tracks the points you are earning: exp, capacity, sparks, and more, on screen.",
+      "config": "config\\addons\\points\\"
     }
   ]
 }
