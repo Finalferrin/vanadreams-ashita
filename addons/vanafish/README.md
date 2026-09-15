@@ -1,6 +1,6 @@
 # vanafish
 
-A fishing bot for Vanadreams, as an Ashita v4 addon. It runs on Vanadreams only: at load it reads the loader command in your boot profile and refuses to start unless it names the server.
+A fishing bot written for Vanadreams, as an Ashita v4 addon. It runs on any server. The fight numbers it reads are the ones every LandSandBoat server sends, so it behaves the same elsewhere; how a given server judges the fight is that server's business.
 
 ## Install
 

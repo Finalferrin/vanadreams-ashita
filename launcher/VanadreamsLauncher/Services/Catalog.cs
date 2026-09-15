@@ -6,7 +6,8 @@ using System.Linq;
 namespace Vanadreams.Services
 {
     public enum SourceType { Bundled, GithubRelease, RepoFolder, None }
-    public enum InstallAction { NothingToInstall, UnzipToRoot, CopyToAddons, PivotOverlay }
+    // UnzipToAddons: the archive holds the addon folder itself (Balloon/Balloon.lua), so it unpacks into addons\.
+    public enum InstallAction { NothingToInstall, UnzipToRoot, CopyToAddons, PivotOverlay, UnzipToAddons }
 
     /// <summary>One line of catalog.json: a plugin, addon or POL plugin the picker can offer.</summary>
     public sealed class CatalogItem
@@ -149,6 +150,7 @@ namespace Vanadreams.Services
                 item.Install = install == "unzip-to-root" ? InstallAction.UnzipToRoot
                              : install == "copy-to-addons" ? InstallAction.CopyToAddons
                              : install == "pivot-overlay" ? InstallAction.PivotOverlay
+                             : install == "unzip-to-addons" ? InstallAction.UnzipToAddons
                              : InstallAction.NothingToInstall;
                 var v3 = Json.Obj(d.ContainsKey("v3") ? d["v3"] : null);
                 item.V3Name = Json.Str(v3, "name");

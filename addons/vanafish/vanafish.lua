@@ -1,7 +1,7 @@
 --[[
     vanafish - a fishing bot for Vanadreams.
 
-    Runs only on Vanadreams. Casts, waits for the bite, reads the fight numbers the
+    Runs on any server. Casts, waits for the bite, reads the fight numbers the
     server sends, decides catch or release by your rules, ends the fight at the packet
     level the way the server judges it, and stops itself when something is off.
 
@@ -21,7 +21,7 @@
 
 addon.name    = 'vanafish';
 addon.author  = 'Vanadreams';
-addon.version = '0.1.0';
+addon.version = '0.1.1';
 addon.desc    = 'Fishing bot for the Vanadreams server.';
 addon.link    = 'https://github.com/Finalferrin/vanadreams-ashita';
 
@@ -57,7 +57,7 @@ local defaults = T{
     -- extra
     alert_command      = T{ '' },     -- e.g. "/echo done" - run when the bot stops itself
     log_catches        = T{ true },
-    servers            = T{ 'vanadreams' }, -- the bot refuses to run unless the boot command names one of these
+    servers            = T{ 'vanadreams' }, -- only used to name the server in the window; the bot runs anywhere
 };
 
 local cfg = settings.load(defaults);
@@ -167,21 +167,19 @@ local function logged_in()
     return AshitaCore:GetMemoryManager():GetPlayer():GetLoginStatus() == 2;
 end
 
--- The bot runs only on Vanadreams: the boot profile's loader command must name it.
+-- The bot runs on any server. It still reads the boot command so the window can say where it is;
+-- the lock to Vanadreams came out in 0.1.1 at Lee's ruling.
 local function check_server()
     local cm = AshitaCore:GetConfigurationManager();
     local cmd = '';
     pcall(function() cmd = cm:GetString('boot', 'ashita.boot', 'command') or ''; end);
     cmd = cmd:lower();
+    bot.allowed = true;
+    bot.allowed_reason = 'any server';
     for _, name in ipairs(cfg.servers) do
-        if #name > 0 and cmd:find(name:lower(), 1, true) then
-            bot.allowed = true; bot.allowed_reason = 'server: ' .. name;
-            return true;
-        end
+        if #name > 0 and cmd:find(name:lower(), 1, true) then bot.allowed_reason = 'server: ' .. name; break; end
     end
-    bot.allowed = false;
-    bot.allowed_reason = 'this addon runs on Vanadreams only (boot command does not name it)';
-    return false;
+    return true;
 end
 
 -- ---------------------------------------------------------------------------
