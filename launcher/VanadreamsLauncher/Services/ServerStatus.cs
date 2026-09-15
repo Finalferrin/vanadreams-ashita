@@ -16,6 +16,8 @@ namespace Vanadreams.Services
         public string Note { get; set; } = "";
         public string ClientVer { get; set; }
         public VersionLock? Lock { get; set; }
+        /// <summary>Players online right now, when the site has a fresh figure; null otherwise.</summary>
+        public int? Online { get; set; }
         public bool FromCache { get; set; }
         public string Error { get; set; }
 
@@ -57,6 +59,9 @@ namespace Vanadreams.Services
             var lockValue = Json.Str(d, "ver_lock");
             int l;
             if (!string.IsNullOrWhiteSpace(lockValue) && int.TryParse(lockValue, out l) && Enum.IsDefined(typeof(VersionLock), l)) s.Lock = (VersionLock)l;
+            var stats = d.ContainsKey("stats") ? Json.Obj(d["stats"]) : null;
+            int online;
+            if (stats != null && int.TryParse(Json.Str(stats, "online") ?? "", out online) && online >= 0) s.Online = online;
             return s;
         }
     }

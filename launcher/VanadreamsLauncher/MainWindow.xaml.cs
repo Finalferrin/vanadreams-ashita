@@ -99,7 +99,8 @@ namespace Vanadreams
         {
             var s = State.Status;
             StatusWord.Text = s.StateWord;
-            StatusWhen.Text = s.CheckedWord + (s.FromCache && s.CheckedAt.HasValue ? " (last seen)" : "");
+            StatusWhen.Text = s.CheckedWord + (s.FromCache && s.CheckedAt.HasValue ? " (last seen)" : "")
+                            + (s.Online.HasValue && !s.FromCache ? " · " + s.Online.Value + (s.Online.Value == 1 ? " online" : " online") : "");
             StatusNote.Text = string.IsNullOrWhiteSpace(s.Note) ? (s.Error != null ? "Couldn't reach fairywitch.ca." : "") : s.Note;
             StatusNote.ToolTip = string.IsNullOrWhiteSpace(StatusNote.Text) ? null : StatusNote.Text;   // the whole note, however long
             Brush dot;
