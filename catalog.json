@@ -557,14 +557,24 @@
     },
     {
       "id": "crafty",
-      "name": "Crafty",
-      "kind": "plugin",
+      "name": "crafty",
+      "kind": "addon",
+      "maintainer": "Vanadreams",
       "source": {
-        "type": "none"
+        "type": "repo-folder",
+        "repo": "Finalferrin/vanadreams-ashita",
+        "path": "addons/crafty",
+        "branch": "main"
       },
+      "version": "0.1.0",
+      "install": "copy-to-addons",
+      "load": "/addon load crafty",
+      "config": "config\\crafty\\",
+      "docs": "https://github.com/Finalferrin/vanadreams-ashita/tree/main/addons/crafty",
+      "description": "Repeats a synthesis on Vanadreams: queue a crystal and ingredients with /crafty add, then /crafty start. Stops itself when materials run out or the bags fill.",
       "v3": {
         "name": "Crafty",
-        "note": "No v4 version exists."
+        "note": "Written again as a v4 addon for Vanadreams; the v3 plugin had no v4 version."
       }
     },
     {
