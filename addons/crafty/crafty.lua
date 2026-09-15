@@ -5,8 +5,12 @@
     inventory, sends the synthesis, waits for the result, waits out the server's cooldown, and goes
     again until the count is reached or something runs out.
 
+    The usual way: craft the recipe once by hand through the game's menu. Crafty sees it. Open the
+    window with /crafty, set how many times, press Repeat.
+
     Commands:
       /crafty                                   toggle the window
+      /crafty repeat [count]                    repeat the synth you last did by hand
       /crafty add <count> "<crystal>" "<ingredient>" ["<ingredient>" ...]
                                                 queue a recipe; list an ingredient twice to use two
       /crafty list                              show the queue
@@ -48,6 +52,8 @@ local S = { IDLE = 'idle', SENT = 'synthesizing', COOLDOWN = 'cooldown', STOPPED
 local bot = {
     running = false, state = S.STOPPED, stop_reason = '', deadline = 0,
     queue = T{},            -- { count = n, done = n, crystal = id, ingredients = { id, id, ... } }
+    last = nil,             -- the synth you last did by hand: { crystal = id, ingredients = { ... } }
+    repeat_count = T{ 10 },
     counters = T{ synths = 0, success = 0, hq = 0, failed = 0, other = 0 },
     fail_streak = 0, last_result = '', allowed = false, allowed_reason = '',
 };
@@ -175,7 +181,33 @@ local function start()
     if not current_recipe() then say('nothing queued: /crafty add <count> "<crystal>" "<ingredient>" ...'); return; end
     bot.running = true; bot.stop_reason = ''; bot.fail_streak = 0;
     say('starting');
-    begin_synth();
+    -- if you just crafted by hand, the server's cooldown is still running; wait it out first
+    if bot.last and bot.last.at and now() - bot.last.at < cfg.delay[1] then
+        bot.state = S.COOLDOWN; bot.deadline = bot.last.at + cfg.delay[1];
+    else
+        begin_synth();
+    end
+end
+
+-- Watch the synths you do by hand through the game's own menu, so the window can repeat the last one.
+ashita.events.register('packet_out', 'crafty_packet_out', function (e)
+    if e.id ~= 0x096 or e.injected then return; end
+    local crystal = struct.unpack('<H', e.data, 0x06 + 1);
+    local items = struct.unpack('<B', e.data, 0x09 + 1);
+    if crystal == 0 or items < 1 or items > 8 then return; end
+    local ingredients = T{};
+    for i = 0, items - 1 do
+        ingredients:append((struct.unpack('<H', e.data, 0x0A + i * 2 + 1)));
+    end
+    bot.last = { crystal = crystal, ingredients = ingredients, at = now() };
+    local names = T{}; for _, id in ipairs(ingredients) do names:append(item_name(id)); end
+    say(('saw you craft %s + %s. Open /crafty to repeat it.'):format(item_name(crystal), table.concat(names, ', ')));
+end);
+
+local function repeat_last(count)
+    if not bot.last then say('craft something by hand first, then repeat it'); return; end
+    bot.queue = T{ { count = count, done = 0, crystal = bot.last.crystal, ingredients = bot.last.ingredients } };
+    start();
 end
 
 local RESULT = { [0] = 'success', [1] = 'failed', [2] = 'interrupted', [3] = 'bad recipe', [4] = 'cancelled', [6] = 'skill too low', [7] = 'rare item held', [12] = 'desynth success', [13] = 'wait longer', [14] = 'interrupted' };
@@ -237,6 +269,7 @@ ashita.events.register('command', 'crafty_cmd', function (e)
         end
     elseif sub == 'clear' then bot.queue = T{}; say('queue cleared');
     elseif sub == 'start' then start();
+    elseif sub == 'repeat' then repeat_last(tonumber(args[3]) or bot.repeat_count[1]);
     elseif sub == 'stop' then stop('by command');
     elseif sub == 'delay' then
         local d = tonumber(args[3]);
@@ -255,6 +288,19 @@ ashita.events.register('d3d_present', 'crafty_present', function ()
     imgui.SetNextWindowSize({ 360, 0 }, ImGuiCond_FirstUseEver);
     if imgui.Begin('Vanadreams crafting', cfg.window_open) then
         local c = bot.counters;
+        if bot.last then
+            local names = T{}; for _, id in ipairs(bot.last.ingredients) do names:append(item_name(id)); end
+            imgui.Text('Last synth: ' .. item_name(bot.last.crystal) .. ' + ' .. table.concat(names, ', '));
+        else
+            imgui.TextDisabled('Craft something once by hand and it shows up here.');
+        end
+        imgui.PushItemWidth(80);
+        imgui.InputInt('times', bot.repeat_count);
+        imgui.PopItemWidth();
+        if bot.repeat_count[1] < 1 then bot.repeat_count[1] = 1; end
+        imgui.SameLine();
+        if not bot.running and imgui.Button('Repeat', { 100, 24 }) then repeat_last(bot.repeat_count[1]); end
+        imgui.Separator();
         if bot.running then
             if imgui.Button('Stop', { 120, 26 }) then stop('by button'); end
         else
@@ -286,5 +332,5 @@ end);
 
 ashita.events.register('load', 'crafty_load', function ()
     check_server();
-    say(bot.allowed and 'loaded. /crafty add <count> "<crystal>" "<ingredient>" ..., then /crafty start.' or bot.allowed_reason);
+    say(bot.allowed and 'loaded. Craft once by hand, then /crafty and press Repeat.' or bot.allowed_reason);
 end);
