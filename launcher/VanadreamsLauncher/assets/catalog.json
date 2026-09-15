@@ -473,6 +473,27 @@
       }
     },
     {
+      "id": "luashitacast",
+      "name": "LuAshitacast",
+      "kind": "addon",
+      "maintainer": "ThornyFFXI",
+      "source": {
+        "type": "github-release",
+        "repo": "ThornyFFXI/luashitacast",
+        "asset": "LuAshitacast-v*.zip"
+      },
+      "version": "2.13",
+      "install": "unzip-to-root",
+      "load": "/addon load luashitacast",
+      "config": "config\\addons\\luashitacast\\",
+      "docs": "https://github.com/ThornyFFXI/LuAshitacast",
+      "description": "Gear swapping with Lua profiles, one per job. Wear a set and /lac addset <name> writes it into your profile; rules for weapon skills, spells, abilities, idle and engaged go in the same file. Same author as LegacyAC and Packer.",
+      "v3": {
+        "name": "Ashitacast",
+        "note": "The author's newer swapper. LegacyAC keeps reading your v3 XMLs; this is for building new jobs in game."
+      }
+    },
+    {
       "id": "multisend",
       "name": "Multisend",
       "kind": "plugin",
