@@ -1,6 +1,6 @@
 // bgw: converts a 16-bit PCM wav into FFXI's BGMStream (.bgw) music format, and back.
 //
-//   bgw encode <in.wav> <out.bgw> --id 108 [--loop <seconds>] [--frame 16]
+//   bgw encode <in.wav> <out.bgw> --id 34 [--loop <seconds>] [--frame 16]
 //   bgw decode <in.bgw> <out.wav>
 //
 // The format, as read by the game and documented by vgmstream's bgw.c:
@@ -43,7 +43,7 @@ static class Program
             else if (args[i] == "--loop" && i + 1 < args.Length) loopSeconds = double.Parse(args[++i], System.Globalization.CultureInfo.InvariantCulture);
             else if (args[i] == "--frame" && i + 1 < args.Length) samplesPerFrame = int.Parse(args[++i]);
         }
-        if (id <= 0) throw new Exception("--id is the game's track number, for example 108 for the title screen.");
+        if (id <= 0) throw new Exception("--id is the game's track number, for example 34 for the title screen.");
         if (samplesPerFrame < 2 || samplesPerFrame > 128 || samplesPerFrame % 2 != 0) throw new Exception("--frame must be even, 2 to 128.");
 
         int rate, channels; short[][] pcm;

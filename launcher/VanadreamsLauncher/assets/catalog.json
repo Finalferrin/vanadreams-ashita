@@ -568,7 +568,7 @@
         "path": "overlays/vanadreams-music",
         "branch": "main"
       },
-      "version": "1.0.0",
+      "version": "1.0.1",
       "install": "pivot-overlay",
       "requires": [
         "pivot"
@@ -1229,8 +1229,11 @@
       },
       "install": "nothing",
       "load": "/addon load macrofix",
+      "conflicts": [
+        "xiui"
+      ],
       "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/macrofix",
-      "description": "Removes the macro bar delay when pressing Ctrl or Alt."
+      "description": "Removes the macro bar delay when pressing Ctrl or Alt. XIUI does this itself and the two cannot load together, so macrofix is left out while XIUI is ticked."
     },
     {
       "id": "minimapmon",
@@ -1655,23 +1658,6 @@
       "docs": "https://github.com/tirem/XIUI",
       "description": "A replacement UI: player bar, target bar, party list, enemy list, exp and gil trackers. The most-used v4 project.",
       "config": "config\\addons\\XIUI\\"
-    },
-    {
-      "id": "hitpoints",
-      "name": "HitPoints",
-      "kind": "addon",
-      "maintainer": "tirem",
-      "source": {
-        "type": "github-release",
-        "repo": "tirem/HitPoints",
-        "asset": "HitPoints_*.zip"
-      },
-      "version": "2.1",
-      "install": "unzip-to-root",
-      "load": "/addon load HitPoints",
-      "docs": "https://github.com/tirem/HitPoints",
-      "description": "Your target and every enemy you are fighting, as HP bars on screen.",
-      "config": "config\\addons\\HitPoints\\"
     },
     {
       "id": "balloon",

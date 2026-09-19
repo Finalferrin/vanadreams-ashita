@@ -29,6 +29,7 @@ namespace Vanadreams.Services
         public string Replacement { get; set; }
         public string Maintainer { get; set; }
         public List<string> ConfigLines { get; set; } = new List<string>();
+        public List<string> Conflicts { get; set; } = new List<string>();   // ids this item gives way to while they are enabled
         public string V3Name { get; set; }
         public string V3Carry { get; set; }
         public string V3Note { get; set; }
@@ -110,6 +111,24 @@ namespace Vanadreams.Services
 
         public CatalogItem Find(string id) => Items.FirstOrDefault(i => string.Equals(i.Id, id, StringComparison.OrdinalIgnoreCase));
 
+        /// <summary>
+        /// The enabled item that keeps this one out of the startup script, or null. Two addons that patch the
+        /// same part of the game cannot both load in either order; the one that names the conflict gives way.
+        /// </summary>
+        public CatalogItem BlockedBy(CatalogItem item, IEnumerable<string> enabledIds)
+        {
+            var enabled = (enabledIds ?? Enumerable.Empty<string>()).ToList();
+            return item.Conflicts.Where(c => enabled.Contains(c, StringComparer.OrdinalIgnoreCase))
+                                 .Select(Find).FirstOrDefault(other => other != null && other.HasV4);
+        }
+
+        /// <summary>What the enabled set contributes to the startup script, in the order given, without the items held back.</summary>
+        public List<ScriptEntry> ScriptEntries(IEnumerable<string> enabledIds)
+        {
+            var enabled = (enabledIds ?? Enumerable.Empty<string>()).ToList();
+            return enabled.Select(Find).Where(i => i != null && i.HasV4 && BlockedBy(i, enabled) == null).Select(i => i.ToScriptEntry()).ToList();
+        }
+
         public static Catalog Parse(string json)
         {
             var root = Json.ParseObject(json);
@@ -132,6 +151,7 @@ namespace Vanadreams.Services
                     Replacement = Json.Str(d, "replacement"),
                     Maintainer = Json.Str(d, "maintainer"),
                     ConfigLines = Json.Strings(d, "configLines"),
+                    Conflicts = Json.Strings(d, "conflicts"),
                 };
                 var src = Json.Obj(d.ContainsKey("source") ? d["source"] : null);
                 var type = (Json.Str(src, "type") ?? "none").ToLowerInvariant();

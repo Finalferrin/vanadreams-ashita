@@ -128,7 +128,7 @@ namespace Vanadreams
         {
             if (!HasAshita) { Log.Warn("apply addons: no Ashita folder set, nothing written"); return; }
             PivotConfig.RemoveRootPath(AshitaRoot);   // a value an earlier launcher wrote that stops overlays loading
-            var entries = Settings.EnabledAddons.Select(id => Catalog.Find(id)).Where(i => i != null && i.HasV4).Select(i => i.ToScriptEntry()).ToList();
+            var entries = Catalog.ScriptEntries(Settings.EnabledAddons);
             var scriptPath = Path.Combine(AshitaRoot, "scripts", "vanadreams.txt");
             Directory.CreateDirectory(Path.GetDirectoryName(scriptPath));
             ScriptWriter.Write(scriptPath, entries);

@@ -72,6 +72,34 @@ namespace Vanadreams.Tests
             Assert.IsFalse(cat.Find("crafty").IsInstalled(root));
         }
 
+        private const string ConflictJson = @"{ ""schema"": 1, ""items"": [
+    { ""id"": ""macrofix"", ""kind"": ""addon"", ""source"": { ""type"": ""bundled"" }, ""load"": ""/addon load macrofix"", ""conflicts"": [""xiui"", ""gone""] },
+    { ""id"": ""xiui"", ""name"": ""XIUI"", ""kind"": ""addon"", ""source"": { ""type"": ""github-release"", ""repo"": ""tirem/XIUI"", ""asset"": ""XIUI-*.zip"" }, ""load"": ""/addon load XIUI"" },
+    { ""id"": ""gone"", ""kind"": ""addon"", ""source"": { ""type"": ""none"" } }
+  ]}";
+
+        [TestMethod]
+        public void Catalog_holds_an_item_back_while_one_it_conflicts_with_is_enabled()
+        {
+            var cat = Catalog.Parse(ConflictJson);
+            var macrofix = cat.Find("macrofix");
+            Assert.AreEqual("xiui", cat.BlockedBy(macrofix, new[] { "macrofix", "XIUI" })?.Id, "held back by the enabled one, whatever the case of the id");
+            Assert.IsNull(cat.BlockedBy(macrofix, new[] { "macrofix" }), "alone, it loads");
+            Assert.IsNull(cat.BlockedBy(macrofix, new[] { "macrofix", "gone" }), "an item with no v4 version never loads, so it holds nothing back");
+            Assert.IsNull(cat.BlockedBy(cat.Find("xiui"), new[] { "macrofix", "xiui" }), "only the item that names the conflict gives way");
+        }
+
+        [TestMethod]
+        public void Script_entries_leave_out_the_item_that_is_held_back()
+        {
+            var cat = Catalog.Parse(ConflictJson);
+            var both = ScriptWriter.Build(cat.ScriptEntries(new[] { "macrofix", "xiui" }), "");
+            StringAssert.Contains(both, "/addon load XIUI");
+            Assert.IsFalse(both.Contains("/addon load macrofix"), "macrofix gives way to XIUI");
+            var alone = ScriptWriter.Build(cat.ScriptEntries(new[] { "macrofix" }), "");
+            StringAssert.Contains(alone, "/addon load macrofix");
+        }
+
         [TestMethod]
         public void Credentials_round_trip_and_never_store_plain_text()
         {
