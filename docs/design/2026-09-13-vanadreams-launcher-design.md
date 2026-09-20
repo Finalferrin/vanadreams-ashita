@@ -239,7 +239,7 @@ vanadreams-ashita/
     VanadreamsLauncher/        the WPF project
     VanadreamsLauncher.Tests/  MSTest
     assets/                    moon, star, guide screenshots
-  docs/superpowers/specs/      this document
+  docs/design/                 this document
 ```
 
 ## Rulings this design rests on

@@ -26,4 +26,4 @@ Then open the Vanadreams Launcher, go to Capture, pick the snapshot and press **
 
 ## What's in the file
 
-Documented in [the design](../../docs/superpowers/specs/2026-09-13-character-capture-design.md). Item `extra` blocks are kept whole, so augments come with the gear.
+Documented in [the design](../../docs/design/2026-09-13-character-capture-design.md). Item `extra` blocks are kept whole, so augments come with the gear.
