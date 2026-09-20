@@ -21,6 +21,23 @@
       "description": "The Vanadreams fishing bot. Casts, reads the bite, decides catch or release by your rules, ends the fight the way the server judges it, stops itself when something is off. Works on any server."
     },
     {
+      "id": "vanachatfix",
+      "name": "vanachatfix",
+      "kind": "addon",
+      "maintainer": "Vanadreams",
+      "source": {
+        "type": "repo-folder",
+        "repo": "Finalferrin/vanadreams-ashita",
+        "path": "addons/vanachatfix",
+        "branch": "main"
+      },
+      "version": "0.1.0",
+      "install": "copy-to-addons",
+      "load": "/addon load vanachatfix",
+      "docs": "https://github.com/Finalferrin/vanadreams-ashita/tree/main/addons/vanachatfix",
+      "description": "For players who also use this Ashita on other private servers. Loads chatfix only where the server still sends the old chat layout, and keeps it off on Vanadreams. Tick this, not chatfix."
+    },
+    {
       "id": "charcapture",
       "name": "charcapture",
       "kind": "addon",
@@ -892,7 +909,9 @@
       "install": "nothing",
       "load": "/addon load chatfix",
       "docs": "https://github.com/AshitaXI/Ashita-v4beta/tree/main/addons/chatfix",
-      "description": "Fixes private-server chat problems caused by a client update. Worth having on."
+      "description": "For private servers still on the old chat packet layout. Vanadreams is not one: here it cuts the first letter off every chat line, sends tells to the wrong name and breaks NPC menus.",
+      "heldBack": "it breaks chat, tells and menus on Vanadreams.",
+      "replacement": "vanachatfix"
     },
     {
       "id": "chime",

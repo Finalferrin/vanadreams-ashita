@@ -100,6 +100,28 @@ namespace Vanadreams.Tests
             StringAssert.Contains(alone, "/addon load macrofix");
         }
 
+        private const string HeldBackJson = @"{ ""schema"": 1, ""items"": [
+    { ""id"": ""chatfix"", ""kind"": ""addon"", ""source"": { ""type"": ""bundled"" }, ""load"": ""/addon load chatfix"", ""heldBack"": ""Breaks chat, tells and menus on Vanadreams."", ""replacement"": ""vanachatfix"" },
+    { ""id"": ""vanachatfix"", ""kind"": ""addon"", ""source"": { ""type"": ""bundled"" }, ""load"": ""/addon load vanachatfix"" },
+    { ""id"": ""distance"", ""kind"": ""addon"", ""source"": { ""type"": ""bundled"" }, ""load"": ""/addon load distance"" }
+  ]}";
+
+        [TestMethod]
+        public void A_held_back_item_never_reaches_the_startup_script_however_it_is_ticked()
+        {
+            var cat = Catalog.Parse(HeldBackJson);
+            Assert.AreEqual("Breaks chat, tells and menus on Vanadreams.", cat.Find("chatfix").HeldBack);
+            Assert.IsTrue(string.IsNullOrEmpty(cat.Find("distance").HeldBack), "an item that says nothing is not held back");
+
+            var alone = ScriptWriter.Build(cat.ScriptEntries(new[] { "chatfix" }), "");
+            Assert.IsFalse(alone.Contains("/addon load chatfix"), "held back even when it is the only thing ticked");
+
+            var all = ScriptWriter.Build(cat.ScriptEntries(new[] { "chatfix", "vanachatfix", "distance" }), "");
+            Assert.IsFalse(all.Contains("/addon load chatfix\r") || all.Contains("/addon load chatfix\n") || all.EndsWith("/addon load chatfix"), "the held-back item is left out");
+            StringAssert.Contains(all, "/addon load vanachatfix");
+            StringAssert.Contains(all, "/addon load distance");
+        }
+
         [TestMethod]
         public void Credentials_round_trip_and_never_store_plain_text()
         {

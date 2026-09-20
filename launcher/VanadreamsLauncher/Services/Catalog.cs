@@ -30,6 +30,7 @@ namespace Vanadreams.Services
         public string Maintainer { get; set; }
         public List<string> ConfigLines { get; set; } = new List<string>();
         public List<string> Conflicts { get; set; } = new List<string>();   // ids this item gives way to while they are enabled
+        public string HeldBack { get; set; }        // why this item is never written to the startup script, however it is ticked
         public string V3Name { get; set; }
         public string V3Carry { get; set; }
         public string V3Note { get; set; }
@@ -122,11 +123,18 @@ namespace Vanadreams.Services
                                  .Select(Find).FirstOrDefault(other => other != null && other.HasV4);
         }
 
-        /// <summary>What the enabled set contributes to the startup script, in the order given, without the items held back.</summary>
+        /// <summary>
+        /// What the enabled set contributes to the startup script, in the order given, without the items held back:
+        /// the ones giving way to a conflict, and the ones the catalogue says must never load here (HeldBack).
+        /// Every profile the launcher makes runs this one script, so an item that is wrong for Vanadreams is kept
+        /// out for good and the catalogue names what to tick instead.
+        /// </summary>
         public List<ScriptEntry> ScriptEntries(IEnumerable<string> enabledIds)
         {
             var enabled = (enabledIds ?? Enumerable.Empty<string>()).ToList();
-            return enabled.Select(Find).Where(i => i != null && i.HasV4 && BlockedBy(i, enabled) == null).Select(i => i.ToScriptEntry()).ToList();
+            return enabled.Select(Find)
+                          .Where(i => i != null && i.HasV4 && string.IsNullOrEmpty(i.HeldBack) && BlockedBy(i, enabled) == null)
+                          .Select(i => i.ToScriptEntry()).ToList();
         }
 
         public static Catalog Parse(string json)
@@ -152,6 +160,7 @@ namespace Vanadreams.Services
                     Maintainer = Json.Str(d, "maintainer"),
                     ConfigLines = Json.Strings(d, "configLines"),
                     Conflicts = Json.Strings(d, "conflicts"),
+                    HeldBack = Json.Str(d, "heldBack"),
                 };
                 var src = Json.Obj(d.ContainsKey("source") ? d["source"] : null);
                 var type = (Json.Str(src, "type") ?? "none").ToLowerInvariant();

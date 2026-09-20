@@ -115,6 +115,12 @@ namespace Vanadreams.Pages
                 ItemState.Text += "\nLeft out of the startup script while " + heldBy.Name + " is ticked: the two cannot load together.";
                 ItemState.Foreground = (Brush)FindResource("Warn");
             }
+            if (!string.IsNullOrEmpty(i.HeldBack))
+            {
+                // shown ticked or not, so the reason is read before the box is
+                ItemState.Text += "\nNever written to the startup script: " + i.HeldBack + (string.IsNullOrEmpty(i.Replacement) ? "" : " Tick " + i.Replacement + " instead.");
+                ItemState.Foreground = (Brush)FindResource("Bad");
+            }
             ItemV3.Text = i.V3Note != null ? "From v3: " + i.V3Note : i.V3Name != null ? "From v3: " + i.V3Name + (i.V3Carry != null ? ", " + i.V3Carry + " carried over" : "") : "";
             InstallButton.Visibility = i.HasV4 && i.Source != SourceType.Bundled ? Visibility.Visible : Visibility.Collapsed;
             InstallButton.Content = !row.Installed ? "Install" : (!string.IsNullOrEmpty(i.Version) && !string.Equals(row.InstalledVersion, i.Version, StringComparison.OrdinalIgnoreCase)) ? "Update to " + i.Version : "Reinstall";
@@ -223,9 +229,11 @@ namespace Vanadreams.Pages
             try
             {
                 state.ApplyEnabledAddons();
-                var held = _rows.Where(r => r.Enabled && r.HasV4).Select(r => new { r.Item, By = state.Catalog.BlockedBy(r.Item, state.Settings.EnabledAddons) }).Where(x => x.By != null).ToList();
-                Footer.Text = "Saved: scripts\\vanadreams.txt written for " + (state.Settings.EnabledAddons.Count - held.Count) + " item(s)."
-                    + string.Concat(held.Select(x => " " + x.Item.Name + " left out while " + x.By.Name + " is ticked."));
+                var never = _rows.Where(r => r.Enabled && r.HasV4 && !string.IsNullOrEmpty(r.Item.HeldBack)).Select(r => r.Item).ToList();
+                var held = _rows.Where(r => r.Enabled && r.HasV4 && string.IsNullOrEmpty(r.Item.HeldBack)).Select(r => new { r.Item, By = state.Catalog.BlockedBy(r.Item, state.Settings.EnabledAddons) }).Where(x => x.By != null).ToList();
+                Footer.Text = "Saved: scripts\\vanadreams.txt written for " + (state.Settings.EnabledAddons.Count - held.Count - never.Count) + " item(s)."
+                    + string.Concat(held.Select(x => " " + x.Item.Name + " left out while " + x.By.Name + " is ticked."))
+                    + string.Concat(never.Select(x => " " + x.Name + " is never loaded here" + (string.IsNullOrEmpty(x.Replacement) ? "." : "; tick " + x.Replacement + " instead.")));
                 Footer.Foreground = (Brush)FindResource("Ok");
             }
             catch (Exception ex)
