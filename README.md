@@ -36,6 +36,7 @@ The launcher plays its own theme, "The Lanterns Are Lit", quietly while it is op
 | `catalog.json` | The launcher's catalogue: every addon and plugin it can install, where it comes from, how it loads. Edit this to add one; every launcher picks it up on its next start. |
 | `ui/` | The Vanadreams in-game UI, an Ashita v4 addon. Not started yet. |
 | `scripts/` | Example boot ini and startup script for connecting by hand. |
+| `server/` | For people running their own LandSandBoat server. [`landsandboat-level-99-gear-stats.sql`](server/landsandboat-level-99-gear-stats.sql) fills in the stats for 2,291 level 99 pieces; how to apply it is at the top of the file. |
 
 ## Connecting by hand, without the launcher
 
