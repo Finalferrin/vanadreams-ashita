@@ -107,26 +107,44 @@ namespace Vanadreams.Services
             return null;
         }
 
-        /// <summary>Every file under a folder of a GitHub repo: (relative path, download url).</summary>
-        public async Task<List<KeyValuePair<string, string>>> ListRepoFolderAsync(string repo, string path, string branch, CancellationToken ct = default(CancellationToken))
+        /// <summary>Every file under a folder of a GitHub repo, with the content hash and size GitHub lists for it.</summary>
+        public async Task<List<RepoFile>> ListRepoFolderAsync(string repo, string path, string branch, CancellationToken ct = default(CancellationToken))
         {
-            var result = new List<KeyValuePair<string, string>>();
-            await WalkAsync(repo, path.Trim('/'), branch, "", result, ct).ConfigureAwait(false);
+            var result = new List<RepoFile>();
+            await WalkAsync(repo, (path ?? "").Trim('/'), branch, "", result, ct).ConfigureAwait(false);
             return result;
         }
 
-        private async Task WalkAsync(string repo, string path, string branch, string rel, List<KeyValuePair<string, string>> into, CancellationToken ct)
+        private async Task WalkAsync(string repo, string path, string branch, string rel, List<RepoFile> into, CancellationToken ct)
         {
             var text = await GetStringAsync($"https://api.github.com/repos/{repo}/contents/{path}?ref={branch}", ct).ConfigureAwait(false);
-            foreach (var e in Json.List(Json.Parse(text)))
+            into.AddRange(ParseFolderListing(text, rel, out var folders));
+            foreach (var name in folders)
+                await WalkAsync(repo, path + "/" + name, branch, string.IsNullOrEmpty(rel) ? name : rel + "/" + name, into, ct).ConfigureAwait(false);
+        }
+
+        /// <summary>One page of GitHub's contents listing: the files in it, and the names of the folders to go into.</summary>
+        public static List<RepoFile> ParseFolderListing(string json, string rel, out List<string> folders)
+        {
+            var files = new List<RepoFile>();
+            folders = new List<string>();
+            foreach (var e in Json.List(Json.Parse(json)))
             {
                 var d = Json.Obj(e);
+                if (d == null) continue;
                 var name = Json.Str(d, "name", "");
                 var type = Json.Str(d, "type", "");
-                var childRel = string.IsNullOrEmpty(rel) ? name : rel + "/" + name;
-                if (type == "dir") await WalkAsync(repo, path + "/" + name, branch, childRel, into, ct).ConfigureAwait(false);
-                else if (type == "file") into.Add(new KeyValuePair<string, string>(childRel, Json.Str(d, "download_url")));
+                if (type == "dir") folders.Add(name);
+                else if (type == "file")
+                    files.Add(new RepoFile
+                    {
+                        Rel = string.IsNullOrEmpty(rel) ? name : rel + "/" + name,
+                        Url = Json.Str(d, "download_url"),
+                        Sha = Json.Str(d, "sha"),
+                        Size = Json.Long(d, "size"),
+                    });
             }
+            return files;
         }
 
         public static Regex GlobToRegex(string glob)

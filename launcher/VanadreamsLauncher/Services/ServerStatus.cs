@@ -131,7 +131,7 @@ namespace Vanadreams.Services
                 {
                     System.Net.ServicePointManager.SecurityProtocol |= System.Net.SecurityProtocolType.Tls12;
                     _shared = new HttpClient { Timeout = TimeSpan.FromMinutes(10) };
-                    _shared.DefaultRequestHeaders.UserAgent.ParseAdd("VanadreamsLauncher/0.1 (+https://github.com/Finalferrin/vanadreams-ashita)");
+                    _shared.DefaultRequestHeaders.UserAgent.ParseAdd("VanadreamsLauncher/0.1 (+https://github.com/VanaDreams/vanadreams-ashita)");
                     _shared.DefaultRequestHeaders.Accept.ParseAdd("application/vnd.github+json, application/json, */*");
                 }
                 return _shared;

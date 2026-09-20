@@ -16,7 +16,7 @@ namespace Vanadreams.Services
         public string AshitaRoot { get; set; } = "";
         public string FfxiFolderOverride { get; set; } = "";
         public string LastProfile { get; set; } = "";
-        public string CatalogUrl { get; set; } = "https://raw.githubusercontent.com/Finalferrin/vanadreams-ashita/main/catalog.json";
+        public string CatalogUrl { get; set; } = "https://raw.githubusercontent.com/VanaDreams/vanadreams-ashita/main/catalog.json";
         public string StatusUrl { get; set; } = ServerStatusClient.DefaultUrl;
         public string CaptureUrl { get; set; } = "https://fairywitch.ca/api/public/vanadreams/capture";
         public string ExpectedClientVer { get; set; } = "30260805_0";
@@ -24,6 +24,7 @@ namespace Vanadreams.Services
         public bool SetupDone { get; set; }
         public bool MusicOn { get; set; } = true;
         public List<string> EnabledAddons { get; set; } = new List<string>();
+        public List<string> GivenDefaults { get; set; } = new List<string>();   // on-by-default items already given once; unticking one sticks
         public Dictionary<string, string> InstalledVersions { get; set; } = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         public Dictionary<string, string> LastPlayed { get; set; } = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         public List<string> GuideDone { get; set; } = new List<string>();
@@ -47,6 +48,7 @@ namespace Vanadreams.Services
                 s.SetupDone = Json.Bool(d, "setupDone");
                 s.MusicOn = Json.Bool(d, "musicOn", true);
                 s.EnabledAddons = Json.Strings(d, "enabledAddons");
+                s.GivenDefaults = Json.Strings(d, "givenDefaults");
                 s.GuideDone = Json.Strings(d, "guideDone");
                 var inst = Json.Obj(d.ContainsKey("installedVersions") ? d["installedVersions"] : null);
                 if (inst != null) foreach (var kv in inst) s.InstalledVersions[kv.Key] = Convert.ToString(kv.Value);
@@ -72,6 +74,7 @@ namespace Vanadreams.Services
                 { "setupDone", SetupDone },
                 { "musicOn", MusicOn },
                 { "enabledAddons", EnabledAddons.ToList() },
+                { "givenDefaults", GivenDefaults.ToList() },
                 { "guideDone", GuideDone.ToList() },
                 { "installedVersions", InstalledVersions.ToDictionary(k => k.Key, k => (object)k.Value) },
                 { "lastPlayed", LastPlayed.ToDictionary(k => k.Key, k => (object)k.Value) },

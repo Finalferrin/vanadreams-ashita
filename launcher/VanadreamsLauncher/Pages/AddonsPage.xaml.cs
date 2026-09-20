@@ -149,6 +149,7 @@ namespace Vanadreams.Pages
             _busy = true; InstallButton.IsEnabled = false;
             Progress.Visibility = ProgressText.Visibility = Visibility.Visible;
             Progress.IsIndeterminate = true; ProgressText.Text = "Looking up " + item.Name + "…";
+            string syncNote = null;
             try
             {
                 var progress = new Progress<DownloadProgress>(p => { Progress.IsIndeterminate = false; Progress.Value = p.Fraction * 100; ProgressText.Text = $"{p.Label}: {p.Done / 1048576.0:0.0} of {p.Total / 1048576.0:0.0} MB"; });
@@ -171,22 +172,14 @@ namespace Vanadreams.Pages
                 }
                 else if (item.Source == SourceType.RepoFolder)
                 {
-                    var files = await state.Downloader.ListRepoFolderAsync(item.Repo, item.Path, item.Branch);
-                    if (files.Count == 0) throw new InvalidOperationException("Nothing found at " + item.Repo + "/" + item.Path + ".");
-                    var overlay = item.Install == InstallAction.PivotOverlay;
-                    var target = overlay ? Path.Combine(PivotConfig.OverlaysRoot(state.AshitaRoot), item.Id)
-                                         : Path.Combine(state.AshitaRoot, "addons", item.LoadName ?? item.Id);
-                    var n = 0;
-                    foreach (var f in files)
-                    {
-                        n++;
-                        ProgressText.Text = $"{f.Key} ({n} of {files.Count})";
-                        Progress.IsIndeterminate = false; Progress.Value = 100.0 * n / files.Count;
-                        var dest = Path.Combine(target, f.Key.Replace('/', '\\'));
-                        await state.Downloader.DownloadFileAsync(f.Value, dest);
-                    }
-                    state.Settings.InstalledVersions[item.Id] = item.Version ?? DateTime.Now.ToString("yyyy-MM-dd");
-                    if (overlay) PivotConfig.AddOverlay(state.AshitaRoot, item.Id);
+                    // only what is missing or changed comes down; what the repo dropped goes (RepoSync)
+                    var plan = await AddonInstaller.InstallRepoFolderAsync(state.Downloader, state.Settings, state.AshitaRoot, item,
+                        (name, n, of) => Dispatcher.Invoke(() =>
+                        {
+                            ProgressText.Text = $"{name} ({n} of {of})";
+                            Progress.IsIndeterminate = false; Progress.Value = 100.0 * n / of;
+                        }));
+                    syncNote = $"{plan.Download.Count} downloaded, {plan.Keep.Count} already here" + (plan.Delete.Count > 0 ? $", {plan.Delete.Count} removed" : "");
                 }
                 // enabled, saved and applied in one motion, so Play right after Install loads it
                 _current.Enabled = true;
@@ -195,7 +188,7 @@ namespace Vanadreams.Pages
                 state.ApplyEnabledAddons();
                 Log.Info("installed " + item.Id);
                 var pivot = item.Install == InstallAction.PivotOverlay ? state.Catalog.Find("pivot") : null;
-                ProgressText.Text = pivot != null && !pivot.IsInstalled(state.AshitaRoot) ? "Installed. It needs XIPivot to show in game: install that too, then Save." : "Installed.";
+                ProgressText.Text = pivot != null && !pivot.IsInstalled(state.AshitaRoot) ? "Installed. It needs XIPivot to show in game: install that too, then Save." : syncNote != null ? "Installed: " + syncNote + "." : "Installed.";
                 Build();
             }
             catch (Exception ex)
@@ -214,7 +207,7 @@ namespace Vanadreams.Pages
         private void Config_Click(object sender, RoutedEventArgs e)
         {
             if (_current?.Item.Config == null) return;
-            var path = Path.Combine(App.State.AshitaRoot, _current.Item.Config);
+            var path = CatalogItem.ResolveConfigPath(App.State.AshitaRoot, _current.Item.Config, Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory));
             var dir = Directory.Exists(path) ? path : Path.GetDirectoryName(path);
             try { Directory.CreateDirectory(dir); Process.Start(new ProcessStartInfo("explorer.exe", "\"" + dir + "\"") { UseShellExecute = true }); } catch (Exception ex) { Log.Warn(ex.Message); }
         }

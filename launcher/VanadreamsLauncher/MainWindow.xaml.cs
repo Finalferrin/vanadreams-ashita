@@ -39,6 +39,7 @@ namespace Vanadreams
             _statusTimer.Start();
             await State.RefreshStatusAsync();
             await State.RefreshCatalogAsync();
+            await State.GiveDefaultsAsync();
             await CheckForUpdateAsync();
         }
 

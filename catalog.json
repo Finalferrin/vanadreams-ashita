@@ -9,7 +9,7 @@
       "maintainer": "Vanadreams",
       "source": {
         "type": "repo-folder",
-        "repo": "Finalferrin/vanadreams-ashita",
+        "repo": "VanaDreams/vanadreams-ashita",
         "path": "addons/vanafish",
         "branch": "main"
       },
@@ -17,7 +17,7 @@
       "install": "copy-to-addons",
       "load": "/addon load vanafish",
       "config": "config\\vanafish\\",
-      "docs": "https://github.com/Finalferrin/vanadreams-ashita/tree/main/addons/vanafish",
+      "docs": "https://github.com/VanaDreams/vanadreams-ashita/tree/main/addons/vanafish",
       "description": "The Vanadreams fishing bot. Casts, reads the bite, decides catch or release by your rules, ends the fight the way the server judges it, stops itself when something is off. Works on any server."
     },
     {
@@ -27,14 +27,14 @@
       "maintainer": "Vanadreams",
       "source": {
         "type": "repo-folder",
-        "repo": "Finalferrin/vanadreams-ashita",
+        "repo": "VanaDreams/vanadreams-ashita",
         "path": "addons/vanachatfix",
         "branch": "main"
       },
       "version": "0.1.0",
       "install": "copy-to-addons",
       "load": "/addon load vanachatfix",
-      "docs": "https://github.com/Finalferrin/vanadreams-ashita/tree/main/addons/vanachatfix",
+      "docs": "https://github.com/VanaDreams/vanadreams-ashita/tree/main/addons/vanachatfix",
       "description": "For players who also use this Ashita on other private servers. Loads chatfix only where the server still sends the old chat layout, and keeps it off on Vanadreams. Tick this, not chatfix."
     },
     {
@@ -44,7 +44,7 @@
       "maintainer": "Vanadreams",
       "source": {
         "type": "repo-folder",
-        "repo": "Finalferrin/vanadreams-ashita",
+        "repo": "VanaDreams/vanadreams-ashita",
         "path": "addons/charcapture",
         "branch": "main"
       },
@@ -52,7 +52,7 @@
       "install": "copy-to-addons",
       "load": "/addon load charcapture",
       "config": "config\\charcapture\\",
-      "docs": "https://github.com/Finalferrin/vanadreams-ashita/tree/main/addons/charcapture",
+      "docs": "https://github.com/VanaDreams/vanadreams-ashita/tree/main/addons/charcapture",
       "description": "Snapshots your character for porting to Vanadreams: /capture in game, then send it from the launcher's Capture page. Reads only."
     },
     {
@@ -581,7 +581,7 @@
       "maintainer": "Vanadreams",
       "source": {
         "type": "repo-folder",
-        "repo": "Finalferrin/vanadreams-ashita",
+        "repo": "VanaDreams/vanadreams-ashita",
         "path": "overlays/vanadreams-music",
         "branch": "main"
       },
@@ -590,8 +590,27 @@
       "requires": [
         "pivot"
       ],
-      "docs": "https://github.com/Finalferrin/vanadreams-ashita/tree/main/overlays/vanadreams-music",
+      "docs": "https://github.com/VanaDreams/vanadreams-ashita/tree/main/overlays/vanadreams-music",
       "description": "Vanadreams' own music on the title screen and character select, through XIPivot. Only our tracks are in it; the game's files are untouched. Needs XIPivot from this page."
+    },
+    {
+      "id": "vanatunes",
+      "name": "vanatunes",
+      "kind": "addon",
+      "maintainer": "Vanadreams",
+      "source": {
+        "type": "repo-folder",
+        "repo": "VanaDreams/vanatunes",
+        "path": "vanatunes",
+        "branch": "main"
+      },
+      "version": "0.3.0",
+      "install": "copy-to-addons",
+      "load": "/addon load vanatunes",
+      "onByDefault": true,
+      "config": "{desktop}\\Vanadreams Music\\",
+      "docs": "https://github.com/VanaDreams/vanatunes/tree/main/vanatunes",
+      "description": "The Vanadreams playlist in game, and your own songs beside it. It plays them shuffled wherever you are, moving on when a song ends, from its own window. Press Reinstall to get songs added to the playlist since; your own mp3 or wav files go in the folder the Config button opens. Windows plays the songs beside the game, so no game track is replaced; turn Music down in the game's sound config if you only want these."
     },
     {
       "id": "crafty",
@@ -600,7 +619,7 @@
       "maintainer": "Vanadreams",
       "source": {
         "type": "repo-folder",
-        "repo": "Finalferrin/vanadreams-ashita",
+        "repo": "VanaDreams/vanadreams-ashita",
         "path": "addons/crafty",
         "branch": "main"
       },
@@ -608,7 +627,7 @@
       "install": "copy-to-addons",
       "load": "/addon load crafty",
       "config": "config\\crafty\\",
-      "docs": "https://github.com/Finalferrin/vanadreams-ashita/tree/main/addons/crafty",
+      "docs": "https://github.com/VanaDreams/vanadreams-ashita/tree/main/addons/crafty",
       "description": "Repeats a synthesis on Vanadreams: queue a crystal and ingredients with /crafty add, then /crafty start. Stops itself when materials run out or the bags fill.",
       "v3": {
         "name": "Crafty",

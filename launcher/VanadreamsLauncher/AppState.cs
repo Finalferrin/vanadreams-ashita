@@ -102,6 +102,34 @@ namespace Vanadreams
             catch (Exception ex) { Log.Warn("bundled catalogue unreadable: " + ex.Message); }
         }
 
+        /// <summary>
+        /// Installs and ticks the catalogue's on-by-default items, once each. After that the box is the player's:
+        /// an item they untick is never ticked for them again. One that fails to install is tried at the next start.
+        /// </summary>
+        public async Task GiveDefaultsAsync()
+        {
+            if (!HasAshita) return;
+            var changed = false;
+            foreach (var item in AddonInstaller.DefaultsToGive(Catalog, Settings.GivenDefaults))
+            {
+                try
+                {
+                    if (item.Source == SourceType.RepoFolder)
+                        await AddonInstaller.InstallRepoFolderAsync(Downloader, Settings, AshitaRoot, item);
+                    else if (item.Source != SourceType.Bundled) continue;   // release archives are installed from the Addons page
+                    if (!Settings.EnabledAddons.Contains(item.Id, StringComparer.OrdinalIgnoreCase)) Settings.EnabledAddons.Add(item.Id);
+                    Settings.GivenDefaults.Add(item.Id);
+                    changed = true;
+                    Log.Info("given by default: " + item.Id);
+                }
+                catch (Exception ex) { Log.Warn("default " + item.Id + " not installed, will try again: " + ex.Message); }
+            }
+            if (!changed) return;
+            Settings.Save();
+            ApplyEnabledAddons();
+            Notify();
+        }
+
         public int EnabledCount => Settings.EnabledAddons.Count(id => Catalog.Find(id) != null);
         public int UpdateCount => Catalog.Items.Count(i => i.Source == SourceType.GithubRelease && Settings.InstalledVersions.ContainsKey(i.Id) && !string.IsNullOrEmpty(i.Version) && !string.Equals(Settings.InstalledVersions[i.Id], i.Version, StringComparison.OrdinalIgnoreCase));
 

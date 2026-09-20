@@ -19,7 +19,7 @@ namespace Vanadreams.Services
     /// </summary>
     public static class Updater
     {
-        public const string Repo = "Finalferrin/vanadreams-ashita";
+        public const string Repo = "VanaDreams/vanadreams-ashita";
         public const string AssetName = "VanadreamsLauncher.exe";
         public const string Signer = "CN=Lee Hattery";
 

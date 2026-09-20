@@ -181,8 +181,11 @@ namespace Vanadreams.Pages
                 // tells and menus for an older packet layout; ime makes typed text need Enter twice).
                 // Players tick what they want on the Addons page. The launcher's own music is a
                 // setting (MusicOn, on by default), not an addon, so it is not touched here.
+                // The exception is whatever the catalogue marks onByDefault (the Vanadreams playlist):
+                // given once, then the player's to untick.
                 Mark(Step5);
                 if (state.Catalog.Items.Count == 0) await state.RefreshCatalogAsync();
+                await state.GiveDefaultsAsync();
                 state.Settings.SetupDone = true;
                 state.Settings.Save();
                 state.ApplyEnabledAddons();

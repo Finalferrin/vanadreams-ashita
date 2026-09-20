@@ -71,7 +71,7 @@ Compress-Archive -Path $exe -DestinationPath (Join-Path $dist 'VanadreamsLaunche
 if ($Publish) {
     $account = gh api user --jq .login
     if ($account -ne 'Finalferrin') { throw "gh is signed in as $account; run: gh auth switch -u Finalferrin" }
-    gh release create "v$version" $exe --repo Finalferrin/vanadreams-ashita --title "Vanadreams Launcher $version" --notes "Signed build. Download VanadreamsLauncher.exe and run it."
+    gh release create "v$version" $exe --repo VanaDreams/vanadreams-ashita --title "Vanadreams Launcher $version" --notes "Signed build. Download VanadreamsLauncher.exe and run it."
     if ($LASTEXITCODE) { throw 'gh release create failed.' }
 }
 

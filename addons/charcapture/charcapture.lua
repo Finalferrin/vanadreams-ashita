@@ -12,7 +12,7 @@ addon.name    = 'charcapture';
 addon.author  = 'Vanadreams';
 addon.version = '0.1.2';
 addon.desc    = 'Captures a character snapshot for porting to Vanadreams.';
-addon.link    = 'https://github.com/Finalferrin/vanadreams-ashita';
+addon.link    = 'https://github.com/VanaDreams/vanadreams-ashita';
 
 require('common');
 local json = require('json');

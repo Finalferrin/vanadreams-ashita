@@ -31,6 +31,7 @@ namespace Vanadreams.Services
         public List<string> ConfigLines { get; set; } = new List<string>();
         public List<string> Conflicts { get; set; } = new List<string>();   // ids this item gives way to while they are enabled
         public string HeldBack { get; set; }        // why this item is never written to the startup script, however it is ticked
+        public bool OnByDefault { get; set; }       // installed and ticked for the player once, without being asked; theirs to untick after
         public string V3Name { get; set; }
         public string V3Carry { get; set; }
         public string V3Note { get; set; }
@@ -89,6 +90,19 @@ namespace Vanadreams.Services
                 case "overlay": return System.IO.Path.Combine(ashitaRoot, "polplugins", "DATs", Id);
                 default: return System.IO.Path.Combine(ashitaRoot, "plugins", (LoadName ?? Id) + ".dll");
             }
+        }
+
+        /// <summary>
+        /// The folder the Config button opens. A catalogue path is under the Ashita folder, unless it starts with
+        /// {desktop}, which is the player's real Desktop wherever Windows keeps it.
+        /// </summary>
+        public static string ResolveConfigPath(string ashitaRoot, string config, string desktop)
+        {
+            if (string.IsNullOrWhiteSpace(config)) return null;
+            const string token = "{desktop}";
+            if (config.StartsWith(token, StringComparison.OrdinalIgnoreCase))
+                return System.IO.Path.Combine(desktop ?? "", config.Substring(token.Length).TrimStart('\\', '/'));
+            return System.IO.Path.Combine(ashitaRoot ?? "", config);
         }
 
         public bool IsInstalled(string ashitaRoot)
@@ -161,6 +175,7 @@ namespace Vanadreams.Services
                     ConfigLines = Json.Strings(d, "configLines"),
                     Conflicts = Json.Strings(d, "conflicts"),
                     HeldBack = Json.Str(d, "heldBack"),
+                    OnByDefault = Json.Bool(d, "onByDefault"),
                 };
                 var src = Json.Obj(d.ContainsKey("source") ? d["source"] : null);
                 var type = (Json.Str(src, "type") ?? "none").ToLowerInvariant();

@@ -27,7 +27,7 @@ addon.name    = 'vanachatfix';
 addon.author  = 'Vanadreams';
 addon.version = '0.1.0';
 addon.desc    = 'Loads chatfix only on servers that still send the old chat packet layout.';
-addon.link    = 'https://github.com/Finalferrin/vanadreams-ashita';
+addon.link    = 'https://github.com/VanaDreams/vanadreams-ashita';
 
 require('common');
 

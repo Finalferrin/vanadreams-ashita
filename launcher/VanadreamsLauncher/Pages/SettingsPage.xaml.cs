@@ -23,7 +23,7 @@ namespace Vanadreams.Pages
             DetectedBox.Text = ClientVersion.FindFfxiFolder() ?? "not registered by PlayOnline";
             MusicBox.IsChecked = s.MusicOn;
             MusicCredit.Text = "made for Vanadreams with SoundBreak";
-            About.Text = "Vanadreams Launcher " + typeof(App).Assembly.GetName().Version + " · github.com/Finalferrin/vanadreams-ashita · no telemetry";
+            About.Text = "Vanadreams Launcher " + typeof(App).Assembly.GetName().Version + " · github.com/VanaDreams/vanadreams-ashita · no telemetry";
         }
 
         /// <summary>The corner mute changed the setting; show it.</summary>
