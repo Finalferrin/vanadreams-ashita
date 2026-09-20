@@ -175,11 +175,14 @@ namespace Vanadreams.Pages
                 else Step4.Text = "4. No v3 install found, nothing to bring over.";
                 Done(Step4);
 
-                // 5. default addons: everything bundled that the catalogue lists, plus vanafish
+                // 5. addons: a new install starts with none switched on, and a repair run leaves the
+                // player's ticks alone. Setup used to tick every addon that ships inside Ashita, all 86,
+                // on every run - and some of those are wrong for this server (chatfix rewrites chat,
+                // tells and menus for an older packet layout; ime makes typed text need Enter twice).
+                // Players tick what they want on the Addons page. The launcher's own music is a
+                // setting (MusicOn, on by default), not an addon, so it is not touched here.
                 Mark(Step5);
                 if (state.Catalog.Items.Count == 0) await state.RefreshCatalogAsync();
-                var defaults = state.Catalog.Items.Where(i => i.Source == SourceType.Bundled).Select(i => i.Id).ToList();
-                foreach (var id in defaults) if (!state.Settings.EnabledAddons.Contains(id, StringComparer.OrdinalIgnoreCase)) state.Settings.EnabledAddons.Add(id);
                 state.Settings.SetupDone = true;
                 state.Settings.Save();
                 state.ApplyEnabledAddons();
