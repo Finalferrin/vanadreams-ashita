@@ -8,8 +8,31 @@ namespace Vanadreams.Services
     {
         private static readonly Regex Token = new Regex("\"[^\"]*\"|\\S+");
 
+        /// <summary>The server's public name, which every player uses unless their network blocks the game's ports.</summary>
+        public const string VanadreamsServer = "vanadreams.fairywitch.ca";
+
+        /// <summary>
+        /// The server's own address on Tailscale. It only answers a player the server has been shared with.
+        /// Tailscale makes ordinary outgoing connections, so it gets through routers and providers that
+        /// refuse the game's ports.
+        /// </summary>
+        public const string TailscaleServer = "100.114.52.41";
+
         public string Server { get; set; } = "";
         public bool Hairpin { get; set; }
+
+        public bool IsTailscale => string.Equals(Server, TailscaleServer, System.StringComparison.OrdinalIgnoreCase);
+
+        /// <summary>
+        /// Point this command at the server over Tailscale, or back at its public name. Over Tailscale
+        /// --hairpin goes on with it: the server hands every client its public address for the zones, and
+        /// --hairpin keeps the client on the address it logged in to instead. Everything else is kept.
+        /// </summary>
+        public void UseTailscale(bool on)
+        {
+            Server = on ? TailscaleServer : VanadreamsServer;
+            Hairpin = on;
+        }
         public string User { get; set; } = "";
         public string Password { get; set; } = "";
         public string Extra { get; set; } = "";

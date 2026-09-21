@@ -29,6 +29,27 @@ namespace Vanadreams.Tests
         }
 
         [TestMethod]
+        public void LoaderCommand_switches_to_Tailscale_and_back_keeping_everything_else()
+        {
+            var c = LoaderCommand.Parse("--server vanadreams.fairywitch.ca --lang 2");
+            Assert.IsFalse(c.IsTailscale);
+
+            // over Tailscale the server's own tailnet address is used, and --hairpin keeps the client on it
+            // for the zones too: the server hands every client its public address, which is the very thing
+            // a player's router or provider is blocking when they need this
+            c.UseTailscale(true);
+            Assert.IsTrue(c.IsTailscale);
+            Assert.AreEqual("--server 100.114.52.41 --hairpin --lang 2", c.ToIniCommand());
+
+            c.UseTailscale(false);
+            Assert.IsFalse(c.IsTailscale);
+            Assert.AreEqual("--server vanadreams.fairywitch.ca --lang 2", c.ToIniCommand());
+
+            // a profile for some other server is not Tailscale just because it uses --hairpin
+            Assert.IsFalse(LoaderCommand.Parse("--server 192.168.0.19 --hairpin").IsTailscale);
+        }
+
+        [TestMethod]
         public void ClientVersion_takes_the_newest_stamp_from_patch_history()
         {
             var cfg = "file ROM/0/0.DAT {\n30260805_0 12 ab cd\n30260904_1 12 ab cd\n30260904_0 12 ab cd\n}\nend\n30210706_0 zzz\n";

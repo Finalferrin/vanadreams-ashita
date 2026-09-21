@@ -55,6 +55,9 @@ namespace Vanadreams.Pages
             if (!enabled) return;
             NameBox.Text = p.Name;
             ServerBox.Text = p.Command.Server;
+            _filling = true;   // setting the box while the form is filled must not rewrite the boxes beside it
+            TailscaleBox.IsChecked = p.Command.IsTailscale;
+            _filling = false;
             var cred = App.State.Credentials.Get(p.Id);
             UserBox.Text = cred?.User ?? p.Command.User;
             PassBox.Password = cred?.Password ?? p.Command.Password;
@@ -70,6 +73,23 @@ namespace Vanadreams.Pages
                 var bf = Path.IsPathRooted(p.BootFile) ? p.BootFile : Path.Combine(App.State.AshitaRoot, p.BootFile);
                 if (!File.Exists(bf)) Note.Text = "Boot file not found. Run Setup or browse to xiloader.";
             }
+        }
+
+        private bool _filling;
+
+        /// <summary>
+        /// Ticked: the server's Tailscale address and --hairpin go into the boxes. Unticked: the public name comes
+        /// back and --hairpin goes. Only the boxes change here; Save writes them, the same as any other edit.
+        /// </summary>
+        private void Tailscale_Changed(object sender, RoutedEventArgs e)
+        {
+            if (_filling) return;
+            var c = LoaderCommand.Parse(ExtraBox.Text);
+            c.Server = ServerBox.Text.Trim();
+            c.UseTailscale(TailscaleBox.IsChecked == true);
+            ServerBox.Text = c.Server;
+            ExtraBox.Text = c.Extra + (c.Hairpin ? (c.Extra.Length > 0 ? " " : "") + "--hairpin" : "");
+            Note.Text = c.IsTailscale ? "Over Tailscale: needs Tailscale running and the Vanadreams server shared with you. Press Save." : "Back to the public address. Press Save.";
         }
 
         private void Save_Click(object sender, RoutedEventArgs e)
