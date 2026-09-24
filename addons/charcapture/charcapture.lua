@@ -10,7 +10,7 @@
 
 addon.name    = 'charcapture';
 addon.author  = 'Vanadreams';
-addon.version = '0.1.3';
+addon.version = '0.1.4';
 addon.desc    = 'Captures a character snapshot for porting to Vanadreams.';
 addon.link    = 'https://github.com/VanaDreams/vanadreams-ashita';
 
@@ -70,11 +70,11 @@ end
 local JOB_COUNT = 22;        -- 1 WAR .. 22 RUN
 local COMBAT_SKILLS = 48;    -- Ashita combat skill indexes
 local CRAFT_SKILLS = 10;     -- fishing, woodworking, smithing, goldsmithing, clothcraft, leathercraft, bonecraft, alchemy, cooking, synergy
-local SPELL_MAX = 2048;         -- the client indexes these by id; probing past the end of a table is safe (HasX returns false)
-local ABILITY_MAX = 2048;       -- job abilities are id + 512 and the server has ids to 970, so 1482 and up
-local WEAPONSKILL_MAX = 1024;
-local TRAIT_MAX = 1024;
-local KEYITEM_MAX = 4096;       -- 8 tables of 512 key items, the whole table (the server list runs to 3381)
+local SPELL_MAX = 1024;         -- exact client table: 0x0AA MagicDataTbl, 128 bytes
+local ABILITY_MAX = 1024;       -- exact client tables: 0x0AC JobAbilities 64 bytes + PetAbilities 64 bytes
+local WEAPONSKILL_MAX = 512;     -- exact client table: 0x0AC WeaponSkills, 64 bytes (it was 256, half of it)
+local TRAIT_MAX = 256;          -- exact client table: 0x0AC Traits, 32 bytes
+local KEYITEM_MAX = 4096;       -- exact client tables: 0x055, 8 tables of 512 (it was 3072, so every key item from 3072 up was lost)
 local CONTAINERS = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
 local EQUIP_SLOTS = 16;
 
