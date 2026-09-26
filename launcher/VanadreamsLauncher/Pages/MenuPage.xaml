@@ -57,7 +57,7 @@
                 <ItemsControl x:Name="Commands">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Grid Height="30" Background="Transparent" MouseLeftButtonUp="Command_Click" MouseEnter="Command_Hover" Tag="{Binding}">
+                            <Grid Height="28" Background="Transparent" MouseLeftButtonUp="Command_Click" MouseEnter="Command_Hover" Tag="{Binding}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="34"/>
                                     <ColumnDefinition Width="*"/>

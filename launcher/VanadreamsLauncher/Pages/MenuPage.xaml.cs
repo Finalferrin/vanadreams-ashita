@@ -35,9 +35,10 @@ namespace Vanadreams.Pages
             new MenuCommand { Label = "Profiles", Key = "profiles" },
             new MenuCommand { Label = "Addons", Key = "addons" },
             new MenuCommand { Label = "Fishing", Key = "fishing" },
+            new MenuCommand { Label = "Vanatunes", Key = "vanatunes" },
             new MenuCommand { Label = "Capture", Key = "capture" },
             new MenuCommand { Label = "Setup", Key = "setup" },
-            new MenuCommand { Label = "Guide", Key = "guide" },
+            new MenuCommand { Label = "Install game", Key = "install" },
             new MenuCommand { Label = "Settings", Key = "settings" },
             new MenuCommand { Label = "Discord", Key = "discord", Dim = true },
             new MenuCommand { Label = "Exit", Key = "exit", Dim = true },
@@ -156,9 +157,10 @@ namespace Vanadreams.Pages
                 case "profiles": _win.Navigate(new ProfilesPage(_win, _profile?.Id)); break;
                 case "addons": _win.Navigate(new AddonsPage(_win)); break;
                 case "fishing": _win.Navigate(new FishingPage(_win)); break;
+                case "vanatunes": _win.Navigate(new VanatunesPage(_win)); break;
                 case "capture": _win.Navigate(new CapturePage(_win)); break;
                 case "setup": _win.Navigate(new SetupPage(_win)); break;
-                case "guide": new GuideWindow(App.State) { Owner = _win }.Show(); break;
+                case "install": _win.Navigate(new InstallPage(_win)); break;
                 case "settings": _win.Navigate(new SettingsPage(_win)); break;
                 case "discord": OpenUrl("https://fairywitch.ca/"); break;
                 case "exit": Application.Current.Shutdown(); break;
@@ -177,7 +179,7 @@ namespace Vanadreams.Pages
             state.CheckVersion();
             if (!_profile.IsRetail && state.Version.BlocksPlay)   // the Vanadreams version rule has no say over retail
             {
-                MessageBox.Show(state.Version.Sentence + "\n\nOpen the Guide from the menu for the update steps.", "Vanadreams Launcher", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(state.Version.Sentence + "\n\nInstall game, on the menu, fetches the version the server runs.", "Vanadreams Launcher", MessageBoxButton.OK, MessageBoxImage.Warning);
                 _win.RefreshStrip();
                 return;
             }

@@ -149,8 +149,9 @@ namespace Vanadreams.Pages
                     p.BootFile = Path.Combine(root, "bootloader", "xiloader.exe");
                     p.Script = "vanadreams.txt";
                     p.AutoClose = true;
-                    if (p.Width <= 0) { p.Width = 1920; p.Height = 1080; p.MenuWidth = 1920; p.MenuHeight = 1080; }
-                    if (p.Mode == WindowMode.Registry) p.Mode = WindowMode.Borderless;
+                    // a new player starts borderless at their own screen's size, never fullscreen
+                    if (p.Width <= 0) { var s = ScreenSize.PrimaryPixels(); p.Width = s.Width; p.Height = s.Height; p.MenuWidth = s.Width; p.MenuHeight = s.Height; }
+                    if (p.Mode == WindowMode.Registry || p.Mode == WindowMode.Fullscreen) p.Mode = WindowMode.Borderless;
                     p.Save();
                 }
                 state.Settings.LastProfile = "vanadreams";
