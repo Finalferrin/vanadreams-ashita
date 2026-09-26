@@ -66,6 +66,7 @@ namespace Vanadreams.Pages
             ModeBox.SelectedIndex = Array.FindIndex(_modes, m => m.mode == p.Mode);
             WidthBox.Text = p.Width > 0 ? p.Width.ToString() : ""; HeightBox.Text = p.Height > 0 ? p.Height.ToString() : "";
             MenuWBox.Text = p.MenuWidth > 0 ? p.MenuWidth.ToString() : ""; MenuHBox.Text = p.MenuHeight > 0 ? p.MenuHeight.ToString() : "";
+            BgWBox.Text = p.BackgroundWidth > 0 ? p.BackgroundWidth.ToString() : ""; BgHBox.Text = p.BackgroundHeight > 0 ? p.BackgroundHeight.ToString() : "";
             AutoCloseBox.IsChecked = p.AutoClose;
             if (p.IsExample) Note.Text = "A shipped example. Duplicate it, then edit the copy.";
             else if (!string.IsNullOrEmpty(p.BootFile))
@@ -106,6 +107,10 @@ namespace Vanadreams.Pages
             p.Width = int.TryParse(WidthBox.Text, out w) ? w : -1; p.Height = int.TryParse(HeightBox.Text, out h) ? h : -1;
             p.MenuWidth = int.TryParse(MenuWBox.Text, out mw) ? mw : (p.Width > 0 ? p.Width : -1);
             p.MenuHeight = int.TryParse(MenuHBox.Text, out mh) ? mh : (p.Height > 0 ? p.Height : -1);
+            // blank or not a number: the game's own default
+            int bw, bh;
+            p.BackgroundWidth = int.TryParse(BgWBox.Text, out bw) && bw > 0 ? bw : -1;
+            p.BackgroundHeight = int.TryParse(BgHBox.Text, out bh) && bh > 0 ? bh : -1;
             p.AutoClose = AutoCloseBox.IsChecked == true;
             p.Save();
             App.State.Credentials.Set(p.Id, UserBox.Text.Trim(), PassBox.Password);

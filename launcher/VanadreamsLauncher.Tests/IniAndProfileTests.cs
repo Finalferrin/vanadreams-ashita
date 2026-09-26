@@ -82,6 +82,24 @@ sandbox = 0
         }
 
         [TestMethod]
+        public void Profile_background_resolution_is_registry_0003_and_0004()
+        {
+            var path = Path.Combine(_dir, "config", "boot", "vanadreams.ini");
+            File.WriteAllText(path, Example);
+            var p = Profile.Load(path);
+            Assert.AreEqual(-1, p.BackgroundWidth, "absent means the game's default");
+            Assert.AreEqual(-1, p.BackgroundHeight);
+            p.BackgroundWidth = 4096; p.BackgroundHeight = 4096;
+            p.Save();
+            var again = Profile.Load(path);
+            Assert.AreEqual(4096, again.BackgroundWidth);
+            Assert.AreEqual(4096, again.BackgroundHeight);
+            Assert.AreEqual("4096", again.Ini.Get("ffxi.registry", "0003"));
+            Assert.AreEqual("4096", again.Ini.Get("ffxi.registry", "0004"));
+            Assert.AreEqual(1920, again.Width, "the window size is left as it was");
+        }
+
+        [TestMethod]
         public void Profile_round_trips_through_a_real_file()
         {
             var path = Path.Combine(_dir, "config", "boot", "vanadreams.ini");

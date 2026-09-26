@@ -27,6 +27,9 @@ namespace Vanadreams.Services
         public int Height { get; set; } = -1;
         public int MenuWidth { get; set; } = -1;
         public int MenuHeight { get; set; } = -1;
+        /// <summary>Background resolution (registry 0003/0004): the size the game draws the world at. -1 is the game's default.</summary>
+        public int BackgroundWidth { get; set; } = -1;
+        public int BackgroundHeight { get; set; } = -1;
         public WindowMode Mode { get; set; } = WindowMode.Registry;
         public Dictionary<string, bool> PolPlugins { get; } = new Dictionary<string, bool>(StringComparer.OrdinalIgnoreCase);
 
@@ -44,6 +47,7 @@ namespace Vanadreams.Services
             p.Command = LoaderCommand.Parse(ini.Get("ashita.boot", "command", ""));
             p.Width = ReadInt(ini, "0001"); p.Height = ReadInt(ini, "0002");
             p.MenuWidth = ReadInt(ini, "0037"); p.MenuHeight = ReadInt(ini, "0038");
+            p.BackgroundWidth = ReadInt(ini, "0003"); p.BackgroundHeight = ReadInt(ini, "0004");
             var mode = ReadInt(ini, "0034");
             p.Mode = Enum.IsDefined(typeof(WindowMode), mode) ? (WindowMode)mode : WindowMode.Registry;
             foreach (var kv in ini.Section("ashita.polplugins")) p.PolPlugins[kv.Key] = kv.Value.Trim() == "1";
@@ -64,6 +68,8 @@ namespace Vanadreams.Services
             Ini.Set("ffxi.registry", "0002", Height.ToString());
             Ini.Set("ffxi.registry", "0037", MenuWidth.ToString());
             Ini.Set("ffxi.registry", "0038", MenuHeight.ToString());
+            Ini.Set("ffxi.registry", "0003", BackgroundWidth.ToString());
+            Ini.Set("ffxi.registry", "0004", BackgroundHeight.ToString());
             Ini.Set("ffxi.registry", "0034", ((int)Mode).ToString());
             foreach (var kv in PolPlugins) Ini.Set("ashita.polplugins", kv.Key, kv.Value ? "1" : "0");
             Ini.Save(path ?? Path);

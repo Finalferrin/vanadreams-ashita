@@ -72,8 +72,8 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="30"/><RowDefinition Height="30"/><RowDefinition Height="30"/><RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/><RowDefinition Height="30"/><RowDefinition Height="30"/><RowDefinition Height="30"/><RowDefinition Height="30"/>
+                        <RowDefinition Height="28"/><RowDefinition Height="28"/><RowDefinition Height="28"/><RowDefinition Height="28"/><RowDefinition Height="28"/>
+                        <RowDefinition Height="28"/><RowDefinition Height="28"/><RowDefinition Height="28"/><RowDefinition Height="28"/><RowDefinition Height="28"/>
                     </Grid.RowDefinitions>
                     <TextBlock Text="Name" Style="{StaticResource Muted}" VerticalAlignment="Center"/>
                     <TextBox Grid.Column="1" x:Name="NameBox" VerticalAlignment="Center"/>
@@ -109,7 +109,15 @@
                         <TextBlock Text=" × " VerticalAlignment="Center"/>
                         <TextBox x:Name="MenuHBox" Width="60" VerticalAlignment="Center"/>
                     </StackPanel>
-                    <CheckBox Grid.Row="8" Grid.Column="1" x:Name="AutoCloseBox" Content="Close the launcher after launching" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Row="8" Text="Background" Style="{StaticResource Muted}" VerticalAlignment="Center"/>
+                    <StackPanel Grid.Row="8" Grid.Column="1" Orientation="Horizontal"
+                                ToolTip="The resolution the game draws the world at. Higher is sharper and asks more of your graphics card: twice or four times the window size is usual, 4096 × 4096 is common. Leave blank for the game's own default.">
+                        <TextBox x:Name="BgWBox" Width="70" VerticalAlignment="Center"/>
+                        <TextBlock Text=" × " VerticalAlignment="Center"/>
+                        <TextBox x:Name="BgHBox" Width="70" VerticalAlignment="Center"/>
+                        <TextBlock Text="   sharper world, blank for default" Style="{StaticResource Muted}" FontSize="12" VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <CheckBox Grid.Row="9" Grid.Column="1" x:Name="AutoCloseBox" Content="Close the launcher after launching" VerticalAlignment="Center"/>
                 </Grid>
                 <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
                     <TextBlock x:Name="Note" Style="{StaticResource Muted}" VerticalAlignment="Center" Margin="0,0,12,0" Foreground="{StaticResource Warn}"/>
