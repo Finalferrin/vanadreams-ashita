@@ -16,6 +16,9 @@ namespace Vanadreams
             base.OnStartup(e);
             // test hook: VanadreamsLauncher.exe --snapshot <png> [page] renders the window to a file and exits
             var args = e.Args;
+            // test hook: --data <folder> must be read before anything opens the settings
+            for (var i = 0; i + 1 < args.Length; i++)
+                if (args[i] == "--data") LauncherSettings.DataOverride = args[i + 1];
             for (var i = 0; i < args.Length; i++)
             {
                 if (args[i] == "--snapshot" && i + 1 < args.Length) { SnapshotPath = args[i + 1]; if (i + 2 < args.Length) SnapshotPage = args[i + 2]; }

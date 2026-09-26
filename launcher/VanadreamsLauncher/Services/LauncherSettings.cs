@@ -9,7 +9,9 @@ namespace Vanadreams.Services
     /// <summary>What the launcher remembers between runs. Lives in %LOCALAPPDATA%\Vanadreams\settings.json.</summary>
     public sealed class LauncherSettings
     {
-        public static string DataFolder => System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Vanadreams");
+        /// <summary>Test hook (--data &lt;folder&gt;): a separate data folder, so demo screenshots never read or touch the player's own.</summary>
+        public static string DataOverride { get; set; }
+        public static string DataFolder => DataOverride ?? System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Vanadreams");
         public static string DefaultPath => System.IO.Path.Combine(DataFolder, "settings.json");
 
         public string Path { get; private set; }

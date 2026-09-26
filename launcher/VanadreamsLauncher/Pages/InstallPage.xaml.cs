@@ -16,10 +16,14 @@ namespace Vanadreams.Pages
         private ClientManifest _manifest;
         private CancellationTokenSource _cancel;
 
-        public InstallPage(MainWindow win)
+        private readonly bool _asNewPlayer;
+
+        /// <param name="asNewPlayer">Snapshot hook: show the page as a PC with no game on it sees it.</param>
+        public InstallPage(MainWindow win, bool asNewPlayer = false)
         {
             InitializeComponent();
             _win = win;
+            _asNewPlayer = asNewPlayer;
             Loaded += async (s, e) => { Refresh(); await LoadManifestAsync(); };
         }
 
@@ -28,7 +32,7 @@ namespace Vanadreams.Pages
 
         private void Refresh()
         {
-            var found = ClientVersion.FindFfxiFolder();
+            var found = _asNewPlayer ? null : ClientVersion.FindFfxiFolder();
             var have = ClientVersion.ReadInstalled(found);
             var want = Expected;
             FolderText.Text = ClientInstall.GameFolder(_root);

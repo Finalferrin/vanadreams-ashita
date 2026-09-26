@@ -37,7 +37,7 @@
                     <Button x:Name="GoButton" Style="{StaticResource GoldButton}" Content="Download and set up" Click="Go_Click"/>
                     <Button x:Name="AdoptButton" Style="{StaticResource GhostButton}" Content="Use this folder as it is" Margin="10,0,0,0" Click="Adopt_Click" Visibility="Collapsed"/>
                     <Button x:Name="BackButton" Style="{StaticResource GhostButton}" Content="Back" Margin="10,0,0,0" Click="Back_Click"/>
-                    <Button Style="{StaticResource GhostButton}" Content="FFXI client guide" Margin="10,0,0,0" Click="Guide_Click"/>
+                    <Button Style="{StaticResource GhostButton}" Content="Install game" Margin="10,0,0,0" Click="InstallGame_Click"/>
                 </StackPanel>
 
                 <StackPanel Grid.Column="2" Grid.RowSpan="3">

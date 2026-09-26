@@ -27,7 +27,8 @@ namespace Vanadreams.Pages
             FolderBox.Text = string.IsNullOrWhiteSpace(state.AshitaRoot) ? @"C:\Games\Vanadreams" : state.AshitaRoot;
             BackButton.Visibility = state.HasAshita ? Visibility.Visible : Visibility.Collapsed;
             if (state.HasAshita) { Title.Text = "Repair or update Ashita"; GoButton.Content = "Check and update"; }
-            _v3 = V3Import.FindInstalls().FirstOrDefault();
+            // a snapshot for the website never shows the machine's own v3 folder, which carries a Windows user name
+            _v3 = string.IsNullOrEmpty(App.SnapshotPath) ? V3Import.FindInstalls().FirstOrDefault() : null;
             if (_v3 != null)
             {
                 ImportPanel.Visibility = Visibility.Visible;
@@ -238,6 +239,6 @@ namespace Vanadreams.Pages
         private void Done(TextBlock step) { step.Foreground = (Brush)FindResource("Ok"); if (!step.Text.StartsWith("✓")) step.Text = "✓ " + step.Text; }
 
         private void Back_Click(object sender, RoutedEventArgs e) => _win.Navigate(new MenuPage(_win));
-        private void Guide_Click(object sender, RoutedEventArgs e) => new GuideWindow(App.State) { Owner = _win }.Show();
+        private void InstallGame_Click(object sender, RoutedEventArgs e) => _win.Navigate(new InstallPage(_win));
     }
 }

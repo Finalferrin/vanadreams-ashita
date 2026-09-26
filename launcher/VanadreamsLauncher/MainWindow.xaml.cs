@@ -145,6 +145,7 @@ namespace Vanadreams
                 case "fishing": page = new FishingPage(this); break;
                 case "vanatunes": page = new VanatunesPage(this); break;
                 case "install": page = new InstallPage(this); break;
+                case "install-new": page = new InstallPage(this, asNewPlayer: true); break;
                 case "capture": page = new CapturePage(this); break;
                 default: page = new MenuPage(this); break;
             }
