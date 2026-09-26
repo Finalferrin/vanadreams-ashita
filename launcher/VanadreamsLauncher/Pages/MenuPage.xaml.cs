@@ -40,7 +40,7 @@ namespace Vanadreams.Pages
             new MenuCommand { Label = "Setup", Key = "setup" },
             new MenuCommand { Label = "Install game", Key = "install" },
             new MenuCommand { Label = "Settings", Key = "settings" },
-            new MenuCommand { Label = "Discord", Key = "discord", Dim = true },
+            new MenuCommand { Label = "Discord", Key = "discord" },
             new MenuCommand { Label = "Exit", Key = "exit", Dim = true },
         };
         private Profile _profile;
@@ -162,10 +162,13 @@ namespace Vanadreams.Pages
                 case "setup": _win.Navigate(new SetupPage(_win)); break;
                 case "install": _win.Navigate(new InstallPage(_win)); break;
                 case "settings": _win.Navigate(new SettingsPage(_win)); break;
-                case "discord": OpenUrl("https://fairywitch.ca/"); break;
+                case "discord": OpenUrl(DiscordInvite); break;
                 case "exit": Application.Current.Shutdown(); break;
             }
         }
+
+        /// <summary>The Vanadreams Discord's permanent invite, the same one fairywitch.ca carries.</summary>
+        public const string DiscordInvite = "https://discord.gg/tBpNVBwKqT";
 
         public static void OpenUrl(string url)
         {
